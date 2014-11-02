@@ -1,4 +1,4 @@
-enum Priority {High =1, medium, low}
+enum Priority {High =1, Medium, low}
 
 class ImageSettings {
 	int projectID;
