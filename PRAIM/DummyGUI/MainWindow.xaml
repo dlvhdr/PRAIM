@@ -1,8 +1,41 @@
 ﻿<Window x:Class="DummyGUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DummyGUI" Height="350" Width="525">
+        Title="DummyGUI" Height="400" Width="550" WindowStartupLocation="Manual" FontFamily="Trebuchet MS" ResizeMode="NoResize">
+    <Window.Background>
+        <ImageBrush ImageSource="background.jpg"/>
+    </Window.Background>
     <Grid>
-        
+        <Button Content="PRAIM" HorizontalAlignment="Left" Margin="217,288,0,0" VerticalAlignment="Top" Width="104" Height="36" Click="Button_Click_1"/>
+        <ComboBox HorizontalAlignment="Left" Height="31" Margin="28,95,0,0" VerticalAlignment="Top" Width="145" IsReadOnly="True" FontSize="14">
+            <ComboBoxItem >High</ComboBoxItem>
+            <ComboBoxItem >Medium</ComboBoxItem>
+            <ComboBoxItem >Low</ComboBoxItem>
+        </ComboBox>
+        <Label Content="default priority" HorizontalAlignment="Left" Height="27" Margin="28,68,0,0" VerticalAlignment="Top" Width="104"/>
+        <Label Content="version" HorizontalAlignment="Left" Height="27" Margin="28,138,0,0" VerticalAlignment="Top" Width="104"/>
+        <ComboBox HorizontalAlignment="Left" Height="31" Margin="28,173,0,0" VerticalAlignment="Top" Width="145" IsEditable="True">
+            <Button/>
+        </ComboBox>
+        <Menu HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" Width="534">
+            <Menu.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                </LinearGradientBrush>
+            </Menu.Background>
+            <MenuItem Header="_File">
+                <MenuItem Header="_New" />
+                <MenuItem Header="_Open" />
+                <MenuItem Header="_Save" />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Cut" />
+                <MenuItem Header="_Copy" />
+                <MenuItem Header="_Paste" />
+            </MenuItem>
+        </Menu>
+
     </Grid>
+
 </Window>

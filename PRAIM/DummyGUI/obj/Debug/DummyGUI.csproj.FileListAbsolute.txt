@@ -1,0 +1,15 @@
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\bin\Debug\DummyGUI.exe.config
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\bin\Debug\DummyGUI.exe
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\bin\Debug\DummyGUI.pdb
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\bin\Debug\PRAIM.dll
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\bin\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI.csprojResolveAssemblyReference.cache
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\MainWindow.baml
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\MainWindow.g.cs
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\App.g.cs
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI_MarkupCompile.cache
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI.g.resources
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI.Properties.Resources.resources
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI.csproj.GenerateResource.Cache
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI.exe
+C:\Users\Adi&Dvir\PRAIM\PRAIM\DummyGUI\obj\Debug\DummyGUI.pdb
