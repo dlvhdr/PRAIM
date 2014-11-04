@@ -42,18 +42,38 @@
                             <ColumnDefinition Width="100"/>
                         </Grid.ColumnDefinitions>
                         
-                        <TextBlock Grid.Row="0" Text="Date:" Margin="0,2"/>
-                        <TextBox Grid.Row="0" Grid.Column="1" Margin="2,2"/>
-                        <TextBlock Grid.Row="1" Text="Time:" Margin="0,2"/>
-                        <TextBox Grid.Row="1" Grid.Column="1" Margin="2,2"/>
-                        <TextBlock Grid.Row="2" Text="Comments:" Margin="0,2"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Margin="2,2"/>
-                        <TextBlock Grid.Row="3" Text="Priority:" Margin="0,2"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" Margin="2,2"/>
-                        <TextBlock Grid.Row="4" Text="Version:" Margin="0,2"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Margin="2,2"/>
-                        <TextBlock Grid.Row="5" Text="Project ID:" Margin="0,2"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" Margin="2,2"/>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type TextBlock}">
+                                <Setter Property="Margin" Value="0,2,5,2"/>
+                            </Style>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="Margin" Value="2,2"/>
+                            </Style>
+                        </Grid.Resources>
+                        
+                        <!--Date-->
+                        <TextBlock Grid.Row="0" Text="Date:"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" />
+                        
+                        <!--Time-->
+                        <TextBlock Grid.Row="1" Text="Time:"/>
+                        <TextBox Grid.Row="1" Grid.Column="1"/>
+                        
+                        <!--Comments-->
+                        <TextBlock Grid.Row="2" Text="Comments:"/>
+                        <TextBox Grid.Row="2" Grid.Column="1"/>
+                        
+                        <!--Priority-->
+                        <TextBlock Grid.Row="3" Text="Priority:"/>
+                        <TextBox Grid.Row="3" Grid.Column="1"/>
+                        
+                        <!--Version-->
+                        <TextBlock Grid.Row="4" Text="Version:"/>
+                        <TextBox Grid.Row="4" Grid.Column="1"/>
+                        
+                        <!--Project ID-->
+                        <TextBlock Grid.Row="5" Text="Project ID:"/>
+                        <TextBox Grid.Row="5" Grid.Column="1"/>
                     </Grid>
                 </Grid>
 
