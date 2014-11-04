@@ -11,3 +11,6 @@ C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PR
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csproj.GenerateResource.Cache
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PRAIMGUI\obj\Debug\PRAIM.exe
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PRAIMGUI\obj\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.exe.config
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.exe
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.pdb
