@@ -51,7 +51,7 @@
                         <TextBlock Grid.Row="3" Text="Priority:" Margin="0,2"/>
                         <TextBox Grid.Row="3" Grid.Column="1" Margin="2,2"/>
                         <TextBlock Grid.Row="4" Text="Version:" Margin="0,2"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Margin="2,2"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" Margin="2,2" Text="{Binding Version}"/>
                         <TextBlock Grid.Row="5" Text="Project ID:" Margin="0,2"/>
                         <TextBox Grid.Row="5" Grid.Column="1" Margin="2,2"/>
                     </Grid>

@@ -40,19 +40,19 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Content="Default Priority" Padding="0,5"/>
-            <ComboBox Grid.Row="1" IsReadOnly="True">
+            <ComboBox Grid.Row="1" IsReadOnly="True" SelectionChanged="ComboBox_SelectionChanged_1">
                 <ComboBoxItem >High</ComboBoxItem>
                 <ComboBoxItem >Medium</ComboBoxItem>
                 <ComboBoxItem >Low</ComboBoxItem>
             </ComboBox>
 
             <Label Grid.Row="2" Content="Version" Padding="0,5"/>
-            <ComboBox Grid.Row="3" IsEditable="True">
+            <ComboBox Grid.Row="3" IsEditable="True" Height="20" VerticalAlignment="Top" SelectionChanged="ComboBox_SelectionChanged_2">
             </ComboBox>
             
         </Grid>
 
-        <Button Grid.Row="4" Content="PRAIM" Click="Button_Click_1" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Bottom"/>
+        <Button Grid.Row="4" Content="PRAIM" Click="Button_Click_1" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Bottom" Width="80" Height="35"/>
 
     </DockPanel>
 

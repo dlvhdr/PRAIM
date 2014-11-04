@@ -12,3 +12,14 @@ C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PR
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PRAIMGUI\obj\Debug\PRAIM.exe
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PRAIMGUI\obj\Debug\PRAIM.pdb
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\PRAIMGUI\obj\Debug\ImagesDictionary.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ImagesDictionary.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIMWindow.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIMWindow.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM_MarkupCompile.cache
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.g.resources
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.Properties.Resources.resources
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csproj.GenerateResource.Cache
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.dll
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.dll
