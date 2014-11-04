@@ -5,19 +5,9 @@
     <Window.Background>
         <ImageBrush ImageSource="background.jpg"/>
     </Window.Background>
-    <Grid>
-        <Button Content="PRAIM" HorizontalAlignment="Left" Margin="217,288,0,0" VerticalAlignment="Top" Width="104" Height="36" Click="Button_Click_1"/>
-        <ComboBox HorizontalAlignment="Left" Height="31" Margin="28,95,0,0" VerticalAlignment="Top" Width="145" IsReadOnly="True" FontSize="14">
-            <ComboBoxItem >High</ComboBoxItem>
-            <ComboBoxItem >Medium</ComboBoxItem>
-            <ComboBoxItem >Low</ComboBoxItem>
-        </ComboBox>
-        <Label Content="default priority" HorizontalAlignment="Left" Height="27" Margin="28,68,0,0" VerticalAlignment="Top" Width="104"/>
-        <Label Content="version" HorizontalAlignment="Left" Height="27" Margin="28,138,0,0" VerticalAlignment="Top" Width="104"/>
-        <ComboBox HorizontalAlignment="Left" Height="31" Margin="28,173,0,0" VerticalAlignment="Top" Width="145" IsEditable="True">
-            <Button/>
-        </ComboBox>
-        <Menu HorizontalAlignment="Left" Height="17" VerticalAlignment="Top" Width="534">
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top" HorizontalAlignment="Stretch">
             <Menu.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 </LinearGradientBrush>
@@ -36,6 +26,35 @@
             </MenuItem>
         </Menu>
 
-    </Grid>
+        <Grid DockPanel.Dock="Top" Margin="20,60,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Row="0" Content="Default Priority" Padding="0,5"/>
+            <ComboBox Grid.Row="1" IsReadOnly="True">
+                <ComboBoxItem >High</ComboBoxItem>
+                <ComboBoxItem >Medium</ComboBoxItem>
+                <ComboBoxItem >Low</ComboBoxItem>
+            </ComboBox>
+
+            <Label Grid.Row="2" Content="Version" Padding="0,5"/>
+            <ComboBox Grid.Row="3" IsEditable="True">
+            </ComboBox>
+            
+        </Grid>
+
+        <Button Grid.Row="4" Content="PRAIM" Click="Button_Click_1" HorizontalAlignment="Center" VerticalAlignment="Center" DockPanel.Dock="Bottom"/>
+
+    </DockPanel>
+
 
 </Window>
