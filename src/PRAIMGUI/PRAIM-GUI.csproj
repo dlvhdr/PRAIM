@@ -23,6 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -53,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ActionItem.cs" />
+    <Compile Include="ActionMetaData.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -67,6 +70,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PRAIMViewModel.cs" />
     <Compile Include="PRAIMWindow.xaml.cs">
       <DependentUpon>PRAIMWindow.xaml</DependentUpon>
     </Compile>
@@ -101,6 +105,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\system-file-manager.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\dummygui-ss.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
