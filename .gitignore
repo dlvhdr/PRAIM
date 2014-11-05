@@ -1,1 +1,5 @@
 *.ini
+src/DummyGUI/bin
+src/DummyGUI/obj
+src/PRAIMGUI/bin
+src/PRAIMGUI/obj
