@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 namespace PRAIM
 {
     public enum Priority { High, Medium, Low }
+    public enum ProjectID { ICT256}
 
-    class ActionMetaData
+    public class ActionMetaData
     {
-        int projectID;
-        Priority priority;
-        double version;
-        DateTime dateTime;
-        StringBuilder comments;
+        public int ProjectID { get; set; }
+        public Priority Priority { get; set; }
+        public double Version { get; set; }
+        public DateTime DateTime { get; set; }
+        public String Comments { get; set; }
+        //StringBuilder Comments;
     }
 }
