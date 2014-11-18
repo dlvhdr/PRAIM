@@ -4,7 +4,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         x:Name="self"
         ResizeMode="NoResize"
-        Title="PRAIM - Project Action Items Manager" Height="310" Width="600">
+        Title="PRAIM - Project Action Items Manager" Height="330" Width="600" ShowInTaskbar="True">
     <Window.Resources>
         <ResourceDictionary>
         </ResourceDictionary>

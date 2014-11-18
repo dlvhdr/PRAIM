@@ -1,0 +1,59 @@
+﻿<Window x:Class="PRAIM.SnapshotManager"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:PRAIM"
+        WindowState="Maximized"
+        ShowInTaskbar="False"
+        WindowStyle="None"
+        MouseDown="OnMouseDown"  MouseMove="OnMouseMove" MouseUp="OnMouseUp"
+        AllowsTransparency="True"
+        Background="Transparent"
+        KeyDown="OnKeyPressed" Name="self">
+    <Window.Resources>
+        <Style x:Key="ResizeRectangle" TargetType="Rectangle">
+            <Setter Property="Width" Value="8"/>
+            <Setter Property="Height" Value="8"/>
+            <Setter Property="StrokeThickness" Value="1"/>
+            <Setter Property="Stroke" Value="White"/>
+            <Setter Property="Fill" Value="DarkSlateBlue"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Image x:Name="MainImage" Stretch="None"/>
+        <Border Background="Black" Opacity="0.4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+        <Canvas Name="MainCanvas" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
+            <ContentControl Name="SelectionRect" Visibility="Hidden">
+                <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=ContentControl, Mode=FindAncestor}}">
+                    <local:MoveResizeHelper Cursor="SizeAll">
+                        <local:MoveResizeHelper.Template>
+                            <ControlTemplate TargetType="{x:Type local:MoveResizeHelper}">
+                                <Grid>
+                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                               Stroke="Black" StrokeThickness="1" StrokeDashArray="3 3" Fill="Transparent">
+                                        <!--<Rectangle.Fill>
+                                            <ImageBrush ImageSource="{Binding SelectionImageSource, ElementName=self, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </Rectangle.Fill>-->
+                                    </Rectangle>
+                                    <Rectangle Style="{StaticResource ResizeRectangle}"
+                                                       Cursor="SizeNWSE" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="-5,-5,0,0"/>
+                                    <Rectangle Style="{StaticResource ResizeRectangle}"
+                                                       Cursor="SizeNS" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,-5,0,0"/>
+                                    <Rectangle Style="{StaticResource ResizeRectangle}"
+                                                       Cursor="SizeNESW" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,-5,-5,0"/>
+                                    <Rectangle Style="{StaticResource ResizeRectangle}"
+                                                       Cursor="SizeNESW" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="-5,0,0,-5"/>
+                                    <Rectangle Style="{StaticResource ResizeRectangle}"
+                                                       Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,-5"/>
+                                    <Rectangle Style="{StaticResource ResizeRectangle}"
+                                                       Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,-5,-5"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </local:MoveResizeHelper.Template>
+                    </local:MoveResizeHelper>
+                </Grid>
+            </ContentControl>
+        </Canvas>
+    </Grid>
+</Window>
