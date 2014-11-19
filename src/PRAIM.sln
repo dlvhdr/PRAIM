@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRAIM-GUI", "PRAIMGUI\PRAIM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRAIMDataBase", "PRAIMDataBase\PRAIMDataBase.csproj", "{267324C2-50FC-4290-9C5E-BD9CC8E4AE3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqConsoleApp", "LinqConsoleApp\LinqConsoleApp.csproj", "{0B291451-BB41-4F70-9473-71F3D6E4E8CF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,10 +25,6 @@ Global
 		{267324C2-50FC-4290-9C5E-BD9CC8E4AE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{267324C2-50FC-4290-9C5E-BD9CC8E4AE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{267324C2-50FC-4290-9C5E-BD9CC8E4AE3A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B291451-BB41-4F70-9473-71F3D6E4E8CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B291451-BB41-4F70-9473-71F3D6E4E8CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B291451-BB41-4F70-9473-71F3D6E4E8CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B291451-BB41-4F70-9473-71F3D6E4E8CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
