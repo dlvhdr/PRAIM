@@ -12,10 +12,11 @@ namespace PRAIM
         //public string imagePath { get; set; }
         public ActionMetaData metaData { get; set; }
 
+        public ActionItem() { }
+
         public ActionItem(int id)
         {
             this.id = id;
-            System.Console.WriteLine("ActionItem was created, id: {0}", id);
         }
 
     }
