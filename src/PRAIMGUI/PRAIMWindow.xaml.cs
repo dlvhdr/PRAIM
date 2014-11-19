@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace PRAIM
 {
@@ -42,8 +43,28 @@ namespace PRAIM
 
         private void OnTakeSnapshot(object sender, RoutedEventArgs e)
         {
+            this.LayoutUpdated += RunSnapshotMgr;
             this.Hide();
         }
+
+        private void RunSnapshotMgr(object sender, EventArgs e)
+        {
+            if (IsVisible == true) return;
+            Thread.Sleep(200);
+
+            SnapshotManager snapshotMgr = new SnapshotManager();
+            snapshotMgr.Closed += SnapshotMgrClosed;
+            snapshotMgr.Show();
+
+            this.LayoutUpdated -= RunSnapshotMgr;
+        }
+
+
+        private void SnapshotMgrClosed(object sender, EventArgs e)
+        {
+            this.Show();
+        }
+
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
