@@ -1,0 +1,14 @@
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.exe.config
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.exe
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ImagesDictionary.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIMWindow.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\App.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIMWindow.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\App.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM_MarkupCompile.cache
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.g.resources
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.Properties.Resources.resources
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csproj.GenerateResource.Cache
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.exe
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.pdb

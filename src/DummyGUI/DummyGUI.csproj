@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PRAIM">
-      <HintPath>..\..\..\Documents\דביר\טכניון\סמסטר 7\פרוייקט תעשייתי\visual studio 2012\PRAIM\PRAIM\bin\Debug\PRAIM.dll</HintPath>
+      <HintPath>..\PRAIMGUI\bin\Debug\PRAIM.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />

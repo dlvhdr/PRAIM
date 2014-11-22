@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace PRAIM
 {
-    public enum Priority { High, Medium, Low }
+    public enum Priority { High = 0, Medium, Low }
+    public enum ProjectID { ICT256}
 
     public class ActionMetaData
     {
         public int ProjectID { get; set; }
         public Priority Priority { get; set; }
         public double Version { get; set; }
-        public DateTime DateTime { get; set; }
+        public Nullable<DateTime> DateTime { get; set; }
+        //public DateTime DateTime { get; set; }
         public String Comments { get; set; }
-        //StringBuilder Comments;
     }
 }

@@ -11,7 +11,7 @@ class ActionMetaData {
 class ActionItem {
 	int id;
 	string imagePath;
-	ImageSettings settings;
+	ActionMetaData metaData;
 }
 
 //The app that use this DLL need to create one PRAIM object and use open() to open PRAIM application

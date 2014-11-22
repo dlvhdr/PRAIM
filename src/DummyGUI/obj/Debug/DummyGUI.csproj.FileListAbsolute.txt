@@ -1,0 +1,28 @@
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\bin\Debug\DummyGUI.exe.config
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI.csprojResolveAssemblyReference.cache
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\MainWindow.baml
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\MainWindow.g.cs
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\App.g.cs
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI_MarkupCompile.cache
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI.g.resources
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\bin\Debug\DummyGUI.exe
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\bin\Debug\DummyGUI.pdb
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI.Properties.Resources.resources
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI.csproj.GenerateResource.Cache
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI.exe
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\project\src\DummyGUI\obj\Debug\DummyGUI.pdb
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\bin\Debug\DummyGUI.exe.config
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI.exe
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI.pdb
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\bin\Debug\DummyGUI.exe
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\bin\Debug\DummyGUI.pdb
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\bin\Debug\PRAIM.dll
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\bin\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI.csprojResolveAssemblyReference.cache
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\MainWindow.baml
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\MainWindow.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\App.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI_MarkupCompile.cache
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI.g.resources
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI.Properties.Resources.resources
+C:\Users\Adi&Dvir\PRAIM\src\DummyGUI\obj\Debug\DummyGUI.csproj.GenerateResource.Cache

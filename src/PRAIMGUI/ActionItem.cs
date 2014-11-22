@@ -6,10 +6,18 @@ using System.Threading.Tasks;
 
 namespace PRAIM
 {
-    class ActionItem
+    public class ActionItem
     {
-        int id;
-        string imagePath;
-        ActionMetaData metaData;
+        public int id { get; set; }
+        //public string imagePath { get; set; }
+        public ActionMetaData metaData { get; set; }
+
+        public ActionItem() { }
+
+        public ActionItem(int id)
+        {
+            this.id = id;
+        }
+
     }
 }
