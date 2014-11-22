@@ -3,3 +3,5 @@ src/DummyGUI/bin
 src/DummyGUI/obj
 src/PRAIMGUI/bin
 src/PRAIMGUI/obj
+src/PRAIMDataBase/obj
+src/PRAIMDataBase/bin
