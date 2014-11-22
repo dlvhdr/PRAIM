@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace PRAIM
 {
-    public class PRAIMViewModel
+    public class PRAIMViewModel : INotifyPropertyChanged
     {
         public Priority DefaultPriority { get; set; }
         public Priority Priority { get; set; }
@@ -15,6 +17,16 @@ namespace PRAIM
         public int ProjectID { get; set; }
         public TimeSpan Time { get; set; }
         public List<Priority> PossiblePriorities { get; private set; }
+        
+        public CroppedBitmap CroppedImage
+        {
+            get { return _CroppedImage; }
+            set
+            {
+                _CroppedImage = value;
+                NotifyPropertyChanged("CroppedImage");
+            }
+        }
 
         //PRAIM constructor. Provide default values for the project under development.
         public PRAIMViewModel(int projectID, string version, Priority defaultPriority)
@@ -42,6 +54,20 @@ namespace PRAIM
 	
 	    // return the list of images 
        // List<ActionItem> getActionItem(ActionMetaData metaData) { }
-        
+
+        private CroppedBitmap _CroppedImage;
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void NotifyPropertyChanged(string property)
+        {
+            if (PropertyChanged != null) {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
+            }
+        }
+
+        #endregion INotifyPropertyChanged
     }
 }

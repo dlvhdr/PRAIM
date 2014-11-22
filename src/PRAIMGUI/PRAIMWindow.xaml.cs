@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using PRAIM.SnapshotManager;
 
 namespace PRAIM
 {
@@ -22,6 +23,8 @@ namespace PRAIM
     /// </summary>
     public partial class PRAIMWindow : Window
     {
+        public PRAIMViewModel ViewModel { get { return this.DataContext as PRAIMViewModel; } }
+
         public ICollectionView DummyDBItems { get; private set; }
 
         public PRAIMWindow()
@@ -52,7 +55,7 @@ namespace PRAIM
             if (IsVisible == true) return;
             Thread.Sleep(200);
 
-            SnapshotManager snapshotMgr = new SnapshotManager();
+            SnapshotManagerWindow snapshotMgr = new SnapshotManagerWindow();
             snapshotMgr.Closed += SnapshotMgrClosed;
             snapshotMgr.Show();
 
@@ -62,7 +65,9 @@ namespace PRAIM
 
         private void SnapshotMgrClosed(object sender, EventArgs e)
         {
+            SnapshotManagerWindow snapshotMgr = sender as SnapshotManagerWindow;
             this.Show();
+            ViewModel.CroppedImage = snapshotMgr.CroppedImage;
         }
 
 

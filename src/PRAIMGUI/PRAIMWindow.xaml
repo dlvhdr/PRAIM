@@ -119,12 +119,9 @@
                         <Label Content="Preview" FontWeight="Bold" Margin="0" Padding="0"/>
 
                         <Border Grid.Row="1" Grid.Column="1" Width="370" Height="212"  BorderBrush="LightBlue" BorderThickness="2">
-                            <Image Source="Images/dummygui-ss.png" Stretch="UniformToFill" ClipToBounds="True">
-                            </Image>
+                            <Image Source="{Binding CroppedImage}" Stretch="Uniform"/>
                         </Border>
-
                     </Grid>
-
                 </Grid>
             </TabItem>
 

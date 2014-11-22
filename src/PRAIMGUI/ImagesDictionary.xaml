@@ -12,5 +12,6 @@
 
     <BitmapImage x:Key="CameraIcon" UriSource="Images/camera-photo.png"/>
     <BitmapImage x:Key="DBIcon" UriSource="Images/system-file-manager.png"/>
+    <BitmapImage x:Key="DocumentSave" UriSource="Images/document-save.png"/>
 
 </ResourceDictionary>
