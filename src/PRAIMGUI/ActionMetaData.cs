@@ -16,7 +16,6 @@ namespace PRAIM
         public Priority Priority { get; set; }
         public double Version { get; set; }
         public Nullable<DateTime> DateTime { get; set; }
-        //public DateTime DateTime { get; set; }
         public String Comments { get; set; }
     }
 }

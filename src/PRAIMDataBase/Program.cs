@@ -11,15 +11,15 @@ namespace PRAIMDataBase
     {
         static void Main(string[] args)
         {
-            ActionItem actionItem = new ActionItem(6);
+            ActionItem actionItem = new ActionItem(2);
             PRAIMDataBase db = new PRAIMDataBase();
 
             ActionMetaData metaData = new ActionMetaData();
             metaData.Priority = Priority.High;
             metaData.ProjectID = 1;
             metaData.Version = 1;
-            metaData.DateTime = new DateTime(2010,10,10);
-            metaData.Comments = "comment";
+            metaData.DateTime = DateTime.Now;
+            metaData.Comments = "Dolev Hadar";
             actionItem.metaData = metaData;
 
             bool result = db.InsertActionItem(actionItem);
@@ -40,24 +40,19 @@ namespace PRAIMDataBase
             {
                 foreach (ActionItem item in list)
                 {
-                    Console.WriteLine("{0}, {1} , {2}, {3} ,{4}, {5}",
+                    Console.WriteLine("{0}, {1} , {2}, {3} ,{4}, {5}, {6}",
                                        item.id, item.metaData.Priority, item.metaData.ProjectID,
-                                       item.metaData.Version, item.metaData.DateTime, item.metaData.Comments);
+                                       item.metaData.Version, item.metaData.DateTime,
+                                       item.metaData.Comments, item.snapShot);
                 }
             }
 
             //DeleteActionItems test
 
-            ActionItem actionItemToDelete = list[0];//new ActionItem(1);
-            //metaData.Priority = Priority.High;
-            //metaData.ProjectID = 1;
-            //metaData.Version = 1;
-            //metaData.DateTime = null;
-            //metaData.Comments = "aaa";
-            //actionItemToDelete.metaData = metaData;
+            //ActionItem actionItemToDelete = list[0];//new ActionItem(1);
 
-            result = db.DeleteActionItems(actionItemToDelete);
-            System.Console.WriteLine("DeleteActionItems result: {0}", result);
+            //result = db.DeleteActionItems(actionItemToDelete);
+            //System.Console.WriteLine("DeleteActionItems result: {0}", result);
 
         }
     }

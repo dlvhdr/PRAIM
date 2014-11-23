@@ -12,3 +12,6 @@ C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.Properties.Resources.resour
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csproj.GenerateResource.Cache
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.exe
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.pdb
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csprojResolveAssemblyReference.cache
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\SnapshotManager\SnapshotManager.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\SnapshotManager\SnapshotManager.g.cs

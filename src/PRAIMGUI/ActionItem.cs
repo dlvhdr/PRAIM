@@ -9,7 +9,7 @@ namespace PRAIM
     public class ActionItem
     {
         public int id { get; set; }
-        //public string imagePath { get; set; }
+        public byte[] snapShot { get; set; }
         public ActionMetaData metaData { get; set; }
 
         public ActionItem() { }

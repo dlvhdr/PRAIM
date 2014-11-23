@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 
-using System.Data.Linq;
+using System.Drawing;
+using System.IO;
 
 using PRAIM;
 
@@ -31,24 +32,40 @@ namespace PRAIMDataBase
             int priority = (int)actionItem.metaData.Priority;
             int projectID = (int)actionItem.metaData.ProjectID;
             double version = actionItem.metaData.Version;
-            DateTime dateTime = new DateTime(2010, 10, 10);
+            Nullable<DateTime> dateTime = actionItem.metaData.DateTime;
             string comments = actionItem.metaData.Comments;
+            byte[] snapShot = actionItem.snapShot;
 
-            System.Console.WriteLine("actionItemId: {0}", actionItemId);
-            System.Console.WriteLine("priority: {0}", priority);
-            System.Console.WriteLine("projectID: {0}", projectID);
-            System.Console.WriteLine("version: {0}", version);
-            System.Console.WriteLine("dateTime: {0}", dateTime);
-            System.Console.WriteLine("comments: {0}", comments);
+            //Image img = Image.FromFile(@"C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\test.PNG");
+            //byte[] arr;
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+            //    arr = ms.ToArray();
+            //}
+            string filepath = @"C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\test.PNG";
+            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read); //create a file stream object associate to user selected file 
+            byte[] image = new byte[fs.Length]; //create a byte array with size of user select file stream length
+            fs.Read(image, 0, Convert.ToInt32(fs.Length));//read user selected file stream in to byte array
             
+
+
+            //System.Console.WriteLine("actionItemId: {0}", actionItemId);
+            //System.Console.WriteLine("priority: {0}", priority);
+            //System.Console.WriteLine("projectID: {0}", projectID);
+            //System.Console.WriteLine("version: {0}", version);
+            //System.Console.WriteLine("dateTime: {0}", dateTime);
+            //System.Console.WriteLine("comments: {0}", comments);
+            System.Console.WriteLine("snapShot: {0}", image);
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     SqlDataAdapter cmd = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand("INSERT INTO PRAIMDBTable " +
-                                         "(ActionItemId, Priority, ProjectID, Version, DateTime, Comments) " +
-                                         "VALUES (@actionItemId, @priority, @projectID, @version, @dateTime, @comments)"
+                                         "(ActionItemId, Priority, ProjectID, Version, DateTime, Comments, Snapshot) " +
+                                         "VALUES (@actionItemId, @priority, @projectID, @version, @dateTime, @comments, @snapshot)"
                                          , connection);
 
                     command.Parameters.AddWithValue("@actionItemId", actionItemId);
@@ -57,6 +74,9 @@ namespace PRAIMDataBase
                     command.Parameters.AddWithValue("@version", version);
                     command.Parameters.AddWithValue("@dateTime", dateTime);
                     command.Parameters.AddWithValue("@comments", comments);
+                    //command.Parameters.AddWithValue("@snapshot", image);
+
+                    command.Parameters.Add("@snapshot", SqlDbType.Image, image.Length).Value = image;
 
                     command.Connection = connection;
                     cmd.InsertCommand = command;
@@ -164,8 +184,11 @@ namespace PRAIMDataBase
                             {
                                 receivedMetaData.Comments = reader.GetString(5);
                             }
+                            if (!reader.IsDBNull(6))
+                            {
+                                receivedActionItem.snapShot = (byte[])reader.GetSqlBinary(6);
+                            }
                             receivedActionItem.metaData = receivedMetaData;
-
                             list.Add(receivedActionItem);
                         }
                     }
