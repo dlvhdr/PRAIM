@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using PRAIM.SnapshotManager;
+
 
 namespace PRAIM
 {
@@ -22,10 +24,18 @@ namespace PRAIM
     /// </summary>
     public partial class PRAIMWindow : Window
     {
+        public ActionItem actionItem;
+        public ActionMetaData metaData;
+        
+        public PRAIMViewModel ViewModel { get { return this.DataContext as PRAIMViewModel; } }
+
         public ICollectionView DummyDBItems { get; private set; }
+
 
         public PRAIMWindow()
         {
+            metaData = new ActionMetaData();
+            actionItem = new ActionItem();
             List<ActionMetaData> dummyDBItems = new List<ActionMetaData> {
                 new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #1", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
                 new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #2", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
@@ -52,7 +62,7 @@ namespace PRAIM
             if (IsVisible == true) return;
             Thread.Sleep(200);
 
-            SnapshotManager snapshotMgr = new SnapshotManager();
+            SnapshotManagerWindow snapshotMgr = new SnapshotManagerWindow();
             snapshotMgr.Closed += SnapshotMgrClosed;
             snapshotMgr.Show();
 
@@ -62,12 +72,39 @@ namespace PRAIM
 
         private void SnapshotMgrClosed(object sender, EventArgs e)
         {
+            SnapshotManagerWindow snapshotMgr = sender as SnapshotManagerWindow;
             this.Show();
+            ViewModel.CroppedImage = snapshotMgr.CroppedImage;
         }
 
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
+        }
+
+        private void searchComments(object sender, TextChangedEventArgs e)
+        {
+            metaData.Comments = sender as string;
+        }
+
+        private void searchPriority(object sender, SelectionChangedEventArgs e)
+        {
+            //metaData.Priority = (Priority)sender;
+        }
+
+        private void searchVersion(object sender, TextChangedEventArgs e)
+        {
+            //metaData.Version = (double)sender;
+        }
+
+        private void searchProjectID(object sender, TextChangedEventArgs e)
+        {
+            //metaData.ProjectID = (int)sender;
+        }
+
+        private void searchButton(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

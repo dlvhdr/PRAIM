@@ -84,7 +84,7 @@
 
                         <!--Comments-->
                         <TextBlock Grid.Row="2" Text="Comments:"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Comments, Mode=TwoWay}"/>
+                        <TextBox Grid.Row="2" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" Text="{Binding Comments, Mode=TwoWay}"/>
 
                         <!--Priority-->
                         <TextBlock Grid.Row="3" Text="Priority:"/>
@@ -119,12 +119,9 @@
                         <Label Content="Preview" FontWeight="Bold" Margin="0" Padding="0"/>
 
                         <Border Grid.Row="1" Grid.Column="1" Width="370" Height="212"  BorderBrush="LightBlue" BorderThickness="2">
-                            <Image Source="Images/dummygui-ss.png" Stretch="UniformToFill" ClipToBounds="True">
-                            </Image>
+                            <Image Source="{Binding CroppedImage}" Stretch="Uniform"/>
                         </Border>
-
                     </Grid>
-
                 </Grid>
             </TabItem>
 
@@ -188,22 +185,22 @@
 
                         <!--Comments-->
                         <TextBlock Grid.Row="2" Text="Comments:"/>
-                        <TextBox Grid.Row="2" Grid.Column="1"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" TextChanged="searchComments"/>
 
                         <!--Priority-->
                         <TextBlock Grid.Row="3" Text="Priority:"/>
-                        <TextBox Grid.Row="3" Grid.Column="1"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" SelectedItem="{Binding Priority}" SelectionChanged="searchPriority"/>
 
                         <!--Version-->
                         <TextBlock Grid.Row="4" Text="Version:"/>
-                        <TextBox Grid.Row="4" Grid.Column="1"/>
+                        <TextBox Grid.Row="4" Grid.Column="1" TextChanged="searchVersion"/>
 
                         <!--Project ID-->
                         <TextBlock Grid.Row="5" Text="Project ID:"/>
-                        <TextBox Grid.Row="5" Grid.Column="1"/>
+                        <TextBox Grid.Row="5" Grid.Column="1" TextChanged="searchProjectID"/>
 
-                        <!--Take snapshot button-->
-                        <Button Grid.Row="6" Grid.Column="1" Margin="2,20,2,0" Padding="5">
+                        <!--Search button-->
+                        <Button Grid.Row="6" Grid.Column="1" Margin="2,20,2,0" Padding="5" Click="searchButton">
                             Search
                         </Button>
                     </Grid>
@@ -211,11 +208,15 @@
                     <Grid Grid.Column="1" Margin="20,0,5,5">
                         <DataGrid ItemsSource="{Binding DummyDBItems, ElementName=self}" AutoGenerateColumns="False" CanUserAddRows="False">
                             <DataGrid.Columns>
-                                <DataGridTextColumn Header="Date" Binding="{Binding DateTime}">
+                                <DataGridTextColumn Header="ID" Binding="{Binding ID}">
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Priory" Binding="{Binding Priority}">
                                 </DataGridTextColumn>
+                                <DataGridTextColumn Header="ProjectID" Binding="{Binding ProjectID}">
+                                </DataGridTextColumn>
                                 <DataGridTextColumn Header="Version" Binding="{Binding Version}">
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Date" Binding="{Binding DateTime}">
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Comments" Binding="{Binding Comments}">
                                 </DataGridTextColumn>

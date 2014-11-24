@@ -1,11 +1,15 @@
-﻿<Window x:Class="PRAIM.SnapshotManager"
+﻿<Window x:Class="PRAIM.SnapshotManager.SnapshotManagerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:PRAIM.SnapshotManager"
+        xmlns:converters="clr-namespace:PRAIM.Common.Converters"
+        xmlns:common="clr-namespace:PRAIM.Common.Controls"
         WindowState="Maximized"
         WindowStyle="None"
         MouseDown="OnMouseDown"  MouseMove="OnMouseMove" MouseUp="OnMouseUp"
         AllowsTransparency="True"
+        ShowInTaskbar="False"
         Background="Transparent"
         KeyDown="OnKeyPressed" Name="self">
     <Window.Resources>
@@ -15,57 +19,96 @@
             <Setter Property="StrokeThickness" Value="1"/>
             <Setter Property="Stroke" Value="White"/>
             <Setter Property="Fill" Value="DarkSlateBlue"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
         </Style>
+
+        <converters:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibility"/>
     </Window.Resources>
 
-    <Grid SnapsToDevicePixels="False">
+    <Grid Name="MainGrid" SnapsToDevicePixels="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Image x:Name="MainImage" Stretch="None"/>
-        <Border Background="Black" Opacity="0.4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
         <Canvas Name="MainCanvas" Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}}" Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}}" Background="Transparent">
-            <ContentControl Name="SelectionRect" Height="0" Width="0">
+            <!--The masking-->
+            <Path Fill="Black" Opacity="0.4" Canvas.Left="0" Canvas.Top="0" IsHitTestVisible="False">
+                <Path.Data>
+                    <CombinedGeometry GeometryCombineMode="Exclude">
+                        <CombinedGeometry.Geometry1>
+                            <RectangleGeometry Rect="{Binding OuterRect, ElementName=self}"/>
+                        </CombinedGeometry.Geometry1>
+                        <CombinedGeometry.Geometry2>
+                            <RectangleGeometry Rect="{Binding InnerRect, ElementName=self, UpdateSourceTrigger=PropertyChanged}"/>
+                        </CombinedGeometry.Geometry2>
+                    </CombinedGeometry>
+                </Path.Data>
+            </Path>
+            
+            <!--The selection rectangle-->
+            <ContentControl Name="SelectionRect" Visibility="Hidden"
+                            Canvas.Top="{Binding RectTopPos, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding RectLeftPos, ElementName=self, UpdateSourceTrigger=PropertyChanged}"
+                            Width="{Binding RectWidth, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Height="{Binding RectHeight, ElementName=self, UpdateSourceTrigger=PropertyChanged}">
                 <Grid DataContext="{Binding RelativeSource={RelativeSource AncestorType=ContentControl, Mode=FindAncestor}}">
                     <Thumb DragDelta="OnMoveHelperDragDelta" Cursor="SizeAll">
                         <Thumb.Template>
                             <ControlTemplate TargetType="{x:Type Thumb}">
-                                <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                            Stroke="Black" StrokeThickness="1" StrokeDashArray="3 3" Fill="Transparent">
-                                    <!--<Rectangle.Fill>
-                                        <ImageBrush ImageSource="{Binding SelectionImageSource, ElementName=self, UpdateSourceTrigger=PropertyChanged}"/>
-                                    </Rectangle.Fill>-->
-                                </Rectangle>
+                                <Grid Background="Transparent">
+                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                               Margin="-1" Stroke="White" StrokeThickness="1">
+                                    </Rectangle>
+                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                                Margin="-1" Stroke="Black" StrokeThickness="1" StrokeDashArray="3,3,3,3">
+                                    </Rectangle>
+                                    <!--<Image Stretch="None" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding SelectionRectImageSource, ElementName=self, UpdateSourceTrigger=PropertyChanged}"
+                                           HorizontalAlignment="Left" VerticalAlignment="Top" SnapsToDevicePixels="True"/>-->
+                                </Grid>
+
                             </ControlTemplate>
                         </Thumb.Template>
                     </Thumb>
                     <Rectangle Name="UpperLeftHook" Cursor="SizeNWSE" VerticalAlignment="Top" HorizontalAlignment="Left"
-                               Style="{StaticResource ResizeRectangle}" Margin="-4,-4,0,0" RenderOptions.EdgeMode="Aliased"
+                               Style="{StaticResource ResizeRectangle}" Margin="-4,-4,0,0"
                                MouseDown="OnHookMouseDown"
                                MouseMove="UpperLeftMouseMove"
                                MouseUp="OnMouseUp"/>
                     <Rectangle Name="UpperRightHook" Cursor="SizeNESW" VerticalAlignment="Top" HorizontalAlignment="Right"
-                               Style="{StaticResource ResizeRectangle}" Margin="0,-4,-4,0" RenderOptions.EdgeMode="Aliased"
+                               Style="{StaticResource ResizeRectangle}" Margin="0,-4,-4,0"
                                MouseDown="OnHookMouseDown"
                                MouseMove="UpperRightMouseMove"
                                MouseUp="OnMouseUp"/>
                     <Rectangle Name="BottomLeftHook" Cursor="SizeNESW" VerticalAlignment="Bottom" HorizontalAlignment="Left"
-                               Style="{StaticResource ResizeRectangle}" Margin="-4,0,0,-4" RenderOptions.EdgeMode="Aliased"
+                               Style="{StaticResource ResizeRectangle}" Margin="-4,0,0,-4"
                                MouseDown="OnHookMouseDown"
                                MouseMove="BottomLeftMouseMove"
                                MouseUp="OnMouseUp"/>
                     <Rectangle Name="BottomRightHook" Cursor="SizeNWSE" VerticalAlignment="Bottom" HorizontalAlignment="Right"
-                               Style="{StaticResource ResizeRectangle}" Margin="0,0,-4,-4" RenderOptions.EdgeMode="Aliased" 
+                               Style="{StaticResource ResizeRectangle}" Margin="0,0,-4,-4"
                                MouseDown="OnHookMouseDown"
                                MouseMove="BottomRightMouseMove"
                                MouseUp="OnMouseUp"/>
                     <Rectangle Name="UpperCenterHook" Cursor="SizeNS" VerticalAlignment="Top" HorizontalAlignment="Center"
-                               Style="{StaticResource ResizeRectangle}" Margin="0,-4,0,0" RenderOptions.EdgeMode="Aliased" 
+                               Style="{StaticResource ResizeRectangle}" Margin="0,-4,0,0"
                                MouseDown="OnHookMouseDown"
                                MouseMove="UpperCenterMouseMove"
                                MouseUp="OnMouseUp"/>
                     <Rectangle Name="BottomCenterHook" Cursor="SizeNS" VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                               Style="{StaticResource ResizeRectangle}" Margin="0,0,0,-4" RenderOptions.EdgeMode="Aliased" 
+                               Style="{StaticResource ResizeRectangle}" Margin="0,0,0,-4"
                                MouseDown="OnHookMouseDown"
                                MouseMove="BottomCenterMouseMove"
                                MouseUp="OnMouseUp"/>
+                    <Rectangle Name="LeftCenterHook" Cursor="SizeWE" VerticalAlignment="Center" HorizontalAlignment="Left"
+                               Style="{StaticResource ResizeRectangle}" Margin="-4,0,0,0" 
+                               MouseDown="OnHookMouseDown"
+                               MouseMove="LeftCenterMouseMove"
+                               MouseUp="OnMouseUp"/>
+                    <Rectangle Name="RightCenterHook" Cursor="SizeWE" VerticalAlignment="Center" HorizontalAlignment="Right"
+                               Style="{StaticResource ResizeRectangle}" Margin="0,0,-4,0" 
+                               MouseDown="OnHookMouseDown"
+                               MouseMove="RightCenterMouseMove"
+                               MouseUp="OnMouseUp"/>
+
+                    <common:ImageButton Padding="5" ImageSource="{StaticResource DocumentSave}" Margin="0,0,-24,-24" Height="20" Width="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
+                                        ImageHeight="16" ImageWidth="16"
+                                        Visibility="{Binding IsResizing, ElementName=self, Converter={StaticResource NegateBoolToVisibility}}"
+                                        Click="Capture"/>
                 </Grid>
             </ContentControl>
         </Canvas>
