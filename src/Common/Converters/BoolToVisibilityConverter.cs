@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 
-namespace PRAIM.Common.Converters
+namespace Common.Converters
 {
     public class BoolToVisibilityConverter: IValueConverter
     {

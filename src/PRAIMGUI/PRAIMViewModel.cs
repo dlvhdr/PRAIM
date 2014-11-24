@@ -5,57 +5,60 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
+using System.Windows;
+
+using PRAIMDB;
+using Common;
 
 namespace PRAIM
 {
     public class PRAIMViewModel : INotifyPropertyChanged
     {
-        public Priority DefaultPriority { get; set; }
-        public Priority Priority { get; set; }
-        public string Version { get; set; }
-        public string Comments { get; set; }
-        public int ProjectID { get; set; }
-        public TimeSpan Time { get; set; }
         public List<Priority> PossiblePriorities { get; private set; }
         
-        public CroppedBitmap CroppedImage
+        public ActionItem ActionItem { get; set; }
+        public ActionMetaData Metadata
         {
-            get { return _CroppedImage; }
+            get { return (ActionItem != null)? ActionItem.metaData : null; }
+            set { ActionItem.metaData = value; }
+        }
+
+        public byte[] CroppedImageBytes
+        {
+            get { return _CroppedImageBytes; }
             set
             {
-                _CroppedImage = value;
-                NotifyPropertyChanged("CroppedImage");
+                _CroppedImageBytes = value;
+                NotifyPropertyChanged("CroppedImageBytes");
             }
         }
 
         //PRAIM constructor. Provide default values for the project under development.
         public PRAIMViewModel(int projectID, string version, Priority defaultPriority)
         {
+            _DB = new PRAIMDataBase();
             PossiblePriorities = new List<Priority> { Priority.Low, Priority.Medium, Priority.High };
-            this.ProjectID = projectID;
-            this.DefaultPriority = defaultPriority;
-            this.Priority = DefaultPriority;
-            this.Version = version;
-            
 
-            //Mockup code
-            this.Time = DateTime.Now.TimeOfDay;
-
+            ActionItem = new ActionItem();
+            ActionItem.metaData = new ActionMetaData();
         }
 	
 	    //open the PRAIM dialog
         public bool open() { return true; }
-	
-	    //Take snapshot handler
-        bool takeSnapshot() { return true; }
-	
-	    // return true if succeed & false if fail
-        bool insertActionItem(ActionItem actionItem) { return true; }
-	
+
+        public void SaveActionItem()
+        {
+            ActionItem.snapShot = CroppedImageBytes;
+            if (_DB.InsertActionItem(this.ActionItem) == true) return;
+
+            MessageBox.Show("Error insering to DB");
+        }
+
 	    // return the list of images 
        // List<ActionItem> getActionItem(ActionMetaData metaData) { }
 
-        private CroppedBitmap _CroppedImage;
+        private byte[] _CroppedImageBytes;
+        private PRAIMDataBase _DB;
 
         #region INotifyPropertyChanged
 

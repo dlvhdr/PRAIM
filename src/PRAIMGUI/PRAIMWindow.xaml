@@ -4,7 +4,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         x:Name="self"
         ResizeMode="NoResize"
-        Title="PRAIM - Project Action Items Manager" Height="330" Width="600" ShowInTaskbar="True">
+        Title="PRAIM - Project Action Items Manager" Height="400" Width="600" ShowInTaskbar="True">
     <Window.Resources>
         <ResourceDictionary>
         </ResourceDictionary>
@@ -34,8 +34,7 @@
 
                 <Grid Margin="5,5,0,0">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="250"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -50,10 +49,8 @@
                             <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
                             <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
                             <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto"/>
-
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
@@ -71,34 +68,43 @@
                         </Grid.Resources>
 
                         <!--Date-->
-                        <TextBlock Grid.Row="0" Text="Date:"/>
-                        <DatePicker Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" />
-
-                        <!--Time-->
+                        <!--Change to Date & Time-->
+                        <TextBlock Grid.Row="0" Text="Date Time:"/>
+                        <Label Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" />
+                        <!--Content="{ }" binding static datetime.Now -->
+                        
+                        <!--Time--><!--
                         <TextBlock Grid.Row="1" Text="Time:"/>
                         <Label Grid.Row="1" Grid.Column="1" Content="{Binding Time}" Padding="0" Margin="2,2">
                             <Label.ContentStringFormat>
                                 hh\:mm\:ss
                             </Label.ContentStringFormat>
-                        </Label>
-
-                        <!--Comments-->
-                        <TextBlock Grid.Row="2" Text="Comments:"/>
-                        <TextBox Grid.Row="2" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" Text="{Binding Comments, Mode=TwoWay}"/>
+                        </Label>-->
 
                         <!--Priority-->
-                        <TextBlock Grid.Row="3" Text="Priority:"/>
-                        <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" SelectedItem="{Binding Priority}"/>
+                        <TextBlock Grid.Row="1" Text="Priority:"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="2,2" Padding="2,1" 
+                                  ItemsSource="{Binding PossiblePriorities}" 
+                                  SelectedItem="{Binding Metadata.Priority}"/>
 
                         <!--Version-->
-                        <TextBlock Grid.Row="4" Text="Version:"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Version}"/>
+                        <TextBlock Grid.Row="2" Text="Version:"/>
+                        <TextBox Grid.Row="2" Grid.Column="1" 
+                                 Text="{Binding Metadata.Version}"/>
 
                         <!--Project ID-->
-                        <TextBlock Grid.Row="5" Text="Project ID:"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding ProjectID}"/>
+                        <TextBlock Grid.Row="3" Text="Project ID:"/>
+                        <TextBox Grid.Row="3" Grid.Column="1" 
+                                 Text="{Binding Metadata.ProjectID}"/>
 
-                        <DockPanel Grid.Row="6" Grid.Column="1" Margin="2,10,2,0">
+                        <!--Comments-->
+                        <TextBlock Grid.Row="4" Text="Comments:"
+                                   VerticalAlignment="Top"/>
+                        <TextBox Grid.Row="4" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" 
+                                 Height="100"
+                                 Text="{Binding Metadata.Comments, Mode=TwoWay}"/>
+                        
+                        <DockPanel Grid.Row="5" Grid.Column="1" Margin="2,10,2,0">
                             <!--Take snapshot button-->
                             <Button DockPanel.Dock="Top" Padding="5" Click="OnTakeSnapshot" Margin="0,0,0,7">
                                 Take Snapshot
@@ -185,22 +191,22 @@
 
                         <!--Comments-->
                         <TextBlock Grid.Row="2" Text="Comments:"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" TextChanged="searchComments"/>
+                        <TextBox Grid.Row="2" Grid.Column="1"/>
 
                         <!--Priority-->
                         <TextBlock Grid.Row="3" Text="Priority:"/>
-                        <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" SelectedItem="{Binding Priority}" SelectionChanged="searchPriority"/>
+                        <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" SelectedItem="{Binding Priority}"/>
 
                         <!--Version-->
                         <TextBlock Grid.Row="4" Text="Version:"/>
-                        <TextBox Grid.Row="4" Grid.Column="1" TextChanged="searchVersion"/>
+                        <TextBox Grid.Row="4" Grid.Column="1"/>
 
                         <!--Project ID-->
                         <TextBlock Grid.Row="5" Text="Project ID:"/>
-                        <TextBox Grid.Row="5" Grid.Column="1" TextChanged="searchProjectID"/>
+                        <TextBox Grid.Row="5" Grid.Column="1"/>
 
                         <!--Search button-->
-                        <Button Grid.Row="6" Grid.Column="1" Margin="2,20,2,0" Padding="5" Click="searchButton">
+                        <Button Grid.Row="6" Grid.Column="1" Margin="2,20,2,0" Padding="5">
                             Search
                         </Button>
                     </Grid>

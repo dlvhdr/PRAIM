@@ -3,8 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:PRAIM.SnapshotManager"
-        xmlns:converters="clr-namespace:PRAIM.Common.Converters"
-        xmlns:common="clr-namespace:PRAIM.Common.Controls"
+        xmlns:converters="clr-namespace:Common.Converters;assembly=Common"
+        xmlns:common="clr-namespace:Common.Controls;assembly=Common"
         WindowState="Maximized"
         WindowStyle="None"
         ResizeMode="NoResize"
@@ -106,7 +106,7 @@
                     <common:ImageButton Padding="5" ImageSource="{StaticResource DocumentSave}" Margin="0,0,-24,-24" Height="20" Width="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
                                         ImageHeight="16" ImageWidth="16"
                                         Visibility="{Binding IsResizing, ElementName=self, Converter={StaticResource NegateBoolToVisibility}}"
-                                        Click="Capture"/>
+                                        Click="Capture" ToolTip="Continue to PRAIM"/>
                 </Grid>
             </ContentControl>
         </Canvas>

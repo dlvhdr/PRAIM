@@ -15,6 +15,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using PRAIM.SnapshotManager;
+using Common;
+using System.IO;
+
 
 
 namespace PRAIM
@@ -24,9 +27,6 @@ namespace PRAIM
     /// </summary>
     public partial class PRAIMWindow : Window
     {
-        public ActionItem actionItem;
-        public ActionMetaData metaData;
-        
         public PRAIMViewModel ViewModel { get { return this.DataContext as PRAIMViewModel; } }
 
         public ICollectionView DummyDBItems { get; private set; }
@@ -34,18 +34,6 @@ namespace PRAIM
 
         public PRAIMWindow()
         {
-            metaData = new ActionMetaData();
-            actionItem = new ActionItem();
-            List<ActionMetaData> dummyDBItems = new List<ActionMetaData> {
-                new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #1", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
-                new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #2", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
-                new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #3", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
-                new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #4", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
-                new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #5", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
-                new ActionMetaData { DateTime = new DateTime(2010,10,10), Comments = "Comment #6", Priority=Priority.High, ProjectID = 1, Version = 1.1 },
-            };
-
-            DummyDBItems = CollectionViewSource.GetDefaultView(dummyDBItems);
             InitializeComponent();
 
             this.DataContext = new PRAIMViewModel(1, "1.0", Priority.Low);
@@ -74,37 +62,22 @@ namespace PRAIM
         {
             SnapshotManagerWindow snapshotMgr = sender as SnapshotManagerWindow;
             this.Show();
-            ViewModel.CroppedImage = snapshotMgr.CroppedImage;
+
+            byte[] image_bytes;
+            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create(snapshotMgr.CroppedImage));
+            using(MemoryStream ms = new MemoryStream())
+            {
+                encoder.Save(ms);
+                image_bytes = ms.ToArray();
+                ViewModel.CroppedImageBytes = image_bytes;
+            }
         }
 
 
         private void OnSave(object sender, RoutedEventArgs e)
         {
-        }
-
-        private void searchComments(object sender, TextChangedEventArgs e)
-        {
-            metaData.Comments = sender as string;
-        }
-
-        private void searchPriority(object sender, SelectionChangedEventArgs e)
-        {
-            //metaData.Priority = (Priority)sender;
-        }
-
-        private void searchVersion(object sender, TextChangedEventArgs e)
-        {
-            //metaData.Version = (double)sender;
-        }
-
-        private void searchProjectID(object sender, TextChangedEventArgs e)
-        {
-            //metaData.ProjectID = (int)sender;
-        }
-
-        private void searchButton(object sender, RoutedEventArgs e)
-        {
-            
+            ViewModel.SaveActionItem();
         }
     }
 }

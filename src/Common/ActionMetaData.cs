@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace PRAIM
+namespace Common
 {
     public enum Priority { High = 0, Medium, Low }
     public enum ProjectID { ICT256}

@@ -3,17 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using System.Data;
 using System.Data.SqlClient;
-
 using System.Drawing;
 using System.IO;
 
 using PRAIM;
+using Common;
 
-
-namespace PRAIMDataBase
+namespace PRAIMDB
 {
     public class PRAIMDataBase
     {
@@ -28,7 +26,7 @@ namespace PRAIMDataBase
 //                          User Instance=True";
         public bool InsertActionItem(ActionItem actionItem)
         {
-            int actionItemId = actionItem.id;
+            actionItem.id = 100;
             int priority = (int)actionItem.metaData.Priority;
             int projectID = (int)actionItem.metaData.ProjectID;
             double version = actionItem.metaData.Version;
@@ -43,10 +41,10 @@ namespace PRAIMDataBase
             //    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
             //    arr = ms.ToArray();
             //}
-            string filepath = @"C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\test.PNG";
-            FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read); //create a file stream object associate to user selected file 
-            byte[] image = new byte[fs.Length]; //create a byte array with size of user select file stream length
-            fs.Read(image, 0, Convert.ToInt32(fs.Length));//read user selected file stream in to byte array
+            //string filepath = @"C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\test.PNG";
+            //FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read); //create a file stream object associate to user selected file 
+            //byte[] image = new byte[fs.Length]; //create a byte array with size of user select file stream length
+            //fs.Read(image, 0, Convert.ToInt32(fs.Length));//read user selected file stream in to byte array
             
 
 
@@ -56,7 +54,7 @@ namespace PRAIMDataBase
             //System.Console.WriteLine("version: {0}", version);
             //System.Console.WriteLine("dateTime: {0}", dateTime);
             //System.Console.WriteLine("comments: {0}", comments);
-            System.Console.WriteLine("snapShot: {0}", image);
+            //System.Console.WriteLine("snapShot: {0}", image);
 
             try
             {
@@ -68,7 +66,7 @@ namespace PRAIMDataBase
                                          "VALUES (@actionItemId, @priority, @projectID, @version, @dateTime, @comments, @snapshot)"
                                          , connection);
 
-                    command.Parameters.AddWithValue("@actionItemId", actionItemId);
+                    command.Parameters.AddWithValue("@actionItemId", actionItem.id);
                     command.Parameters.AddWithValue("@priority", priority);
                     command.Parameters.AddWithValue("@projectID", projectID);
                     command.Parameters.AddWithValue("@version", version);
@@ -76,7 +74,7 @@ namespace PRAIMDataBase
                     command.Parameters.AddWithValue("@comments", comments);
                     //command.Parameters.AddWithValue("@snapshot", image);
 
-                    command.Parameters.Add("@snapshot", SqlDbType.Image, image.Length).Value = image;
+                    command.Parameters.Add("@snapshot", SqlDbType.Image, actionItem.snapShot.Length).Value = actionItem.snapShot;
 
                     command.Connection = connection;
                     cmd.InsertCommand = command;
@@ -246,5 +244,6 @@ namespace PRAIMDataBase
             return true;
         }
 
+        private static int _NextID = 0;
     }
 }
