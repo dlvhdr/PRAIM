@@ -7,10 +7,10 @@
         xmlns:common="clr-namespace:PRAIM.Common.Controls"
         WindowState="Maximized"
         WindowStyle="None"
+        ResizeMode="NoResize"
+        AllowsTransparency="False"
         MouseDown="OnMouseDown"  MouseMove="OnMouseMove" MouseUp="OnMouseUp"
-        AllowsTransparency="True"
         ShowInTaskbar="False"
-        Background="Transparent"
         KeyDown="OnKeyPressed" Name="self">
     <Window.Resources>
         <Style x:Key="ResizeRectangle" TargetType="Rectangle">
@@ -25,11 +25,11 @@
         <converters:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibility"/>
     </Window.Resources>
 
-    <Grid Name="MainGrid" SnapsToDevicePixels="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Image x:Name="MainImage" Stretch="None"/>
-        <Canvas Name="MainCanvas" Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}}" Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}}" Background="Transparent">
+    <Grid Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Image x:Name="MainImage" Stretch="None" IsHitTestVisible="False"/>
+        <Canvas Name="MainCanvas" Width="{Binding Source={x:Static SystemParameters.PrimaryScreenWidth}}" Height="{Binding Source={x:Static SystemParameters.PrimaryScreenHeight}}">
             <!--The masking-->
-            <Path Fill="Black" Opacity="0.4" Canvas.Left="0" Canvas.Top="0" IsHitTestVisible="False">
+            <Path Fill="#77000000" Canvas.Left="0" Canvas.Top="0" IsHitTestVisible="False">
                 <Path.Data>
                     <CombinedGeometry GeometryCombineMode="Exclude">
                         <CombinedGeometry.Geometry1>
@@ -41,7 +41,7 @@
                     </CombinedGeometry>
                 </Path.Data>
             </Path>
-            
+
             <!--The selection rectangle-->
             <ContentControl Name="SelectionRect" Visibility="Hidden"
                             Canvas.Top="{Binding RectTopPos, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Canvas.Left="{Binding RectLeftPos, ElementName=self, UpdateSourceTrigger=PropertyChanged}"
@@ -51,14 +51,12 @@
                         <Thumb.Template>
                             <ControlTemplate TargetType="{x:Type Thumb}">
                                 <Grid Background="Transparent">
-                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="False"
                                                Margin="-1" Stroke="White" StrokeThickness="1">
                                     </Rectangle>
-                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                    <Rectangle VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="False"
                                                 Margin="-1" Stroke="Black" StrokeThickness="1" StrokeDashArray="3,3,3,3">
                                     </Rectangle>
-                                    <!--<Image Stretch="None" RenderOptions.BitmapScalingMode="HighQuality" Source="{Binding SelectionRectImageSource, ElementName=self, UpdateSourceTrigger=PropertyChanged}"
-                                           HorizontalAlignment="Left" VerticalAlignment="Top" SnapsToDevicePixels="True"/>-->
                                 </Grid>
 
                             </ControlTemplate>
