@@ -18,3 +18,4 @@ C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Common\Controls\ImageButton.baml
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Common\Controls\ImageButton.g.cs
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM_MarkupCompile.lref
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csprojResolveAssemblyReference.cache
