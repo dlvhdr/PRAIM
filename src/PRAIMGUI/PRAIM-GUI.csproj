@@ -59,24 +59,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ActionItem.cs" />
-    <Compile Include="ActionMetaData.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Common\Controls\ImageButton.xaml.cs">
-      <DependentUpon>ImageButton.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Common\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="SnapshotManager\SnapshotManager.xaml.cs">
       <DependentUpon>SnapshotManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Utilities\Utilities.cs" />
-    <Page Include="Common\Controls\ImageButton.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="ImagesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +121,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\document-save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{1499f792-f0ff-4170-9867-88636ff8b927}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRAIMDataBase\PRAIMDataBase.csproj">
+      <Project>{267324c2-50fc-4290-9c5e-bd9cc8e4ae3a}</Project>
+      <Name>PRAIMDataBase</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

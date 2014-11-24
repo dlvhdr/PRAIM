@@ -1,4 +1,4 @@
-﻿<Button x:Class="PRAIM.Common.Controls.ImageButton"
+﻿<Button x:Class="Common.Controls.ImageButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -11,7 +11,7 @@
             <Border HorizontalAlignment="Center" VerticalAlignment="Center" Background="Silver" BorderBrush="White" BorderThickness="1" Padding="1">
                 <Image Style="{StaticResource Icon16x16}" Width="{Binding ImageWidth, ElementName=self}" 
                        Height="{Binding ImageHeight, ElementName=self}" 
-                       Source="{Binding ImageSource, ElementName=self}"></Image>            
+                       Source="{Binding ImageSource, ElementName=self}"></Image>
             </Border>
         </ControlTemplate>
     </Button.Template>

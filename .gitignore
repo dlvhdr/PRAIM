@@ -6,3 +6,5 @@ src/PRAIMGUI/bin
 src/PRAIMGUI/obj
 src/PRAIMDataBase/obj
 src/PRAIMDataBase/bin
+src/Common/bin
+src/Common/obj

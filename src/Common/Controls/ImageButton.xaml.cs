@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PRAIM.Common.Controls
+namespace Common.Controls
 {
     /// <summary>
     /// Interaction logic for ImageButton.xaml
