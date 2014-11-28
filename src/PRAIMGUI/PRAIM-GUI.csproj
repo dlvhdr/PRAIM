@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PRAIM.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -131,6 +134,15 @@
       <Project>{267324c2-50fc-4290-9c5e-bd9cc8e4ae3a}</Project>
       <Name>PRAIMDataBase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PRAIM.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\emblem-unreadable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\media-floppy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

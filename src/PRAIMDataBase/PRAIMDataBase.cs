@@ -15,9 +15,11 @@ namespace PRAIMDB
 {
     public class PRAIMDataBase
     {
+        //static string app_location = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
-                //"AttachDbFilename=|DataDirectory|PRAIMTable.mdf;" +
-                @"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
+                //@"AttachDbFilename=|DataDirectory|PRAIMTable.mdf;" +
+                @"AttachDbFilename=C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMDataBase\PRAIMTable.mdf;" +
+                //@"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
                 "Integrated Security=True; Trusted_Connection=True;";
 //        static string connectionString = @"Data Source=.\SQLEXPRESS;
 //                          AttachDbFilename=|DataDirectory|PRAIMTable.mdf;
@@ -126,7 +128,7 @@ namespace PRAIMDB
             }
             if (comments != null)
             {
-                commentsString = "Comments = @comments AND ";
+                commentsString = "Comments LIKE @comments AND ";
             }
             List<ActionItem> list = new List<ActionItem>();
             try
@@ -146,7 +148,7 @@ namespace PRAIMDB
                     }
                     if (comments != null)
                     {
-                        command.Parameters.AddWithValue("@comments", comments);
+                        command.Parameters.AddWithValue("@comments", '%' + comments + '%');
                     }
 
                     command.Connection = connection;

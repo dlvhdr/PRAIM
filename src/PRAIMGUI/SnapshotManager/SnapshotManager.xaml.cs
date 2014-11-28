@@ -28,10 +28,21 @@ namespace PRAIM.SnapshotManager
 
         public static double MinimumRecLength = 2;
         public static double MinimumHookProximity = 3;
+        public static readonly double ScreenWidth = Screen.PrimaryScreen.Bounds.Width;
+        public static readonly double ScreenHeight = Screen.PrimaryScreen.Bounds.Height;
+        public static readonly double NegetiveButtonsMargin = -24;
 
         #endregion Constants
 
         #region Public Properties
+
+        public bool ButtonsStackVisibility
+        {
+            get
+            {
+                return _IsInitialized & !IsResizing;
+            }
+        }
 
         public CroppedBitmap CroppedImage { get; set; }
 
@@ -58,14 +69,10 @@ namespace PRAIM.SnapshotManager
                 if (_RectLeftPos != value) {
                     _RectLeftPos = value;
                     UpdateInnerRect();
+                    UpdateButtonsStackPanel();
                     NotifyPropertyChanged("RectLeftPos");
                 }
             }
-        }
-
-        private void UpdateInnerRect()
-        {
-            InnerRect = new Rect(RectLeftPos, RectTopPos, RectWidth, RectHeight);
         }
 
         public double RectTopPos
@@ -76,6 +83,7 @@ namespace PRAIM.SnapshotManager
                 if (_RectTopPos != value) {
                     _RectTopPos = value;
                     UpdateInnerRect();
+                    UpdateButtonsStackPanel();
                     NotifyPropertyChanged("RectTopPos");
                 }
             }
@@ -89,6 +97,7 @@ namespace PRAIM.SnapshotManager
                 if (_RectWidth != value && !Utilities.Equal(value, 0)) {
                     _RectWidth = value;
                     UpdateInnerRect();
+                    UpdateButtonsStackPanel();
                     NotifyPropertyChanged("RectWidth");
                 }
             }
@@ -102,6 +111,7 @@ namespace PRAIM.SnapshotManager
                 if (_RectHeight != value && !Utilities.Equal(value, 0)) {
                     _RectHeight = value;
                     UpdateInnerRect();
+                    UpdateButtonsStackPanel();
                     NotifyPropertyChanged("RectHeight");
                 }
             }
@@ -118,6 +128,7 @@ namespace PRAIM.SnapshotManager
                 if (_IsResizing != value) {
                     _IsResizing = value;
                     NotifyPropertyChanged("IsResizing");
+                    NotifyPropertyChanged("ButtonsStackVisibility");
                 }
             }
         }
@@ -157,6 +168,7 @@ namespace PRAIM.SnapshotManager
                 RectLeftPos = _StartX;
                 RectTopPos = _StartY;
                 SelectionRect.Visibility = Visibility.Visible;
+                _IsInitialized = true;
             }
 
             if (IsResizing && _PastResizeThreshold) {
@@ -561,7 +573,7 @@ namespace PRAIM.SnapshotManager
         private void OnKeyPressed(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == Key.Escape) {
-                this.Close();
+                OnCancel(sender, e);
             }
         }
 
@@ -638,6 +650,33 @@ namespace PRAIM.SnapshotManager
             this.Close();
         }
 
+        private void UpdateButtonsStackPanel()
+        {
+            bool exceed_right = RectLeftPos + RectWidth + ButtonsStackPanel.Width > MainCanvas.Width;
+            bool exceed_left = RectLeftPos - ButtonsStackPanel.Width < 0;
+
+            if (exceed_left && exceed_right) {
+                Canvas.SetLeft(ButtonsStackPanel, RectLeftPos + RectWidth + NegetiveButtonsMargin);
+                Canvas.SetTop(ButtonsStackPanel, Math.Max(0, RectTopPos + RectHeight - ButtonsStackPanel.Height));
+            } else if (exceed_right) {
+                Canvas.SetLeft(ButtonsStackPanel, RectLeftPos + NegetiveButtonsMargin);
+                Canvas.SetTop(ButtonsStackPanel, Math.Max(0, RectTopPos + RectHeight - ButtonsStackPanel.Height));
+            } else {
+                Canvas.SetLeft(ButtonsStackPanel, RectLeftPos + RectWidth);
+                Canvas.SetTop(ButtonsStackPanel, Math.Max(0, RectTopPos + RectHeight - ButtonsStackPanel.Height));
+            }
+        }
+
+        private void UpdateInnerRect()
+        {
+            InnerRect = new Rect(RectLeftPos, RectTopPos, RectWidth, RectHeight);
+        }
+
+        private void OnCancel(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         #endregion Private Methods
         
         #region INotifyPropertyChanged
@@ -659,8 +698,9 @@ namespace PRAIM.SnapshotManager
         private double _StartY;
         private double _EndX;
         private double _EndY;
-        private bool _IsResizing = false;
-        private bool _PastResizeThreshold = false;
+        private bool _IsResizing;
+        private bool _IsInitialized;
+        private bool _PastResizeThreshold;
         private double _RectLeftPos;
         private double _RectTopPos;
         private double _RectWidth;
@@ -668,5 +708,10 @@ namespace PRAIM.SnapshotManager
         private Rect _InnerRect;
 
         #endregion Private Fields
+
+        private void OnSaveToFile(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

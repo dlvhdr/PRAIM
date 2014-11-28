@@ -3,14 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         x:Name="self"
-        ResizeMode="NoResize"
-        Title="PRAIM - Project Action Items Manager" Height="400" Width="600" ShowInTaskbar="True">
+        ResizeMode="CanMinimize"
+        Title="PRAIM - Project Action Items Manager" ShowInTaskbar="True"
+        Height="380" Width="550">
     <Window.Resources>
-        <ResourceDictionary>
-        </ResourceDictionary>
+        <LinearGradientBrush x:Key="SeperatorGradient">
+            <GradientStop Color="White" Offset="0"/>
+            <GradientStop Color="Black" Offset="0.3"/>
+            <GradientStop Color="White" Offset="1.1"/>
+        </LinearGradientBrush>  
+
     </Window.Resources>
 
-    <DockPanel LastChildFill="True">
+    <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Help">
                 <MenuItem Header="User Manual"/>
@@ -32,103 +37,104 @@
                     </Grid>
                 </TabItem.Header>
 
-                <Grid Margin="5,5,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!--Metadata-->
-                    <Grid Grid.Row="0" Grid.Column="0" Grid.IsSharedSizeScope="True">
+                <DockPanel LastChildFill="False">
+                    <Grid Margin="5,5,0,0" DockPanel.Dock="Top" Grid.IsSharedSizeScope="True">
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
+
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Margin" Value="0,2,5,2"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                            <Style TargetType="{x:Type TextBox}">
-                                <Setter Property="Margin" Value="2,2"/>
-                            </Style>
-                        </Grid.Resources>
+                        <!--Metadata-->
+                        <Grid Grid.Row="0" Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
 
-                        <!--Date-->
-                        <!--Change to Date & Time-->
-                        <TextBlock Grid.Row="0" Text="Date Time:"/>
-                        <Label Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" />
-                        <!--Content="{ }" binding static datetime.Now -->
-                        
-                        <!--Time--><!--
-                        <TextBlock Grid.Row="1" Text="Time:"/>
-                        <Label Grid.Row="1" Grid.Column="1" Content="{Binding Time}" Padding="0" Margin="2,2">
-                            <Label.ContentStringFormat>
-                                hh\:mm\:ss
-                            </Label.ContentStringFormat>
-                        </Label>-->
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Margin" Value="0,2,5,2"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Margin" Value="2,2"/>
+                                </Style>
+                            </Grid.Resources>
 
-                        <!--Priority-->
-                        <TextBlock Grid.Row="1" Text="Priority:"/>
-                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="2,2" Padding="2,1" 
+                            <!--Date-->
+                            <TextBlock Grid.Row="0" Text="Date:"/>
+                            <Label Grid.Row="0" Grid.Column="1" Margin="2,2" Padding="1"
+                                   Content="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}"
+                                   ContentStringFormat="dd-MM-yyyy, HH:mm"/>
+
+                            <!--Priority-->
+                            <TextBlock Grid.Row="1" Text="Priority:"/>
+                            <ComboBox Grid.Row="1" Grid.Column="1" Margin="2,2" Padding="2,1" 
                                   ItemsSource="{Binding PossiblePriorities}" 
-                                  SelectedItem="{Binding Metadata.Priority}"/>
+                                  SelectedItem="{Binding InsertMetadata.Priority}"/>
 
-                        <!--Version-->
-                        <TextBlock Grid.Row="2" Text="Version:"/>
-                        <TextBox Grid.Row="2" Grid.Column="1" 
-                                 Text="{Binding Metadata.Version}"/>
+                            <!--Version-->
+                            <TextBlock Grid.Row="2" Text="Version:"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" 
+                                 Text="{Binding InsertMetadata.Version}"/>
 
-                        <!--Project ID-->
-                        <TextBlock Grid.Row="3" Text="Project ID:"/>
-                        <TextBox Grid.Row="3" Grid.Column="1" 
-                                 Text="{Binding Metadata.ProjectID}"/>
+                            <!--Project ID-->
+                            <TextBlock Grid.Row="3" Text="Project ID:"/>
+                            <TextBox Grid.Row="3" Grid.Column="1" 
+                                 Text="{Binding InsertMetadata.ProjectID}"/>
 
-                        <!--Comments-->
-                        <TextBlock Grid.Row="4" Text="Comments:"
+                            <!--Comments-->
+                            <TextBlock Grid.Row="4" Text="Comments:"
                                    VerticalAlignment="Top"/>
-                        <TextBox Grid.Row="4" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" 
-                                 Height="100"
-                                 Text="{Binding Metadata.Comments, Mode=TwoWay}"/>
-                        
-                        <DockPanel Grid.Row="5" Grid.Column="1" Margin="2,10,2,0">
-                            <!--Take snapshot button-->
-                            <Button DockPanel.Dock="Top" Padding="5" Click="OnTakeSnapshot" Margin="0,0,0,7">
-                                Take Snapshot
-                            </Button>
-                            <!--Save button-->
-                            <Button DockPanel.Dock="Top" Padding="5" Click="OnSave">
-                                Save
-                            </Button>
-                        </DockPanel>
+                            <TextBox Grid.Row="4" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" 
+                                 Height="100" TextWrapping="Wrap"
+                                 Text="{Binding InsertMetadata.Comments, Mode=TwoWay}"/>
+                        </Grid>
+
+                        <!--The snapshot-->
+                        <Grid Grid.Row="0" Grid.Column="1" Margin="20,0,5,0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Preview" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" Margin="0" Padding="0"/>
+
+                            <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                                <Image Width="370" Height="212" Source="{Binding CroppedImage}" Stretch="Uniform"/>
+                            </Border>
+                        </Grid>
                     </Grid>
 
-                    <!--The snapshot-->
-                    <Grid Grid.Row="0" Grid.Column="1" Margin="20,0,5,0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Label Content="Preview" FontWeight="Bold" Margin="0" Padding="0"/>
+                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False"
+                               Margin="0,5,5,5" Height="30">
+                        <!--Save button-->
+                        <Button Command="{Binding SaveCommand}" DockPanel.Dock="Right" Padding="5"
+                                Width="90">
+                            Save
+                        </Button>
+                        <!--Take snapshot button-->
+                        <Button DockPanel.Dock="Right" Padding="5" Click="OnTakeSnapshot"
+                                Margin="0,0,10,0" Width="90">
+                            Take Snapshot
+                        </Button>
+                    </DockPanel>
 
-                        <Border Grid.Row="1" Grid.Column="1" Width="370" Height="212"  BorderBrush="LightBlue" BorderThickness="2">
-                            <Image Source="{Binding CroppedImage}" Stretch="Uniform"/>
-                        </Border>
-                    </Grid>
-                </Grid>
+                    <Separator DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
+                               Background="{StaticResource SeperatorGradient}">
+                    </Separator>
+                </DockPanel>
             </TabItem>
 
             <!--Seach db tab-->
@@ -148,89 +154,106 @@
                     </Grid>
                 </TabItem.Header>
 
-                <Grid Margin="5,5,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <!--Search parameters-->
-                    <Grid Grid.IsSharedSizeScope="True">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                            <RowDefinition Height="Auto"/>
-
-                        </Grid.RowDefinitions>
+                <DockPanel LastChildFill="False">
+                    <Grid Margin="5,5,0,0" DockPanel.Dock="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="110"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid.Resources>
-                            <Style TargetType="{x:Type TextBlock}">
-                                <Setter Property="Margin" Value="0,2,5,2"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                            <Style TargetType="{x:Type TextBox}">
-                                <Setter Property="Margin" Value="2,2"/>
-                            </Style>
-                        </Grid.Resources>
+                        <!--Search parameters-->
+                        <Grid Grid.IsSharedSizeScope="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto"/>
 
-                        <!--Date-->
-                        <TextBlock Grid.Row="0" Text="Date:"/>
-                        <DatePicker Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="110"/>
+                            </Grid.ColumnDefinitions>
 
-                        <!--Time-->
-                        <TextBlock Grid.Row="1" Text="Time:"/>
-                        <TextBox Grid.Row="1" Grid.Column="1"/>
+                            <Grid.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Margin" Value="0,2,5,2"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Margin" Value="2,2"/>
+                                </Style>
+                            </Grid.Resources>
 
-                        <!--Comments-->
-                        <TextBlock Grid.Row="2" Text="Comments:"/>
-                        <TextBox Grid.Row="2" Grid.Column="1"/>
+                            <!--Date-->
+                            <TextBlock Grid.Row="0" Text="Date:"/>
+                            <DatePicker Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" />
 
-                        <!--Priority-->
-                        <TextBlock Grid.Row="3" Text="Priority:"/>
-                        <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" SelectedItem="{Binding Priority}"/>
+                            <!--Time-->
+                            <TextBlock Grid.Row="1" Text="Time:"/>
+                            <TextBox Grid.Row="1" Grid.Column="1"/>
 
-                        <!--Version-->
-                        <TextBlock Grid.Row="4" Text="Version:"/>
-                        <TextBox Grid.Row="4" Grid.Column="1"/>
+                            <!--Comments-->
+                            <TextBlock Grid.Row="2" Text="Comments:"/>
+                            <TextBox Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}" Grid.Row="2" Grid.Column="1"/>
 
-                        <!--Project ID-->
-                        <TextBlock Grid.Row="5" Text="Project ID:"/>
-                        <TextBox Grid.Row="5" Grid.Column="1"/>
+                            <!--Priority-->
+                            <TextBlock Grid.Row="3" Text="Priority:"/>
+                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" 
+                                  SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}"/>
 
-                        <!--Search button-->
-                        <Button Grid.Row="6" Grid.Column="1" Margin="2,20,2,0" Padding="5">
+                            <!--Version-->
+                            <TextBlock Grid.Row="4" Text="Version:"/>
+                            <TextBox Grid.Row="4" Grid.Column="1"
+                                 Text="{Binding SearchMetadata.Version, Mode=OneWayToSource}"/>
+
+                            <!--Project ID-->
+                            <TextBlock Grid.Row="5" Text="Project ID:"/>
+                            <TextBox Grid.Row="5" Grid.Column="1"
+                                 Text="{Binding SearchMetadata.ProjectID, Mode=OneWayToSource}"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1" Margin="20,0,5,5" Height="240" VerticalAlignment="Top"
+                          ScrollViewer.CanContentScroll="True">
+                            <DataGrid ItemsSource="{Binding ResultDBItems, UpdateSourceTrigger=PropertyChanged}" 
+                                      Background="White"
+                                      AutoGenerateColumns="False" CanUserAddRows="False">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="ID" Binding="{Binding id}">
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Priority" Binding="{Binding metaData.Priority}">
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Project ID" Binding="{Binding metaData.ProjectID}">
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Version" Binding="{Binding metaData.Version}">
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Date" Binding="{Binding metaData.DateTime}">
+                                    </DataGridTextColumn>
+                                    <DataGridTextColumn Header="Comments" Binding="{Binding metaData.Comments}">
+                                    </DataGridTextColumn>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+
+                    </Grid>
+
+                    
+                    <!--Search button-->
+                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False"
+                               Margin="0,5,5,5" Height="30">
+                        <Button DockPanel.Dock="Right" Click="SearchDB" 
+                                Width="90" Padding="5">
                             Search
                         </Button>
-                    </Grid>
+                    </DockPanel>
+                    
+                    <Separator DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
+                               Background="{StaticResource SeperatorGradient}"/>
+                </DockPanel>
 
-                    <Grid Grid.Column="1" Margin="20,0,5,5">
-                        <DataGrid ItemsSource="{Binding DummyDBItems, ElementName=self}" AutoGenerateColumns="False" CanUserAddRows="False">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn Header="ID" Binding="{Binding ID}">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Priory" Binding="{Binding Priority}">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="ProjectID" Binding="{Binding ProjectID}">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Version" Binding="{Binding Version}">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Date" Binding="{Binding DateTime}">
-                                </DataGridTextColumn>
-                                <DataGridTextColumn Header="Comments" Binding="{Binding Comments}">
-                                </DataGridTextColumn>
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Grid>
-
-                </Grid>
 
             </TabItem>
         </TabControl>

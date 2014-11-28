@@ -22,7 +22,7 @@
             <Setter Property="SnapsToDevicePixels" Value="True"/>
         </Style>
 
-        <converters:NegateBoolToVisibilityConverter x:Key="NegateBoolToVisibility"/>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibility"/>
     </Window.Resources>
 
     <Grid Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -103,12 +103,22 @@
                                MouseMove="RightCenterMouseMove"
                                MouseUp="OnMouseUp"/>
 
-                    <common:ImageButton Padding="5" ImageSource="{StaticResource DocumentSave}" Margin="0,0,-24,-24" Height="20" Width="20" VerticalAlignment="Bottom" HorizontalAlignment="Right" 
-                                        ImageHeight="16" ImageWidth="16"
-                                        Visibility="{Binding IsResizing, ElementName=self, Converter={StaticResource NegateBoolToVisibility}}"
-                                        Click="Capture" ToolTip="Continue to PRAIM"/>
                 </Grid>
             </ContentControl>
+
+            <StackPanel Width="20" Height="65" Name="ButtonsStackPanel" Visibility="{Binding ButtonsStackVisibility, ElementName=self, Converter={StaticResource BoolToVisibility}}"
+                        Orientation="Vertical" VerticalAlignment="Bottom">
+                <common:ImageButton Padding="5" ImageSource="{StaticResource CancelIcon}" Height="20" Width="20" 
+                                        ImageHeight="16" ImageWidth="16"
+                                        Click="OnCancel" ToolTip="Cancel"/>
+                <common:ImageButton Padding="5" ImageSource="{StaticResource SaveIcon}" Height="20" Width="20" 
+                                        ImageHeight="16" ImageWidth="16"
+                                        Click="OnSaveToFile" ToolTip="Save to File"/>
+                <common:ImageButton Padding="5" ImageSource="{StaticResource DocumentSave}" Height="20" Width="20" 
+                                        ImageHeight="16" ImageWidth="16"
+                                        Click="Capture" ToolTip="Continue to PRAIM"/>
+                
+            </StackPanel>
         </Canvas>
     </Grid>
 </Window>
