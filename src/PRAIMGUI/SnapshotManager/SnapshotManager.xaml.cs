@@ -77,7 +77,7 @@ namespace PRAIM.SnapshotManager
 
         public double RectTopPos
         {
-            get { return _RectTopPos;  }
+            get { return _RectTopPos; }
             set
             {
                 if (_RectTopPos != value) {
@@ -132,7 +132,7 @@ namespace PRAIM.SnapshotManager
                 }
             }
         }
-        
+
         #endregion Public Properties
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace PRAIM.SnapshotManager
             this.Loaded += OnLoaded;
         }
 
-        #region Window Mouse Handlers
+        #region General Mouse Handlers
 
         private void OnMouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -186,7 +186,22 @@ namespace PRAIM.SnapshotManager
             this.MouseMove += OnMouseMove;
         }
 
-        #endregion Window Mouse Handlers
+        /// <summary>
+        /// Handler for mouse hook down
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnHookMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed) {
+                IsResizing = true;
+                _PastResizeThreshold = false;
+                Mouse.Capture(sender as IInputElement);
+            }
+            e.Handled = true;
+        }
+
+        #endregion General Mouse Handlers
 
         #region Move Rectangle Handlers
 
@@ -349,7 +364,7 @@ namespace PRAIM.SnapshotManager
 
             if (IsResizing && _PastResizeThreshold && UpperRightHook.IsMouseCaptured) {
                 double old_height = RectHeight;
-                
+
                 RectWidth = Math.Max(MinimumRecLength, _EndX - _StartX);
                 RectHeight = Math.Max(MinimumRecLength, RectHeight - (_EndY - _StartY));
 
@@ -556,45 +571,14 @@ namespace PRAIM.SnapshotManager
         }
 
         #endregion Right Center Hook Handlers
-        
+
         #region Private Methods
 
-        private void UpdateEndPos(System.Windows.Input.MouseEventArgs e)
-        {
-            _EndX = e.GetPosition(MainCanvas).X;
-            _EndY = e.GetPosition(MainCanvas).Y;
-        }
-
         /// <summary>
-        /// Exit the screen shot manager when ESC is pressed
+        /// Window on loaded handler. Initializes the snapshot manager.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnKeyPressed(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape) {
-                OnCancel(sender, e);
-            }
-        }
-
-        private void OnHookMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            if (e.LeftButton == MouseButtonState.Pressed) {
-                IsResizing = true;
-                _PastResizeThreshold = false;
-                Mouse.Capture(sender as IInputElement);
-            }
-            e.Handled = true;
-        }
-
-        private void UpdatePastResizeThreshold()
-        {
-            if (Math.Abs(_EndX - _StartX) > SystemParameters.MinimumHorizontalDragDistance
-                || Math.Abs(_EndY - _StartY) > SystemParameters.MinimumVerticalDragDistance) {
-                    _PastResizeThreshold = true;
-            }
-        }
-        
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             Bitmap snapshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
@@ -621,9 +605,53 @@ namespace PRAIM.SnapshotManager
             Mouse.Capture(this);
         }
 
+        /// <summary>
+        /// Update private fields of where the mouse is now
+        /// </summary>
+        /// <param name="e"></param>
+        private void UpdateEndPos(System.Windows.Input.MouseEventArgs e)
+        {
+            _EndX = e.GetPosition(MainCanvas).X;
+            _EndY = e.GetPosition(MainCanvas).Y;
+        }
+
+        /// <summary>
+        /// Exit the screen shot manager when ESC is pressed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnKeyPressed(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape) {
+                OnCancel(sender, e);
+            }
+        }
+
+        /// <summary>
+        /// Update whether a drag was started
+        /// </summary>
+        private void UpdatePastResizeThreshold()
+        {
+            if (Math.Abs(_EndX - _StartX) > SystemParameters.MinimumHorizontalDragDistance
+                || Math.Abs(_EndY - _StartY) > SystemParameters.MinimumVerticalDragDistance) {
+                _PastResizeThreshold = true;
+            }
+        }
+
+        /// <summary>
+        /// Capture handler - save the selection image to the public property.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Capture(object sender, RoutedEventArgs e)
         {
-            if (SelectionRect.Width < MinimumRecLength || SelectionRect.Height < MinimumRecLength) return;
+            this.CroppedImage = GetSelectionImage();
+            this.Close();
+        }
+
+        private CroppedBitmap GetSelectionImage()
+        {
+            if (SelectionRect.Width < MinimumRecLength || SelectionRect.Height < MinimumRecLength) return null;
 
             var source = (BitmapSource)MainImage.Source;
 
@@ -637,19 +665,20 @@ namespace PRAIM.SnapshotManager
 
             sourceRect.Scale(xMultiplier, yMultiplier);
 
-            if (sourceRect.Height < MinimumRecLength || sourceRect.Width < MinimumRecLength) return;
+            if (sourceRect.Height < MinimumRecLength || sourceRect.Width < MinimumRecLength) return null;
 
-            CroppedImage = new CroppedBitmap(
+            return new CroppedBitmap(
                 source,
                 new Int32Rect(
                     (int)sourceRect.X,
                     (int)sourceRect.Y,
                     (int)sourceRect.Width,
                     (int)sourceRect.Height));
-            
-            this.Close();
         }
 
+        /// <summary>
+        /// Update the buttons position on the canvas (called after resize/move of the selection)
+        /// </summary>
         private void UpdateButtonsStackPanel()
         {
             bool exceed_right = RectLeftPos + RectWidth + ButtonsStackPanel.Width > MainCanvas.Width;
@@ -667,18 +696,63 @@ namespace PRAIM.SnapshotManager
             }
         }
 
+        /// <summary>
+        /// Update the masking shape (called after resize/move of the selection)
+        /// </summary>
         private void UpdateInnerRect()
         {
             InnerRect = new Rect(RectLeftPos, RectTopPos, RectWidth, RectHeight);
         }
 
+        /// <summary>
+        /// Cancel the snapshot taking (close the window)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnCancel(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
 
+        /// <summary>
+        /// Save selection to image file handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnSaveToFile(object sender, RoutedEventArgs e)
+        {
+            CroppedBitmap image = GetSelectionImage();
+            if (image == null) {
+                System.Windows.MessageBox.Show("Selection rectangle is too small", "Error", MessageBoxButton.OK);
+                return;
+            }
+
+            SaveFileDialog dlg = new SaveFileDialog();
+            dlg.Filter = "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp";
+
+            DialogResult result = dlg.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK) {
+                BitmapEncoder encoder;
+
+                if (dlg.FileName.EndsWith("jpeg")) {
+                    encoder = new JpegBitmapEncoder();
+                } else if (dlg.FileName.EndsWith("bmp")) {
+                    encoder = new BmpBitmapEncoder();
+                } else {
+                    encoder = new PngBitmapEncoder();
+                }
+
+                encoder.Frames.Add(BitmapFrame.Create(image));
+                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Create, FileAccess.Write)) {
+                    encoder.Save(fs);
+                }
+
+                this.Close();
+            }
+        }
+
         #endregion Private Methods
-        
+
         #region INotifyPropertyChanged
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -691,7 +765,7 @@ namespace PRAIM.SnapshotManager
         }
 
         #endregion INotifyPropertyChanged
-       
+
         #region Private Fields
 
         private double _StartX;
@@ -708,10 +782,5 @@ namespace PRAIM.SnapshotManager
         private Rect _InnerRect;
 
         #endregion Private Fields
-
-        private void OnSaveToFile(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
