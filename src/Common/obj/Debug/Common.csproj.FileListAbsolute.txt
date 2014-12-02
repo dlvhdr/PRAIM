@@ -6,3 +6,12 @@ C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\Common\obj\Debug\Common.g.resources
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\Common\obj\Debug\Common.dll
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\Common\obj\Debug\Common.pdb
+C:\Users\Adi&Dvir\PRAIM\src\Common\bin\Debug\Common.dll
+C:\Users\Adi&Dvir\PRAIM\src\Common\bin\Debug\Common.pdb
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Common.csprojResolveAssemblyReference.cache
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Controls\ImageButton.baml
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Controls\ImageButton.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Common_MarkupCompile.cache
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Common.g.resources
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Common.dll
+C:\Users\Adi&Dvir\PRAIM\src\Common\obj\Debug\Common.pdb
