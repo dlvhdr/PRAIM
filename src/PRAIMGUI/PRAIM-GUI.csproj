@@ -69,6 +69,9 @@
     <Compile Include="SnapshotManager\SnapshotManager.xaml.cs">
       <DependentUpon>SnapshotManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewSnapshotDlg.xaml.cs">
+      <DependentUpon>ViewSnapshotDlg.xaml</DependentUpon>
+    </Compile>
     <Page Include="ImagesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -78,6 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SnapshotManager\SnapshotManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewSnapshotDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

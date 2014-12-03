@@ -10,6 +10,8 @@ using System.Windows;
 using PRAIMDB;
 using Common;
 using System.Windows.Input;
+using System.IO;
+using System.Windows.Controls;
 
 namespace PRAIM
 {
@@ -43,7 +45,7 @@ namespace PRAIM
         /// </summary>
         public Nullable<DateTime> DateTime
         {
-            get { return (InsertMetadata != null)? InsertMetadata.DateTime : null; }
+            get { return (InsertMetadata != null) ? InsertMetadata.DateTime : null; }
             set
             {
                 if (InsertMetadata != null && value != InsertMetadata.DateTime) {
@@ -73,6 +75,22 @@ namespace PRAIM
             {
                 _ResultDBItems = value;
                 NotifyPropertyChanged("ResultDBItems");
+            }
+        }
+
+        /// <summary>
+        /// The selected item in the data grid
+        /// </summary>
+        public ActionItem SelectedActionItem
+        {
+            get { return _SelectedActionItem; }
+            set
+            {
+                if (_SelectedActionItem != value) {
+                    _SelectedActionItem = value;
+                    UpdateActionItemThumbnail();
+                    NotifyPropertyChanged("SelectedActionItem");
+                }
             }
         }
 
@@ -141,9 +159,34 @@ namespace PRAIM
             ResultDBItems = _DB.GetActionItems(SearchMetadata);
         }
 
+        public BitmapSource GetSnapshotSource(object item)
+        {
+            ActionItem action_item = item as ActionItem;
+            if (action_item == null || action_item.snapShot == null) return null;
+
+            BitmapImage image = new BitmapImage();
+            using (MemoryStream ms = new MemoryStream(action_item.snapShot)) {
+                ms.Position = 0;
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.StreamSource = ms;
+                image.EndInit();
+            }
+
+            image.Freeze();
+            return image;
+        }
+
         #endregion Public Methods
 
         #region Private Methods
+
+        private void UpdateActionItemThumbnail()
+        {
+
+        }
 
         /// <summary>
         /// Save command can execute handler
@@ -184,6 +227,7 @@ namespace PRAIM
         private PRAIMDataBase _DB;
         private BitmapSource _CroppedImage;
         private List<ActionItem> _ResultDBItems;
+        private ActionItem _SelectedActionItem;
 
         #endregion Private Fields
     }

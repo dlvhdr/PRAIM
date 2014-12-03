@@ -28,7 +28,7 @@ namespace PRAIMDB
 //                          User Instance=True";
         public bool InsertActionItem(ActionItem actionItem)
         {
-            actionItem.id = 100;
+            actionItem.id = 102;
             int priority = (int)actionItem.metaData.Priority;
             int projectID = (int)actionItem.metaData.ProjectID;
             double version = actionItem.metaData.Version;

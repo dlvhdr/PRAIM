@@ -34,9 +34,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PRAIM">
-      <HintPath>..\PRAIMGUI\bin\Debug\PRAIM.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -98,12 +95,6 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PRAIMGUI\PRAIM-GUI.csproj">
-      <Project>{5b6d2b58-f73b-4407-81cb-159c4db7084b}</Project>
-      <Name>PRAIM-GUI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

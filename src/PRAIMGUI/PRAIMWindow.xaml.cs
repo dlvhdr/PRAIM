@@ -81,5 +81,13 @@ namespace PRAIM
         {
             ViewModel.SearchDB();
         }
+
+        private void ShowImageHandler(object sender, RoutedEventArgs e)
+        {
+            BitmapSource source = ViewModel.GetSnapshotSource((sender as Button).DataContext);
+
+            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
+            dlg.Show();
+        }
     }
 }
