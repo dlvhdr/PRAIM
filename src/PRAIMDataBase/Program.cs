@@ -16,7 +16,7 @@ namespace PRAIMDB
 
     //        ActionMetaData metaData = new ActionMetaData();
     //        metaData.Priority = Priority.High;
-    //        metaData.ProjectID = 1;
+    //        metaData.ProjectName = 1;
     //        metaData.Version = 1;
     //        metaData.DateTime = DateTime.Now;
     //        metaData.Comments = "Dolev Hadar";
@@ -30,7 +30,7 @@ namespace PRAIMDB
     //        //GetActionItems test
     //        ActionMetaData metaData2 = new ActionMetaData();
     //        metaData2.Priority = (Priority)(-1);//Priority.High;
-    //        metaData2.ProjectID = -1;
+    //        metaData2.ProjectName = -1;
     //        metaData2.Version = -1;
     //        metaData2.DateTime = null;
     //        metaData2.Comments = null;//"comment";
@@ -41,7 +41,7 @@ namespace PRAIMDB
     //            foreach (ActionItem item in list)
     //            {
     //                Console.WriteLine("{0}, {1} , {2}, {3} ,{4}, {5}, {6}",
-    //                                   item.id, item.metaData.Priority, item.metaData.ProjectID,
+    //                                   item.id, item.metaData.Priority, item.metaData.ProjectName,
     //                                   item.metaData.Version, item.metaData.DateTime,
     //                                   item.metaData.Comments, item.snapShot);
     //            }

@@ -95,7 +95,7 @@
                         <!--Project ID-->
                         <TextBlock Grid.Row="3" Text="Project ID:"/>
                         <TextBox Grid.Row="3" Grid.Column="1" 
-                                 Text="{Binding Metadata.ProjectID}"/>
+                                 Text="{Binding Metadata.ProjectName}"/>
 
                         <!--Comments-->
                         <TextBlock Grid.Row="4" Text="Comments:"
@@ -218,7 +218,7 @@
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Priory" Binding="{Binding Priority}">
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="ProjectID" Binding="{Binding ProjectID}">
+                                <DataGridTextColumn Header="ProjectName" Binding="{Binding ProjectName}">
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Version" Binding="{Binding Version}">
                                 </DataGridTextColumn>

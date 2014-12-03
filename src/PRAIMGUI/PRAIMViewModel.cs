@@ -34,7 +34,7 @@ namespace PRAIM
         }
 
         //PRAIM constructor. Provide default values for the project under development.
-        public PRAIMViewModel(int projectID, string version, Priority defaultPriority)
+        public PRAIMViewModel(int ProjectName, string version, Priority defaultPriority)
         {
             _DB = new PRAIMDataBase();
             PossiblePriorities = new List<Priority> { Priority.Low, Priority.Medium, Priority.High };

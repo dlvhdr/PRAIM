@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 namespace Common
 {
     public enum Priority { High = 0, Medium, Low }
-    public enum ProjectID { ICT256}
+    public enum ProjectName { ICT256}
 
     public class ActionMetaData
     {
-        public int ProjectID { get; set; }
+        public string ProjectName { get; set; }
         public Priority Priority { get; set; }
-        public double Version { get; set; }
+        public string Version { get; set; }
         public Nullable<DateTime> DateTime { get; set; }
         public String Comments { get; set; }
     }

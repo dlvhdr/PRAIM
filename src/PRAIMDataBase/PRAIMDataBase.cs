@@ -28,8 +28,8 @@ namespace PRAIMDB
         {
             actionItem.id = 100;
             int priority = (int)actionItem.metaData.Priority;
-            int projectID = (int)actionItem.metaData.ProjectID;
-            double version = actionItem.metaData.Version;
+            string ProjectName = actionItem.metaData.ProjectName;
+            string version = actionItem.metaData.Version;
             Nullable<DateTime> dateTime = actionItem.metaData.DateTime;
             string comments = actionItem.metaData.Comments;
             byte[] snapShot = actionItem.snapShot;
@@ -50,7 +50,7 @@ namespace PRAIMDB
 
             //System.Console.WriteLine("actionItemId: {0}", actionItemId);
             //System.Console.WriteLine("priority: {0}", priority);
-            //System.Console.WriteLine("projectID: {0}", projectID);
+            //System.Console.WriteLine("ProjectName: {0}", ProjectName);
             //System.Console.WriteLine("version: {0}", version);
             //System.Console.WriteLine("dateTime: {0}", dateTime);
             //System.Console.WriteLine("comments: {0}", comments);
@@ -62,13 +62,13 @@ namespace PRAIMDB
                 {
                     SqlDataAdapter cmd = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand("INSERT INTO PRAIMDBTable " +
-                                         "(ActionItemId, Priority, ProjectID, Version, DateTime, Comments, Snapshot) " +
-                                         "VALUES (@actionItemId, @priority, @projectID, @version, @dateTime, @comments, @snapshot)"
+                                         "(ActionItemId, Priority, ProjectName, Version, DateTime, Comments, Snapshot) " +
+                                         "VALUES (@actionItemId, @priority, @ProjectName, @version, @dateTime, @comments, @snapshot)"
                                          , connection);
 
                     command.Parameters.AddWithValue("@actionItemId", actionItem.id);
                     command.Parameters.AddWithValue("@priority", priority);
-                    command.Parameters.AddWithValue("@projectID", projectID);
+                    command.Parameters.AddWithValue("@ProjectName", ProjectName);
                     command.Parameters.AddWithValue("@version", version);
                     command.Parameters.AddWithValue("@dateTime", dateTime);
                     command.Parameters.AddWithValue("@comments", comments);
@@ -97,13 +97,13 @@ namespace PRAIMDB
 
         public List<ActionItem> GetActionItems(ActionMetaData metaData) {
             int priority = (int)metaData.Priority;
-            int projectID = metaData.ProjectID;
-            double version = metaData.Version;
+            string ProjectName = metaData.ProjectName;
+            string version = metaData.Version;
             Nullable<DateTime> dateTime = metaData.DateTime;
             string comments = metaData.Comments;
             
             string priorityString = null;
-            string projectIDString = null;
+            string ProjectNameString = null;
             string versionString = null;
             string dateTimeString = null;
             string commentsString = null;
@@ -112,11 +112,11 @@ namespace PRAIMDB
             {
                 priorityString = "Priority = @priority AND ";
             }
-            if (projectID != -1)
+            if (ProjectName != null)
             {
-                projectIDString = "ProjectID = @projectID AND ";
+                ProjectNameString = "ProjectName = @ProjectName AND ";
             }
-            if (version != -1)
+            if (version != null)
             {
                 versionString = "Version = @version AND ";
             }
@@ -135,10 +135,10 @@ namespace PRAIMDB
                 {
                     SqlDataAdapter cmd = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand("SELECT * FROM PRAIMDBTable WHERE " + priorityString +
-                                                         projectIDString + versionString + dateTimeString + commentsString +
+                                                         ProjectNameString + versionString + dateTimeString + commentsString +
                                                          "2=2", connection);
                     command.Parameters.AddWithValue("@priority", priority);
-                    command.Parameters.AddWithValue("@projectID", projectID);
+                    command.Parameters.AddWithValue("@ProjectName", ProjectName);
                     command.Parameters.AddWithValue("@version", version);
                     if (dateTime != null)
                     {
@@ -168,11 +168,11 @@ namespace PRAIMDB
                             }
                             if (!reader.IsDBNull(2))
                             {
-                                receivedMetaData.ProjectID = reader.GetInt32(2);
+                                receivedMetaData.ProjectName = reader.GetString(2);
                             }
                             if (!reader.IsDBNull(3))
                             {
-                                receivedMetaData.Version = reader.GetInt32(3);
+                                receivedMetaData.Version = reader.GetString(3);
                             }
                             if (!reader.IsDBNull(4))
                             {
@@ -211,9 +211,9 @@ namespace PRAIMDB
             try
             {
                 int actionItemId = actionItem.id;
-                double version = actionItem.metaData.Version;
+                string version = actionItem.metaData.Version;
                 int priority = (int)actionItem.metaData.Priority;
-                int projectID = actionItem.metaData.ProjectID;
+                string ProjectName = actionItem.metaData.ProjectName;
                 Nullable<DateTime> dateTime = actionItem.metaData.DateTime;
                 string comments = actionItem.metaData.Comments;
 
@@ -222,13 +222,13 @@ namespace PRAIMDB
                 {
                     connection.Open();
                     //command.CommandText = "DELETE FROM PRAIMDBTable WHERE ActionItemId = @actionItemId AND " +
-                    //                   "Priority = @priority AND ProjectID = @projectID AND " +
+                    //                   "Priority = @priority AND ProjectName = @ProjectName AND " +
                     //                   "Version = @version AND DateTime = @dateTime AND Comments = @comments";
                     command.CommandText = "DELETE FROM PRAIMDBTable WHERE ActionItemId = @actionItemId";
 
                     command.Parameters.AddWithValue("@actionItemId", actionItemId);
                     //command.Parameters.AddWithValue("@priority", priority);
-                    //command.Parameters.AddWithValue("@projectID", projectID);
+                    //command.Parameters.AddWithValue("@ProjectName", ProjectName);
                     //command.Parameters.AddWithValue("@version", version);
                     //command.Parameters.AddWithValue("@dateTime", dateTime);
                     //command.Parameters.AddWithValue("@comments", comments);
