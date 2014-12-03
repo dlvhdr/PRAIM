@@ -31,7 +31,6 @@ namespace PRAIM
 
         public ICollectionView DummyDBItems { get; private set; }
 
-
         public PRAIMWindow()
         {
             InitializeComponent();
@@ -65,19 +64,30 @@ namespace PRAIM
 
             byte[] image_bytes;
             BmpBitmapEncoder encoder = new BmpBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create(snapshotMgr.CroppedImage));
-            using(MemoryStream ms = new MemoryStream())
-            {
-                encoder.Save(ms);
-                image_bytes = ms.ToArray();
-                ViewModel.CroppedImageBytes = image_bytes;
+            if (snapshotMgr.CroppedImage != null) {
+                encoder.Frames.Add(BitmapFrame.Create(snapshotMgr.CroppedImage));
+                using(MemoryStream ms = new MemoryStream())
+                {
+                    encoder.Save(ms);
+                    image_bytes = ms.ToArray();
+                    ViewModel.CroppedImageBytes = image_bytes;
+                    ViewModel.CroppedImage = snapshotMgr.CroppedImage;
+                    ViewModel.DateTime = DateTime.Now;
+                }
             }
         }
 
-
-        private void OnSave(object sender, RoutedEventArgs e)
+        private void SearchDB(object sender, RoutedEventArgs e)
         {
-            ViewModel.SaveActionItem();
+            ViewModel.SearchDB();
+        }
+
+        private void ShowImageHandler(object sender, RoutedEventArgs e)
+        {
+            BitmapSource source = ViewModel.GetSnapshotSource((sender as Button).DataContext);
+
+            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
+            dlg.Show();
         }
     }
 }

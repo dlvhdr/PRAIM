@@ -37,6 +37,9 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>PRAIM.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -66,6 +69,9 @@
     <Compile Include="SnapshotManager\SnapshotManager.xaml.cs">
       <DependentUpon>SnapshotManager.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewSnapshotDlg.xaml.cs">
+      <DependentUpon>ViewSnapshotDlg.xaml</DependentUpon>
+    </Compile>
     <Page Include="ImagesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -75,6 +81,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SnapshotManager\SnapshotManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ViewSnapshotDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,6 +141,15 @@
       <Project>{267324c2-50fc-4290-9c5e-bd9cc8e4ae3a}</Project>
       <Name>PRAIMDataBase</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="PRAIM.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\emblem-unreadable.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\media-floppy.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
