@@ -12,6 +12,7 @@ using Common;
 using System.Windows.Input;
 using System.IO;
 using System.Windows.Controls;
+using System.Xml.Serialization;
 
 namespace PRAIM
 {
@@ -119,21 +120,31 @@ namespace PRAIM
         /// Constructor. 
         /// Provide default values for the project under development.
         /// </summary>
-        /// <param name="projectID"></param>
+        /// <param name="ProjectName"></param>
         /// <param name="version"></param>
         /// <param name="defaultPriority"></param>
         public PRAIMViewModel(int ProjectName, string version, Priority defaultPriority)
         {
-            _DB = new PRAIMDataBase();
+            //-----------------------
+            // Initialize Properties
+            //-----------------------
+            BootFromXml();
+            _DB = new PRAIMDataBase((int)_Config.CurrentActionItemID);
             PossiblePriorities = new List<Priority> { Priority.Low, Priority.Medium, Priority.High };
-
             InsertActionItem = new ActionItem();
             InsertActionItem.metaData = new ActionMetaData();
-
             SearchActionItem = new ActionItem();
             SearchActionItem.metaData = new ActionMetaData();
 
+            //-----------------------
+            // Initialize Commands
+            //-----------------------
             SaveCommand = new Command(SaveCanExec, SaveExec);
+
+            //-----------------------
+            // Boot from XML
+            //-----------------------
+            
         }
 
         #region Public Methods
@@ -189,6 +200,11 @@ namespace PRAIM
         }
 
         /// <summary>
+        /// Initialize boot info
+        /// </summary>
+        
+
+        /// <summary>
         /// Save command can execute handler
         /// </summary>
         /// <param name="p"></param>
@@ -222,12 +238,37 @@ namespace PRAIM
 
         #endregion INotifyPropertyChanged
 
+        private void BootFromXml()
+        {
+            if (!File.Exists(_XmlLocation))
+            {
+                _Config = new BootConfig();
+                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
+                FileStream fs = new FileStream(_XmlLocation, FileMode.CreateNew);
+                serializer.Serialize(fs, _Config);
+                return;
+            }
+            else
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
+                using (StreamReader sr = new StreamReader(_XmlLocation))
+                {
+                    _Config = (BootConfig)serializer.Deserialize(sr);
+                }
+            }
+
+        }
+
+        private BootConfig _Config;
+        private string _XmlLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "boot.xml");
+
         #region Private Fields
 
         private PRAIMDataBase _DB;
         private BitmapSource _CroppedImage;
         private List<ActionItem> _ResultDBItems;
         private ActionItem _SelectedActionItem;
+      
 
         #endregion Private Fields
     }

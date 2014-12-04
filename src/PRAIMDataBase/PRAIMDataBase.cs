@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
+using System.Xml.Serialization;
 
 using PRAIM;
 using Common;
@@ -15,20 +16,22 @@ namespace PRAIMDB
 {
     public class PRAIMDataBase
     {
+        //constructor
+        public PRAIMDataBase(int currentID)
+        {
+            this.currentID = currentID;
+        }
+
         //static string app_location = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
                 //@"AttachDbFilename=|DataDirectory|PRAIMTable.mdf;" +
-                @"AttachDbFilename=C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMDataBase\PRAIMTable.mdf;" +
-                //@"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
+                //@"AttachDbFilename=C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMDataBase\PRAIMTable.mdf;" +
+                @"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
                 "Integrated Security=True; Trusted_Connection=True;";
-//        static string connectionString = @"Data Source=.\SQLEXPRESS;
-//                          AttachDbFilename=|DataDirectory|PRAIMTable.mdf;
-//                          Integrated Security=True;
-//                          Connect Timeout=5;
-//                          User Instance=True";
+
         public bool InsertActionItem(ActionItem actionItem)
         {
-            actionItem.id = 102;
+            actionItem.id = currentID;
             int priority = (int)actionItem.metaData.Priority;
             string ProjectName = actionItem.metaData.ProjectName;
             string version = actionItem.metaData.Version;
@@ -36,18 +39,7 @@ namespace PRAIMDB
             string comments = actionItem.metaData.Comments;
             byte[] snapShot = actionItem.snapShot;
 
-            //Image img = Image.FromFile(@"C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\test.PNG");
-            //byte[] arr;
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    img.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
-            //    arr = ms.ToArray();
-            //}
-            //string filepath = @"C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\test.PNG";
-            //FileStream fs = new FileStream(filepath, FileMode.Open, FileAccess.Read); //create a file stream object associate to user selected file 
-            //byte[] image = new byte[fs.Length]; //create a byte array with size of user select file stream length
-            //fs.Read(image, 0, Convert.ToInt32(fs.Length));//read user selected file stream in to byte array
-            
+
 
 
             //System.Console.WriteLine("actionItemId: {0}", actionItemId);
@@ -74,8 +66,6 @@ namespace PRAIMDB
                     command.Parameters.AddWithValue("@version", version);
                     command.Parameters.AddWithValue("@dateTime", dateTime);
                     command.Parameters.AddWithValue("@comments", comments);
-                    //command.Parameters.AddWithValue("@snapshot", image);
-
                     command.Parameters.Add("@snapshot", SqlDbType.Image, actionItem.snapShot.Length).Value = actionItem.snapShot;
 
                     command.Connection = connection;
@@ -85,6 +75,7 @@ namespace PRAIMDB
                     command.ExecuteNonQuery();
 
                     connection.Close();
+                    currentID++;
                     Console.WriteLine("InsertActionItem was succeeded");
                 }
             }
@@ -98,29 +89,29 @@ namespace PRAIMDB
         }
 
         public List<ActionItem> GetActionItems(ActionMetaData metaData) {
-            int priority = (int)metaData.Priority;
+            int? priority = (int?)metaData.Priority;
             string ProjectName = metaData.ProjectName;
             string version = metaData.Version;
             Nullable<DateTime> dateTime = metaData.DateTime;
             string comments = metaData.Comments;
-            
+
             string priorityString = null;
             string ProjectNameString = null;
             string versionString = null;
             string dateTimeString = null;
             string commentsString = null;
 
-            if (priority != -1)
+            if (priority != null)
             {
                 priorityString = "Priority = @priority AND ";
             }
             if (ProjectName != null)
             {
-                ProjectNameString = "ProjectName = @ProjectName AND ";
+                ProjectNameString = "ProjectName LIKE @ProjectName AND ";
             }
             if (version != null)
             {
-                versionString = "Version = @version AND ";
+                versionString = "Version LIKE @version AND ";
             }
             if (dateTime != null)
             {
@@ -139,9 +130,18 @@ namespace PRAIMDB
                     SqlCommand command = new SqlCommand("SELECT * FROM PRAIMDBTable WHERE " + priorityString +
                                                          ProjectNameString + versionString + dateTimeString + commentsString +
                                                          "2=2", connection);
-                    command.Parameters.AddWithValue("@priority", priority);
-                    command.Parameters.AddWithValue("@ProjectName", ProjectName);
-                    command.Parameters.AddWithValue("@version", version);
+                    if (priority != null)
+                    {
+                        command.Parameters.AddWithValue("@priority", priority);
+                    }
+                    if (ProjectName != null)
+                    {
+                        command.Parameters.AddWithValue("@ProjectName", '%' + ProjectName + '%');
+                    }
+                    if (version != null)
+                    {
+                        command.Parameters.AddWithValue("@version", '%' + version + '%');
+                    }
                     if (dateTime != null)
                     {
                         command.Parameters.AddWithValue("@dateTime", dateTime);
@@ -198,7 +198,7 @@ namespace PRAIMDB
             }
             catch (Exception e)
             {
-                Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
+                //Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
                 return null;
             }
 
@@ -223,17 +223,9 @@ namespace PRAIMDB
                 using (var command = connection.CreateCommand())
                 {
                     connection.Open();
-                    //command.CommandText = "DELETE FROM PRAIMDBTable WHERE ActionItemId = @actionItemId AND " +
-                    //                   "Priority = @priority AND ProjectName = @ProjectName AND " +
-                    //                   "Version = @version AND DateTime = @dateTime AND Comments = @comments";
                     command.CommandText = "DELETE FROM PRAIMDBTable WHERE ActionItemId = @actionItemId";
 
                     command.Parameters.AddWithValue("@actionItemId", actionItemId);
-                    //command.Parameters.AddWithValue("@priority", priority);
-                    //command.Parameters.AddWithValue("@ProjectName", ProjectName);
-                    //command.Parameters.AddWithValue("@version", version);
-                    //command.Parameters.AddWithValue("@dateTime", dateTime);
-                    //command.Parameters.AddWithValue("@comments", comments);
                     command.ExecuteNonQuery();
                 }
             }
@@ -246,6 +238,6 @@ namespace PRAIMDB
             return true;
         }
 
-        private static int _NextID = 0;
+        public int currentID {get; set;}
     }
 }

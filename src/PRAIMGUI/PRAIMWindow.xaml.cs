@@ -89,5 +89,10 @@ namespace PRAIM
             ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
             dlg.Show();
         }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

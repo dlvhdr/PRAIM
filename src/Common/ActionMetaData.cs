@@ -13,7 +13,7 @@ namespace Common
     public class ActionMetaData
     {
         public string ProjectName { get; set; }
-        public Priority Priority { get; set; }
+        public Priority? Priority { get; set; }
         public string Version { get; set; }
         public Nullable<DateTime> DateTime { get; set; }
         public String Comments { get; set; }
