@@ -112,31 +112,5 @@ namespace PRAIM
             MainViewModel.SaveConfig();
             this.Close();
         }
-
-        private void ShowImageHandler(object sender, RoutedEventArgs e)
-        {
-            BitmapSource source = ViewModel.GetSnapshotSource((sender as Button).DataContext);
-
-            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
-            dlg.Show();
-        }
-
-        private void OnExit(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        private void ShowImageHandler(object sender, RoutedEventArgs e)
-        {
-            BitmapSource source = ViewModel.GetSnapshotSource((sender as Button).DataContext);
-
-            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
-            dlg.Show();
-        }
-
-        private void OnExit(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
     }
 }

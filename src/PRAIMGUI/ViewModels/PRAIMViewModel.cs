@@ -154,10 +154,11 @@ namespace PRAIM
         public PRAIMViewModel(int ProjectName, string version, Priority defaultPriority)
         {
             //-----------------------
-            // Initialize Properties
+            // Boot from XML
             //-----------------------
             BootFromXml();
             _DB = new PRAIMDataBase((int)_Config.CurrentActionItemID);
+            
             //-----------------------
             // Initialize Properties
             //-----------------------
@@ -171,11 +172,6 @@ namespace PRAIM
             // Initialize Commands
             //-----------------------
             SaveCommand = new Command(SaveCanExec, SaveExec);
-
-            //-----------------------
-            // Boot from XML
-            //-----------------------
-            
         }
 
         #region Public Methods
@@ -295,9 +291,6 @@ namespace PRAIM
             }
 
         }
-
-        private BootConfig _Config;
-        private string _XmlLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "boot.xml");
 
         #region Private Fields
 
