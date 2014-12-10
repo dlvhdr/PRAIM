@@ -55,3 +55,5 @@ C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\obj\Debug\Views\NewProjectDlg.g.cs
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\obj\Debug\Views\NewVersionDlg.baml
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\obj\Debug\Views\NewVersionDlg.g.cs
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIMTable.mdf
+C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIMTable_log.ldf

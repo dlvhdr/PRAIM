@@ -44,7 +44,19 @@ namespace PRAIM.ViewModels
             }
         }
 
-        public ObservableCollection<string> Versions { get; set; }
+        public List<string> SelectedProjectVersions
+        {
+            get
+            {
+                Project project = Projects.FirstOrDefault(x => x.Name == SelectedProject);
+                if (project == null) return null;
+                return project.Versions.ToList();
+            }
+        }
+
+        public ObservableCollection<Project> Projects { get; set; }
+
+        public string SelectedProject { get; set; }
 
         public string SelectedVersion { get; set; }
 

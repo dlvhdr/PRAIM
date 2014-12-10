@@ -26,6 +26,8 @@ namespace PRAIM
 
         #region Public Properties
 
+        public PRAIMDataBase DB { get { return _DB; } }
+
         /// <summary>
         /// List of possible priorities to choose from for an Action Item
         /// </summary>

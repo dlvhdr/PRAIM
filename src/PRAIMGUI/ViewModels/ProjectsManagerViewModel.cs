@@ -1,6 +1,7 @@
 ﻿using Common;
 using PRAIM.Models;
 using PRAIM.ViewModels;
+using PRAIMDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -33,29 +34,12 @@ namespace PRAIM
 
         public ProjectsManagerModel Model { get; set; }
 
-        public Project CurrentProject { get; set; }
-
-        public ObservableCollection<Project> Projects { get; set; }
-
-        public ProjectViewModel SelectedProject
-        {
-            get { return _SelectedProject; }
-            set
-            {
-                if (value != _SelectedProject) {
-                    _SelectedProject = value;
-                    SetWorkingProjectCommand.UpdateCanExecuteState();
-                    NotifyPropertyChanged("SelectedProject");
-                }
-            }
-        }
-
         public string SelectedVersion
         {
             get { return (SelectedProject != null) ? SelectedProject.SelectedVersion : null; }
             set
             {
-                if (SelectedProject != null && SelectedProject.SelectedVersion != value) {
+                if (SelectedProject != null && SelectedProject.SelectedVersion != value && value != null) {
                     SelectedProject.SelectedVersion = value;
                     SetWorkingProjectCommand.UpdateCanExecuteState();
                     NotifyPropertyChanged("SelectedVersion");
@@ -68,17 +52,26 @@ namespace PRAIM
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectsManagerViewModel()
+        public ProjectsManagerViewModel(PRAIMDataBase _db)
         {
-            //TODO: initialize from DB
+            _DB = _db;
+            List<Project> projects = _DB.GetAllProjectProperties();
+            BuildProjects(projects);
 
             AddProjectCommand = new Command(CommandsCanExec, OnAddProject);
             RemoveProjectCommand = new Command(CommandsCanExec, OnRemoveProject);
             SetWorkingProjectCommand = new Command(CanSetWorkingProject, OnSetWorkingProject);
 
             Model = new ProjectsManagerModel();
-            Projects = new ObservableCollection<Project>();
             SelectedProject = new ProjectViewModel();
+        }
+
+        private void BuildProjects(List<Project> projects)
+        {
+            Projects = new ObservableCollection<Project>();
+            foreach (Project project in projects) {
+                Projects.Add(project);
+            }
         }
 
         #region Public Methods
@@ -91,14 +84,15 @@ namespace PRAIM
         public void AddVersion(string version)
         {
             SelectedProject.AddVersion.Execute(version);
+            _DB.InsertVersion(SelectedProject.Name, version);
+            
             SelectedVersion = version;
-            //TODO:Update DB.
         }
 
         public void RemoveVersion()
         {
             SelectedProject.RemoveVersion.Execute(null);
-            //TODO:Update DB.
+            _DB.DeleteVersion(SelectedProject.SelectedVersion);
         }
 
         #endregion Public Methods
@@ -111,15 +105,15 @@ namespace PRAIM
             Model.Projects.Add(new_project);
             Projects.Add(new_project);
             SelectedProject.Model = new_project;
-            //TODO: Add to DB
+            _DB.InsertProject(new_project.Name, new_project.Description);
         }
 
         private void OnRemoveProject(object parameter)
         {
+            _DB.DeleteProject(SelectedProject.Model.Name);
             Model.Projects.Remove(SelectedProject.Model);
             Projects.Remove(SelectedProject.Model);
             SelectedProject.Model = Projects.FirstOrDefault();
-            //TODO: Remove from DB
         }
 
         private bool CanSetWorkingProject(object parameter)
@@ -158,6 +152,7 @@ namespace PRAIM
         #region Private Fields
 
         private ProjectViewModel _SelectedProject;
+        private PRAIMDataBase _DB;
 
         #endregion Private Fields
     }

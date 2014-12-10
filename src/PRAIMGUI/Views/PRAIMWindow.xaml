@@ -225,8 +225,8 @@
                         <!--Search parameters-->
                         <Grid Grid.IsSharedSizeScope="True">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
                                 <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
                                 <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
@@ -291,17 +291,22 @@
                             <!--Priority-->
                             <TextBlock Grid.Row="3" Text="Priority:"/>
                             <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" 
-                                  SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}"/>
+                                  SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}" VerticalAlignment="Center"/>
+                            
+                            <!--Project Name-->
+                            <TextBlock Grid.Row="4" Text="Project Name:"/>
+                            <ComboBox Grid.Row="4" Grid.Column="1" Margin="2,2"
+                                      IsReadOnly="False" Padding="2,1"
+                                      SelectedItem="{Binding SearchMetadata.ProjectName, Mode=OneWayToSource}"
+                                      ItemsSource="{Binding Projects}"/>
 
                             <!--Version-->
-                            <TextBlock Grid.Row="4" Text="Version:"/>
-                            <TextBox Grid.Row="4" Grid.Column="1"
-                                 Text="{Binding SearchMetadata.Version, Mode=OneWayToSource}"/>
+                            <TextBlock Grid.Row="5" Text="Version:"/>
+                            <ComboBox Grid.Row="5" Grid.Column="1" Margin="2,2"
+                                      IsReadOnly="False" Padding="2,1"
+                                      SelectedItem="{Binding SearchMetadata.Version, Mode=OneWayToSource}"
+                                      ItemsSource="{Binding SelectedProjectVersions}"/>
 
-                            <!--Project Name-->
-                            <TextBlock Grid.Row="5" Text="Project Name:"/>
-                            <TextBox Grid.Row="5" Grid.Column="1"
-                                 Text="{Binding SearchMetadata.ProjectName, Mode=OneWayToSource}"/>
                         </Grid>
 
                         <Grid Grid.Column="1" Margin="20,0,5,5"
@@ -324,8 +329,6 @@
                                     <DataGridTextColumn Header="Comments" Binding="{Binding metaData.Comments}">
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Project Name" Binding="{Binding metaData.ProjectName}">
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Priority" Binding="{Binding metaData.Priority}">
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Priority" Binding="{Binding metaData.Priority}">
                                     </DataGridTextColumn>

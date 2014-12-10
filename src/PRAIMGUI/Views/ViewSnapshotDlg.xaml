@@ -2,12 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Snapshot" MinHeight="20" MinWidth="20"
-        ResizeMode="CanResizeWithGrip"
+        ResizeMode="NoResize"
         SizeToContent="WidthAndHeight"
         Name="self">
     <Grid>
         <Border BorderBrush="Black" BorderThickness="1">
-            <Image Source="{Binding SnapshotSource, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Stretch="Uniform"/>
+            <Image Source="{Binding SnapshotSource, ElementName=self, UpdateSourceTrigger=PropertyChanged}" Stretch="None"/>
         </Border>
     </Grid>
 </Window>

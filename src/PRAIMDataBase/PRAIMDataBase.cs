@@ -10,6 +10,7 @@ using System.IO;
 
 using PRAIM;
 using Common;
+using PRAIM.Models;
 
 
 namespace PRAIMDB
@@ -289,6 +290,9 @@ namespace PRAIMDB
                                          "(ProjectName, Description) " +
                                          "VALUES (@projectName, @description)"
                                          , connection);
+                    if (Description == null) {
+                        Description = "";
+                    }
 
                     command.Parameters.AddWithValue("@projectName", ProjectName);
                     command.Parameters.AddWithValue("@description", Description);
@@ -390,58 +394,51 @@ namespace PRAIMDB
             return true;
         }
 
-        public List<ProjectProperties> GetAllProjectProperties()
+        public List<Project> GetAllProjectProperties()
         {
-            List<ProjectProperties> list = new List<ProjectProperties>();
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
+            List<Project> list = new List<Project>();
+            try {
+                using (SqlConnection connection = new SqlConnection(connectionString)) {
                     SqlDataAdapter cmd = new SqlDataAdapter();
-                    SqlCommand command = new SqlCommand("SELECT * FROM Projects,Versions WHERE " +
-                                                        "Projects.ProjectName = Versions.ProjectName", connection);
-
+                    //SqlCommand command = new SqlCommand("SELECT * FROM Projects,Versions WHERE " +
+                    //                                    "Projects.ProjectName = Versions.ProjectName", connection);
+                    SqlCommand command = new SqlCommand("SELECT * FROM Projects", connection);
                     command.Connection = connection;
                     cmd.InsertCommand = command;
 
                     connection.Open();
                     command.ExecuteNonQuery();
 
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            ProjectProperties projectProperties = new ProjectProperties();
-                            string version;
+                    using (SqlDataReader reader = command.ExecuteReader()) {
+                        while (reader.Read()) {
+                            Project projectProperties = new Project();
 
-                            if (!reader.IsDBNull(0))
-                            {
-                                projectProperties.ProjectName = reader.GetString(0);
+                            if (!reader.IsDBNull(0)) {
+                                projectProperties.Name = reader.GetString(0);
                             }
-                            if (!reader.IsDBNull(1))
-                            {
+                            if (!reader.IsDBNull(1)) {
                                 projectProperties.Description = reader.GetString(1);
                             }
-                            if (!reader.IsDBNull(2))
-                            {
-                                projectProperties.Versions.Add(reader.GetString(2));
-                                if (list.Exists(x => x.ProjectName == projectProperties.ProjectName))
-                                {
-                                    list.Find(x => x.ProjectName == projectProperties.ProjectName).Versions.Add(reader.GetString(2));
-                                }
-                                else
-                                {
-                                    list.Add(projectProperties);
+                            SqlCommand command2 = new SqlCommand("SELECT Version FROM Versions WHERE " +
+                                                                "ProjectName = @projectName", connection);
+                            command2.Parameters.AddWithValue("@projectName", projectProperties.Name);
+                            using (SqlDataReader reader2 = command2.ExecuteReader()) {
+                                while (reader2.Read()) {
+                                    if (!reader2.IsDBNull(0)) {
+                                        projectProperties.Versions.Add(reader2.GetString(0));
+                                    }
                                 }
                             }
+
+                            list.Add(projectProperties);
                         }
                     }
+
                     connection.Close();
                     Console.WriteLine("GetAllProjectProperties was succeeded");
                 }
             }
-            catch (Exception e)
-            {
+            catch (Exception e) {
                 //Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
                 return null;
             }
@@ -454,12 +451,6 @@ namespace PRAIMDB
         static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
             // @"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
             @"AttachDbFilename=" + appLocation + @"\PRAIMTable.mdf;" +
-                "Integrated Security=True; Trusted_Connection=True;";
-        public class ProjectProperties
-        {
-            public string ProjectName { get; set; }
-            public string Description { get; set; }
-            public List<string> Versions { get; set; }
-        }
+                "Integrated Security=True; Trusted_Connection=True; MultipleActiveResultSets=True;";
     }
 }

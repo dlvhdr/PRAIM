@@ -68,8 +68,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BootConfig.cs" />
-    <Compile Include="Interfaces\IProject.cs" />
-    <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsManagerModel.cs" />
     <Compile Include="ViewModels\ProjectsManagerViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
@@ -195,6 +193,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\list-remove.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

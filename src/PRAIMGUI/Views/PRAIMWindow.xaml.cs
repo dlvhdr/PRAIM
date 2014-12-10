@@ -39,7 +39,9 @@ namespace PRAIM
 
             this.DataContext = new PRAIMViewModel(1, "1.0", Priority.Low);
             ProjectsManagerView.DataContextChanged += OnProjectsManagerDataContextChanged;
-            ProjectsManagerView.DataContext = new ProjectsManagerViewModel();
+            ProjectsManagerViewModel = new ProjectsManagerViewModel(MainViewModel.DB);
+            ProjectsManagerView.DataContext = ProjectsManagerViewModel;
+            MainViewModel.Pr
         }
 
         private void OnProjectsManagerDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
