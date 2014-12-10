@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using PRAIM.SnapshotManager;
 using Common;
 using System.IO;
+using System.Globalization;
 
 
 
@@ -27,7 +28,8 @@ namespace PRAIM
     /// </summary>
     public partial class PRAIMWindow : Window
     {
-        public PRAIMViewModel ViewModel { get { return this.DataContext as PRAIMViewModel; } }
+        public PRAIMViewModel MainViewModel { get { return this.DataContext as PRAIMViewModel; } }
+        public ProjectsManagerViewModel ProjectsManagerViewModel { get; set; }
 
         public ICollectionView DummyDBItems { get; private set; }
 
@@ -36,6 +38,21 @@ namespace PRAIM
             InitializeComponent();
 
             this.DataContext = new PRAIMViewModel(1, "1.0", Priority.Low);
+            ProjectsManagerView.DataContextChanged += OnProjectsManagerDataContextChanged;
+            ProjectsManagerView.DataContext = new ProjectsManagerViewModel();
+        }
+
+        private void OnProjectsManagerDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (ProjectsManagerView.DataContext != null) {
+                ProjectsManagerViewModel projects_vm = ProjectsManagerView.ViewModel;
+                if (projects_vm != null) projects_vm.WorkingProjectChanged += OnWorkingProjectChanged;
+            }
+        }
+
+        private void OnWorkingProjectChanged(string project, string version)
+        {
+            MainViewModel.OnWorkingProjectChanged(project, version);
         }
 
         private void OnTakeSnapshot(object sender, RoutedEventArgs e)
@@ -70,16 +87,43 @@ namespace PRAIM
                 {
                     encoder.Save(ms);
                     image_bytes = ms.ToArray();
-                    ViewModel.CroppedImageBytes = image_bytes;
-                    ViewModel.CroppedImage = snapshotMgr.CroppedImage;
-                    ViewModel.DateTime = DateTime.Now;
+                    MainViewModel.CroppedImageBytes = image_bytes;
+                    MainViewModel.CroppedImage = snapshotMgr.CroppedImage;
+                    MainViewModel.DateTime = DateTime.Now;
                 }
             }
         }
 
         private void SearchDB(object sender, RoutedEventArgs e)
         {
-            ViewModel.SearchDB();
+            MainViewModel.SearchDB();
+        }
+
+        private void ShowImageHandler(object sender, RoutedEventArgs e)
+        {
+            BitmapSource source = MainViewModel.GetSnapshotSource((sender as Button).DataContext);
+
+            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
+            dlg.Show();
+        }
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            MainViewModel.SaveConfig();
+            this.Close();
+        }
+
+        private void ShowImageHandler(object sender, RoutedEventArgs e)
+        {
+            BitmapSource source = ViewModel.GetSnapshotSource((sender as Button).DataContext);
+
+            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
+            dlg.Show();
+        }
+
+        private void OnExit(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
 
         private void ShowImageHandler(object sender, RoutedEventArgs e)

@@ -41,6 +41,7 @@
     <ApplicationIcon>PRAIM.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -66,32 +67,67 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="SnapshotManager\SnapshotManager.xaml.cs">
+    <Compile Include="BootConfig.cs" />
+    <Compile Include="Interfaces\IProject.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\ProjectsManagerModel.cs" />
+    <Compile Include="ViewModels\ProjectsManagerViewModel.cs" />
+    <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Views\NewProjectDlg.xaml.cs">
+      <DependentUpon>NewProjectDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewVersionDlg.xaml.cs">
+      <DependentUpon>NewVersionDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectsManagerView.xaml.cs">
+      <DependentUpon>ProjectsManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SnapshotManager.xaml.cs">
       <DependentUpon>SnapshotManager.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewSnapshotDlg.xaml.cs">
+    <Compile Include="Views\ViewSnapshotDlg.xaml.cs">
       <DependentUpon>ViewSnapshotDlg.xaml</DependentUpon>
     </Compile>
+    <Page Include="Styles\ComboBoxes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ImagesDictionary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PRAIMWindow.xaml">
+    <Page Include="Styles\GroupBoxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SnapshotManager\SnapshotManager.xaml">
+    <Page Include="Views\NewProjectDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="ViewSnapshotDlg.xaml">
+    <Page Include="Views\NewVersionDlg.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\PRAIMWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProjectsManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SnapshotManager.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ViewSnapshotDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PRAIMViewModel.cs" />
-    <Compile Include="PRAIMWindow.xaml.cs">
+    <Compile Include="ViewModels\PRAIMViewModel.cs" />
+    <Compile Include="Views\PRAIMWindow.xaml.cs">
       <DependentUpon>PRAIMWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -150,6 +186,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\media-floppy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\preferences-system-windows.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\list-add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\list-remove.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

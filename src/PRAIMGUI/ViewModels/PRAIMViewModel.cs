@@ -66,6 +66,34 @@ namespace PRAIM
             set { SearchActionItem.metaData = value; }
         }
 
+        public string WorkingProjectName
+        {
+            get { return _WorkingProjectName; }
+            set
+            {
+                if (_WorkingProjectName != value) {
+                    _WorkingProjectName = value;
+                    InsertMetadata.ProjectName = value;
+                    SaveCommand.UpdateCanExecuteState();
+                    NotifyPropertyChanged("WorkingProjectName");
+                }
+            }
+        }
+
+        public string WorkingProjectVersion
+        {
+            get { return _WorkingProjectVersion; }
+            set
+            {
+                if (_WorkingProjectVersion != value) {
+                    _WorkingProjectVersion = value;
+                    InsertMetadata.Version = value;
+                    SaveCommand.UpdateCanExecuteState();
+                    NotifyPropertyChanged("WorkingProjectVersion");
+                }
+            }
+        }
+
         /// <summary>
         /// List of action items returned as search results from the DB
         /// </summary>
@@ -130,6 +158,9 @@ namespace PRAIM
             //-----------------------
             BootFromXml();
             _DB = new PRAIMDataBase((int)_Config.CurrentActionItemID);
+            //-----------------------
+            // Initialize Properties
+            //-----------------------
             PossiblePriorities = new List<Priority> { Priority.Low, Priority.Medium, Priority.High };
             InsertActionItem = new ActionItem();
             InsertActionItem.metaData = new ActionMetaData();
@@ -190,6 +221,12 @@ namespace PRAIM
             return image;
         }
 
+        public void OnWorkingProjectChanged(string project, string version)
+        {
+            WorkingProjectName = project;
+            WorkingProjectVersion = version;
+        }
+
         #endregion Public Methods
 
         #region Private Methods
@@ -211,7 +248,7 @@ namespace PRAIM
         /// <returns></returns>
         private bool SaveCanExec(object p)
         {
-            return CroppedImage != null;
+            return (CroppedImage != null && WorkingProjectName != null && WorkingProjectVersion != null) ;
         }
 
         /// <summary>
@@ -268,7 +305,10 @@ namespace PRAIM
         private BitmapSource _CroppedImage;
         private List<ActionItem> _ResultDBItems;
         private ActionItem _SelectedActionItem;
-      
+        private string _WorkingProjectName;
+        private string _WorkingProjectVersion;
+        private BootConfig _Config;
+        string _XmlLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "boot.xml");
 
         #endregion Private Fields
     }

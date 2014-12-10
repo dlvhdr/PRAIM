@@ -39,7 +39,7 @@ namespace Common
 
         public void UpdateCanExecuteState()
         {
-            this.CanExecuteChanged(this, new EventArgs());
+            if (CanExecuteChanged != null) this.CanExecuteChanged(this, new EventArgs());
         }
     }
 }
