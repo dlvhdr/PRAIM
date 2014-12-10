@@ -6,4 +6,7 @@ src/PRAIMGUI/bin
 src/PRAIMGUI/obj
 src/PRAIMDataBase/obj
 src/PRAIMDataBase/bin
+src/Common/obj
+src/Common/bin
 obj
+Debug

@@ -17,5 +17,8 @@ namespace Common
         public string Version { get; set; }
         public Nullable<DateTime> DateTime { get; set; }
         public String Comments { get; set; }
+
+        public Nullable<DateTime> FromDate { get; set; }
+        public Nullable<DateTime> ToDate { get; set; }
     }
 }

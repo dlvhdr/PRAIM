@@ -36,6 +36,7 @@ namespace PRAIM
             InitializeComponent();
 
             this.DataContext = new PRAIMViewModel(1, "1.0", Priority.Low);
+
         }
 
         private void OnTakeSnapshot(object sender, RoutedEventArgs e)

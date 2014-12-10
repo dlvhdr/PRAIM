@@ -22,3 +22,5 @@ C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\Common.pdb
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMDataBase.pdb
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ViewSnapshotDlg.baml
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ViewSnapshotDlg.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMTable.mdf
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMTable_log.ldf
