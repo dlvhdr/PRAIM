@@ -7,10 +7,10 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Xml.Serialization;
 
 using PRAIM;
 using Common;
+
 
 namespace PRAIMDB
 {
@@ -20,14 +20,59 @@ namespace PRAIMDB
         public PRAIMDataBase(int currentID)
         {
             this.currentID = currentID;
+            //CreateDatabase();
         }
 
-        //static string app_location = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-        static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
-                //@"AttachDbFilename=|DataDirectory|PRAIMTable.mdf;" +
-                //@"AttachDbFilename=C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMDataBase\PRAIMTable.mdf;" +
-                @"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
-                "Integrated Security=True; Trusted_Connection=True;";
+        //public static void CreateSqlDatabase(string filename)
+        //{
+
+        //    SqlConnection myConn = new SqlConnection(connectionString);
+
+        //    String str = "CREATE DATABASE MyDatabase ON PRIMARY " +
+        //        "(NAME = MyDatabase_Data, " +
+        //        "FILENAME = 'C:\\Users\\Adi&Dvir\\PRAIM\\src\\PRAIMDataBase\\PRAIMTable.mdf')";
+        //    SqlCommand myCommand = new SqlCommand(str, myConn);
+        //    try
+        //    {
+        //        myConn.Open();
+        //        myCommand.ExecuteNonQuery();
+        //        Console.WriteLine("DB was crated successfully"); //TODO: tobe removed
+                
+        //        if (myConn.State == ConnectionState.Open)
+        //        {
+        //            using (SqlCommand command = new SqlCommand(@"CREATE TABLE PRAIMDBTable (ActionItemId INT PRIMARY KEY" +
+        //                ",Priority INT,ProjectName NVARCHAR (MAX),Version NVARCHAR (MAX)" +
+        //                ",DateTime dateTime,Comments NVARCHAR (MAX), Snapshot IMAGE)", myConn))
+        //                try
+        //                {
+        //                    command.ExecuteNonQuery();
+        //                }
+        //                catch (System.Exception ex)
+        //                {
+        //                    Console.WriteLine("DB was failed, {0}", ex); //TODO: tobe removed
+        //                }
+        //            myConn.Close();
+        //        }
+                
+        //    }
+        //    catch (System.Exception ex)
+        //    {
+        //        Console.WriteLine("DB was failed, {0}", ex); //TODO: tobe removed
+        //    }       
+        //}
+
+        //create the DB 
+        //public void CreateDatabase()
+        //{
+        //    var filename = System.IO.Path.Combine(appLocation, "PRAIMTable.mdf");
+        //    if (!System.IO.File.Exists(filename))
+        //    {
+        //        CreateSqlDatabase(filename);
+        //    }
+        //    CreateSqlDatabase(filename); //TODO: tobe removed
+        //    Console.WriteLine("DB already exist"); //TODO: tobe removed
+        //}
+
 
         public bool InsertActionItem(ActionItem actionItem)
         {
@@ -38,18 +83,6 @@ namespace PRAIMDB
             Nullable<DateTime> dateTime = actionItem.metaData.DateTime;
             string comments = actionItem.metaData.Comments;
             byte[] snapShot = actionItem.snapShot;
-
-
-
-
-            //System.Console.WriteLine("actionItemId: {0}", actionItemId);
-            //System.Console.WriteLine("priority: {0}", priority);
-            //System.Console.WriteLine("ProjectName: {0}", ProjectName);
-            //System.Console.WriteLine("version: {0}", version);
-            //System.Console.WriteLine("dateTime: {0}", dateTime);
-            //System.Console.WriteLine("comments: {0}", comments);
-            //System.Console.WriteLine("snapShot: {0}", image);
-
             try
             {
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -92,13 +125,15 @@ namespace PRAIMDB
             int? priority = (int?)metaData.Priority;
             string ProjectName = metaData.ProjectName;
             string version = metaData.Version;
-            Nullable<DateTime> dateTime = metaData.DateTime;
+            Nullable<DateTime> fromDate = metaData.FromDate;
+            Nullable<DateTime> toDate = metaData.ToDate + new TimeSpan(23,59,59);
             string comments = metaData.Comments;
 
             string priorityString = null;
-            string ProjectNameString = null;
+            string projectNameString = null;
             string versionString = null;
-            string dateTimeString = null;
+            string fromDateString = null;
+            string toDateString = null;
             string commentsString = null;
 
             if (priority != null)
@@ -107,15 +142,19 @@ namespace PRAIMDB
             }
             if (ProjectName != null)
             {
-                ProjectNameString = "ProjectName LIKE @ProjectName AND ";
+                projectNameString = "ProjectName LIKE @ProjectName AND ";
             }
             if (version != null)
             {
                 versionString = "Version LIKE @version AND ";
             }
-            if (dateTime != null)
+            if (fromDate != null)
             {
-                dateTimeString = "DateTime = @dateTime AND ";
+                fromDateString = "DateTime >= @fromDate AND ";
+            }
+            if (toDate != null)
+            {
+                toDateString = "DateTime <= @toDate AND ";
             }
             if (comments != null)
             {
@@ -128,8 +167,8 @@ namespace PRAIMDB
                 {
                     SqlDataAdapter cmd = new SqlDataAdapter();
                     SqlCommand command = new SqlCommand("SELECT * FROM PRAIMDBTable WHERE " + priorityString +
-                                                         ProjectNameString + versionString + dateTimeString + commentsString +
-                                                         "2=2", connection);
+                                                         projectNameString + versionString + fromDateString + 
+                                                         toDateString + commentsString + "2=2", connection);
                     if (priority != null)
                     {
                         command.Parameters.AddWithValue("@priority", priority);
@@ -142,9 +181,13 @@ namespace PRAIMDB
                     {
                         command.Parameters.AddWithValue("@version", '%' + version + '%');
                     }
-                    if (dateTime != null)
+                    if (fromDate != null)
                     {
-                        command.Parameters.AddWithValue("@dateTime", dateTime);
+                        command.Parameters.AddWithValue("@fromDate", fromDate);
+                    }
+                    if (toDate != null)
+                    {
+                        command.Parameters.AddWithValue("@toDate", toDate);
                     }
                     if (comments != null)
                     {
@@ -205,9 +248,6 @@ namespace PRAIMDB
             return list;
         }
 
-
-
-
         public bool DeleteActionItems(ActionItem actionItem)
         {
             try
@@ -238,6 +278,188 @@ namespace PRAIMDB
             return true;
         }
 
+        public bool InsertProject(string ProjectName, string Description)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlDataAdapter cmd = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand("INSERT INTO Projects " +
+                                         "(ProjectName, Description) " +
+                                         "VALUES (@projectName, @description)"
+                                         , connection);
+
+                    command.Parameters.AddWithValue("@projectName", ProjectName);
+                    command.Parameters.AddWithValue("@description", Description);
+
+                    command.Connection = connection;
+                    cmd.InsertCommand = command;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    Console.WriteLine("InsertProject was succeeded");
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteProject(string ProjectName)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = "DELETE FROM Projects WHERE ProjectName = @projectName";
+
+                    command.Parameters.AddWithValue("@projectName", ProjectName);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("DeleteActionItem was failed: {0}", e.ToString());
+                return false;
+            }
+            //Console.WriteLine("DeleteActionItem was succeeded");
+            return true;
+        }
+
+        public bool InsertVersion(string ProjectName, string Version)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlDataAdapter cmd = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand("INSERT INTO Versions " +
+                                         "(ProjectName, Version) " +
+                                         "VALUES (@projectName, @version)"
+                                         , connection);
+
+                    command.Parameters.AddWithValue("@projectName", ProjectName);
+                    command.Parameters.AddWithValue("@version", Version);
+
+                    command.Connection = connection;
+                    cmd.InsertCommand = command;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    connection.Close();
+                    Console.WriteLine("InsertVersion was succeeded");
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
+                return false;
+            }
+            return true;
+        }
+
+        public bool DeleteVersion(string Version)
+        {
+            try
+            {
+                using (var connection = new SqlConnection(connectionString))
+                using (var command = connection.CreateCommand())
+                {
+                    connection.Open();
+                    command.CommandText = "DELETE FROM Versions WHERE Version = @version";
+
+                    command.Parameters.AddWithValue("@version", Version);
+                    command.ExecuteNonQuery();
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("DeleteActionItem was failed: {0}", e.ToString());
+                return false;
+            }
+            //Console.WriteLine("DeleteActionItem was succeeded");
+            return true;
+        }
+
+        public List<ProjectProperties> GetAllProjectProperties()
+        {
+            List<ProjectProperties> list = new List<ProjectProperties>();
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    SqlDataAdapter cmd = new SqlDataAdapter();
+                    SqlCommand command = new SqlCommand("SELECT * FROM Projects,Versions WHERE " +
+                                                        "Projects.ProjectName = Versions.ProjectName", connection);
+
+                    command.Connection = connection;
+                    cmd.InsertCommand = command;
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            ProjectProperties projectProperties = new ProjectProperties();
+                            string version;
+
+                            if (!reader.IsDBNull(0))
+                            {
+                                projectProperties.ProjectName = reader.GetString(0);
+                            }
+                            if (!reader.IsDBNull(1))
+                            {
+                                projectProperties.Description = reader.GetString(1);
+                            }
+                            if (!reader.IsDBNull(2))
+                            {
+                                projectProperties.Versions.Add(reader.GetString(2));
+                                if (list.Exists(x => x.ProjectName == projectProperties.ProjectName))
+                                {
+                                    list.Find(x => x.ProjectName == projectProperties.ProjectName).Versions.Add(reader.GetString(2));
+                                }
+                                else
+                                {
+                                    list.Add(projectProperties);
+                                }
+                            }
+                        }
+                    }
+                    connection.Close();
+                    Console.WriteLine("GetAllProjectProperties was succeeded");
+                }
+            }
+            catch (Exception e)
+            {
+                //Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
+                return null;
+            }
+
+            return list;
+        }
+
         public int currentID {get; set;}
+        static string appLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
+            // @"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
+            @"AttachDbFilename=" + appLocation + @"\PRAIMTable.mdf;" +
+                "Integrated Security=True; Trusted_Connection=True;";
+        public class ProjectProperties
+        {
+            public string ProjectName { get; set; }
+            public string Description { get; set; }
+            public List<string> Versions { get; set; }
+        }
     }
 }

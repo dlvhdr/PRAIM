@@ -248,27 +248,59 @@
                                 </Style>
                             </Grid.Resources>
 
-                            <!--Date-->
-                            <TextBlock Grid.Row="0" Text="Date:"/>
-                            <DatePicker Name="FromDate" Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1"/>
-
+                            <!--FromDate-->
+                            <TextBlock Grid.Row="0" Text="From Date:"/>
+                            <DatePicker SelectedDate="{Binding Path = SearchMetadata.FromDate, StringFormat = {}{0:dd-MM-yyyy}}"
+                                        Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" >
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBox x:Name="PART_TextBox"
+                                                    Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd-MM-yyyy}, 
+                                                         RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
+                            <!--ToDate-->
+                            <TextBlock Grid.Row="1" Text="To Date:"/>
+                            <DatePicker SelectedDate="{Binding Path = SearchMetadata.ToDate, StringFormat = {}{0:dd-MM-yyyy}}"
+                                       Margin="2,2" Padding="1" Grid.Row="1" Grid.Column="1">
+                                <DatePicker.Resources>
+                                    <Style TargetType="DatePickerTextBox">
+                                        <Setter Property="Control.Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBox x:Name="PART_TextBox"
+                                                    Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd-MM-yyyy}, 
+                                                         RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DatePicker.Resources>
+                            </DatePicker>
                             <!--Comments-->
-                            <TextBlock Grid.Row="1" Text="Comments:"/>
-                            <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}"/>
+                            <TextBlock Grid.Row="2" Text="Comments:"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}"/>
 
                             <!--Priority-->
-                            <TextBlock Grid.Row="2" Text="Priority:"/>
-                            <ComboBox Grid.Row="2" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" 
+                            <TextBlock Grid.Row="3" Text="Priority:"/>
+                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" 
                                   SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}"/>
 
                             <!--Version-->
-                            <TextBlock Grid.Row="3" Text="Version:"/>
-                            <TextBox Grid.Row="3" Grid.Column="1"
+                            <TextBlock Grid.Row="4" Text="Version:"/>
+                            <TextBox Grid.Row="4" Grid.Column="1"
                                  Text="{Binding SearchMetadata.Version, Mode=OneWayToSource}"/>
 
                             <!--Project Name-->
-                            <TextBlock Grid.Row="4" Text="Project Name:"/>
-                            <TextBox Grid.Row="4" Grid.Column="1"
+                            <TextBlock Grid.Row="5" Text="Project Name:"/>
+                            <TextBox Grid.Row="5" Grid.Column="1"
                                  Text="{Binding SearchMetadata.ProjectName, Mode=OneWayToSource}"/>
                         </Grid>
 
