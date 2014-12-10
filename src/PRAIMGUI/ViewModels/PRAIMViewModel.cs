@@ -176,6 +176,15 @@ namespace PRAIM
 
         #region Public Methods
 
+        public void SaveConfig()
+        {
+            _Config.CurrentActionItemID = _DB.currentID;
+            using (FileStream fs = new FileStream(_XmlLocation, FileMode.Open)) {
+                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
+                serializer.Serialize(fs, _Config);
+            }
+        }
+
         /// <summary>
         /// Save an action item to the DB
         /// </summary>
