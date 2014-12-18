@@ -2,9 +2,7 @@ C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.exe.config
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.exe
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIM.pdb
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ImagesDictionary.baml
-C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIMWindow.baml
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\App.baml
-C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIMWindow.g.cs
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\App.g.cs
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM_MarkupCompile.cache
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.g.resources
@@ -12,16 +10,12 @@ C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.Properties.Resources.resour
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csproj.GenerateResource.Cache
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.exe
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM.pdb
-C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\SnapshotManager\SnapshotManager.baml
-C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\SnapshotManager\SnapshotManager.g.cs
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM_MarkupCompile.lref
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\PRAIM-GUI.csprojResolveAssemblyReference.cache
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\Common.dll
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMDataBase.dll
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\Common.pdb
 C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMDataBase.pdb
-C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ViewSnapshotDlg.baml
-C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\ViewSnapshotDlg.g.cs
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIM.exe.config
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIM.exe
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIM.pdb
@@ -55,5 +49,21 @@ C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\obj\Debug\Views\NewProjectDlg.g.cs
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\obj\Debug\Views\NewVersionDlg.baml
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\obj\Debug\Views\NewVersionDlg.g.cs
-C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIMTable.mdf
 C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMGUI\bin\Debug\PRAIMTable_log.ldf
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMTable.mdf
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\bin\Debug\PRAIMTable_log.ldf
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Styles\ComboBoxes.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Styles\GroupBoxes.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\NewProjectDlg.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\NewVersionDlg.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\ProjectsManagerView.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\ViewSnapshotDlg.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\NewProjectDlg.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\NewVersionDlg.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\PRAIMWindow.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\ProjectsManagerView.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\SnapshotManager.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\ViewSnapshotDlg.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\PRAIMWindow.baml
+C:\Users\Adi&Dvir\PRAIM\src\PRAIMGUI\obj\Debug\Views\SnapshotManager.baml

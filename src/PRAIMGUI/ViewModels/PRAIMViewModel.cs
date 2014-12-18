@@ -13,6 +13,8 @@ using System.Windows.Input;
 using System.IO;
 using System.Windows.Controls;
 using System.Xml.Serialization;
+using System.Collections.ObjectModel;
+using PRAIM.Models;
 
 namespace PRAIM
 {
@@ -27,6 +29,28 @@ namespace PRAIM
         #region Public Properties
 
         public PRAIMDataBase DB { get { return _DB; } }
+
+        public ProjectsManagerViewModel ProjectsViewModel { get; set; }
+
+        public ObservableCollection<Project> Projects { get { return ProjectsViewModel.Projects; } }
+
+        public Project SelectedSearchProject
+        {
+            get
+            {
+                return _SelectedSearchProject;
+            }
+            set
+            {
+                if (value != _SelectedSearchProject) {
+                    _SelectedSearchProject = value;
+                    SearchMetadata.ProjectName = _SelectedSearchProject.Name;
+                    UpdateSelectedProjectVersions();
+                }
+            }
+        }
+        
+        public ObservableCollection<string> SelectedProjectVersions { get; set; }
 
         /// <summary>
         /// List of possible priorities to choose from for an Action Item
@@ -144,23 +168,31 @@ namespace PRAIM
             }
         }
 
+        public BitmapSource PreviewImage
+        {
+            get { return _PreviewImage; }
+            set
+            {
+                if (value != _PreviewImage) {
+                    _PreviewImage = value;
+                    NotifyPropertyChanged("PreviewImage");
+                }
+            }
+        }
+
         #endregion Public Properties
 
         /// <summary>
-        /// Constructor. 
-        /// Provide default values for the project under development.
+        /// constructor
         /// </summary>
-        /// <param name="ProjectName"></param>
-        /// <param name="version"></param>
-        /// <param name="defaultPriority"></param>
-        public PRAIMViewModel(int ProjectName, string version, Priority defaultPriority)
+        public PRAIMViewModel()
         {
             //-----------------------
             // Boot from XML
             //-----------------------
             BootFromXml();
             _DB = new PRAIMDataBase((int)_Config.CurrentActionItemID);
-            
+
             //-----------------------
             // Initialize Properties
             //-----------------------
@@ -174,6 +206,16 @@ namespace PRAIM
             // Initialize Commands
             //-----------------------
             SaveCommand = new Command(SaveCanExec, SaveExec);
+
+            //---------------------------------------
+            // Initialize ProjectsManager view model
+            //---------------------------------------
+            ProjectsViewModel = new ProjectsManagerViewModel(_DB);
+            ProjectsViewModel.WorkingProjectChanged += OnWorkingProjectChanged;
+            ProjectsViewModel.VersionAdded += OnVersionAdded;
+            ProjectsViewModel.VersionRemoved += OnVersionRemoved;
+
+            PreviewImage = new BitmapImage();
         }
 
         #region Public Methods
@@ -238,15 +280,58 @@ namespace PRAIM
 
         #region Private Methods
 
+        private void OnVersionRemoved(string version)
+        {
+            if (SelectedProjectVersions == null) return;
+
+            SelectedProjectVersions.Add(version);
+        }
+
+        private void OnVersionAdded(string version)
+        {
+            if (SelectedProjectVersions == null) return;
+
+            if (SelectedProjectVersions.Contains(version)) {
+                SelectedProjectVersions.Add(version);
+            }
+        }
+
+        private void UpdateSelectedProjectVersions()
+        {
+            SelectedProjectVersions = new ObservableCollection<string>();
+            NotifyPropertyChanged("SelectedProjectVersions");
+
+            if (SelectedSearchProject == null) return;
+
+            foreach (string version in SelectedSearchProject.Versions) {
+                SelectedProjectVersions.Add(version);
+            }
+        }
+
         private void UpdateActionItemThumbnail()
         {
-
+            PreviewImage = GetSnapshotSource(SelectedActionItem);
         }
 
         /// <summary>
         /// Initialize boot info
         /// </summary>
-        
+        private void BootFromXml()
+        {
+            if (!File.Exists(_XmlLocation)) {
+                _Config = new BootConfig();
+                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
+                FileStream fs = new FileStream(_XmlLocation, FileMode.CreateNew);
+                serializer.Serialize(fs, _Config);
+                return;
+            } else {
+                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
+                using (StreamReader sr = new StreamReader(_XmlLocation)) {
+                    _Config = (BootConfig)serializer.Deserialize(sr);
+                }
+            }
+
+        }
 
         /// <summary>
         /// Save command can execute handler
@@ -255,7 +340,7 @@ namespace PRAIM
         /// <returns></returns>
         private bool SaveCanExec(object p)
         {
-            return (CroppedImage != null && WorkingProjectName != null && WorkingProjectVersion != null) ;
+            return (CroppedImage != null && WorkingProjectName != null && WorkingProjectVersion != null);
         }
 
         /// <summary>
@@ -282,27 +367,6 @@ namespace PRAIM
 
         #endregion INotifyPropertyChanged
 
-        private void BootFromXml()
-        {
-            if (!File.Exists(_XmlLocation))
-            {
-                _Config = new BootConfig();
-                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
-                FileStream fs = new FileStream(_XmlLocation, FileMode.CreateNew);
-                serializer.Serialize(fs, _Config);
-                return;
-            }
-            else
-            {
-                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
-                using (StreamReader sr = new StreamReader(_XmlLocation))
-                {
-                    _Config = (BootConfig)serializer.Deserialize(sr);
-                }
-            }
-
-        }
-
         #region Private Fields
 
         private PRAIMDataBase _DB;
@@ -313,6 +377,8 @@ namespace PRAIM
         private string _WorkingProjectVersion;
         private BootConfig _Config;
         string _XmlLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "boot.xml");
+        private Project _SelectedSearchProject;
+        private BitmapSource _PreviewImage;
 
         #endregion Private Fields
     }

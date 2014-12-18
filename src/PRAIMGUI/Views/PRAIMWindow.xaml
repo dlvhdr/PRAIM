@@ -6,8 +6,8 @@
         xmlns:converters="clr-namespace:Common.Converters;assembly=Common"
         x:Name="self"
         Title="PRAIM - Project Action Items Manager" ShowInTaskbar="True"
-        MinWidth="610" MinHeight="380"
-        Width="610" Height="380"
+        MinWidth="610" MinHeight="400"
+        Width="610" Height="400"
         Closed="OnExit">
     <Window.Resources>
         <converters:NullToNegateBoolConverter x:Key="NullToNegateBoolConverter"/>
@@ -93,12 +93,15 @@
                                Background="{StaticResource SeperatorGradient}">
                     </Separator>
 
-                    <DockPanel Margin="5,5,0,0" Grid.IsSharedSizeScope="True"
-                               LastChildFill="True">
+                    <Grid Margin="5,5,0,0" Grid.IsSharedSizeScope="True">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.35*"/>
+                            <ColumnDefinition Width="0.65*"/>
+                        </Grid.ColumnDefinitions>
                         <!--Metadata-->
-                        <GroupBox Header="Action Item Meta-data" BorderBrush="Black" BorderThickness="1">
-                            <Grid MinWidth="140"
-                              VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,0,0,0.2">
+                        <GroupBox Grid.Column="0" Header="Action Item Meta-data" BorderBrush="Black" BorderThickness="1">
+                            <Grid HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch" Margin="0,0,0,0.2">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
                                     <RowDefinition Height="*" />
@@ -106,7 +109,7 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition MinWidth="120" Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid.Resources>
@@ -148,40 +151,30 @@
                                 <TextBlock Grid.Row="1" Text="Comments:" 
                                    VerticalAlignment="Top" HorizontalAlignment="Left"/>
                                 <TextBox Grid.Row="1" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" 
-                                 TextWrapping="Wrap" Margin="2,2" AcceptsReturn="True"
+                                 TextWrapping="Wrap" Margin="2,2" AcceptsReturn="True" HorizontalAlignment="Stretch"
                                  Text="{Binding InsertMetadata.Comments, Mode=TwoWay}"/>
 
                                 <!--Priority-->
                                 <TextBlock Grid.Row="2" Text="Priority:"/>
-                                <ComboBox Grid.Row="2" Grid.Column="1" Margin="2,2" Padding="2,1" 
+                                <ComboBox Grid.Row="2" Grid.Column="1" Margin="2,2"
+                                          Style="{StaticResource FlatWhiteComboBox}"
                                   ItemsSource="{Binding PossiblePriorities}" 
-                                  SelectedItem="{Binding InsertMetadata.Priority}"/>
-                                <!--Date-->
-                                <!--
-                            <TextBlock Grid.Row="0" Text="Date:"/>
-                            <Label Grid.Row="0" Grid.Column="1" Margin="2,2" Padding="1"
-                                   Content="{Binding DateTime, UpdateSourceTrigger=PropertyChanged}"
-                                   ContentStringFormat="dd-MM-yyyy, HH:mm"/>-->
-
-                                <!--Version-->
-                                <!--
-                            <TextBlock Grid.Row="2" Text="Version:"/>
-                            <TextBox Grid.Row="2" Grid.Column="1" 
-                                 Text="{Binding InsertMetadata.Version}"/>-->
-
-                                <!--Project ID-->
-                                <!--
-                            <TextBlock Grid.Row="3" Text="Project ID:"/>
-                            <TextBox Grid.Row="3" Grid.Column="1" 
-                                 Text="{Binding InsertMetadata.ProjectName}"/>-->
+                                  SelectedItem="{Binding InsertMetadata.Priority}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"/>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                
+                                </ComboBox>
 
                             </Grid>
                         </GroupBox>
 
-                        <GroupBox Header="Snapshot Preview" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+                        <GroupBox Grid.Column="1" Header="Snapshot Preview" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
                             <Image Source="{Binding CroppedImage}" Stretch="Uniform"/>
                         </GroupBox>
-                    </DockPanel>
+                    </Grid>
                 </DockPanel>
             </TabItem>
 
@@ -227,11 +220,11 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                                <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
                                 <RowDefinition Height="Auto"/>
-
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -249,9 +242,9 @@
                             </Grid.Resources>
 
                             <!--FromDate-->
-                            <TextBlock Grid.Row="0" Text="From Date:"/>
+                            <TextBlock Grid.Row="0" Text="From Date:" Margin="0,0,0,5"/>
                             <DatePicker SelectedDate="{Binding Path = SearchMetadata.FromDate, StringFormat = {}{0:dd-MM-yyyy}}"
-                                        Margin="2,2" Padding="1" Grid.Row="0" Grid.Column="1" >
+                                        Margin="0,0,0,5" Padding="1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" >
                                 <DatePicker.Resources>
                                     <Style TargetType="DatePickerTextBox">
                                         <Setter Property="Control.Template">
@@ -267,9 +260,9 @@
                                 </DatePicker.Resources>
                             </DatePicker>
                             <!--ToDate-->
-                            <TextBlock Grid.Row="1" Text="To Date:"/>
+                            <TextBlock Grid.Row="1" Text="To Date:" Margin="0,0,0,5"/>
                             <DatePicker SelectedDate="{Binding Path = SearchMetadata.ToDate, StringFormat = {}{0:dd-MM-yyyy}}"
-                                       Margin="2,2" Padding="1" Grid.Row="1" Grid.Column="1">
+                                       Margin="0,0,0,5" Padding="1" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
                                 <DatePicker.Resources>
                                     <Style TargetType="DatePickerTextBox">
                                         <Setter Property="Control.Template">
@@ -285,28 +278,50 @@
                                 </DatePicker.Resources>
                             </DatePicker>
                             <!--Comments-->
-                            <TextBlock Grid.Row="2" Text="Comments:"/>
-                            <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}"/>
+                            <TextBlock Grid.Row="2" Text="Comments:" Margin="0,0,0,5"/>
+                            <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}"
+                                     VerticalAlignment="Center"/>
 
                             <!--Priority-->
-                            <TextBlock Grid.Row="3" Text="Priority:"/>
-                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="2,2" ItemsSource="{Binding PossiblePriorities}" Padding="2,1" 
-                                  SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}" VerticalAlignment="Center"/>
-                            
+                            <TextBlock Grid.Row="3" Text="Priority:" Margin="0,0,0,5"/>
+                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" ItemsSource="{Binding PossiblePriorities}"
+                                      SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}" VerticalAlignment="Center"
+                                      Style="{StaticResource FlatWhiteComboBox}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+
                             <!--Project Name-->
-                            <TextBlock Grid.Row="4" Text="Project Name:"/>
-                            <ComboBox Grid.Row="4" Grid.Column="1" Margin="2,2"
-                                      IsReadOnly="False" Padding="2,1"
-                                      SelectedItem="{Binding SearchMetadata.ProjectName, Mode=OneWayToSource}"
-                                      ItemsSource="{Binding Projects}"/>
+                            <TextBlock Grid.Row="4" Text="Project Name:" Margin="0,0,5,5"/>
+                            <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Style="{StaticResource FlatWhiteComboBox}"
+                                      IsReadOnly="False"
+                                      SelectedItem="{Binding SelectedSearchProject, Mode=OneWayToSource}"
+                                      ItemsSource="{Binding Projects}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
                             <!--Version-->
-                            <TextBlock Grid.Row="5" Text="Version:"/>
-                            <ComboBox Grid.Row="5" Grid.Column="1" Margin="2,2"
-                                      IsReadOnly="False" Padding="2,1"
+                            <TextBlock Grid.Row="5" Text="Version:" Margin="0,0,0,5"/>
+                            <ComboBox Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"
+                                      IsReadOnly="False"
                                       SelectedItem="{Binding SearchMetadata.Version, Mode=OneWayToSource}"
-                                      ItemsSource="{Binding SelectedProjectVersions}"/>
+                                      ItemsSource="{Binding SelectedProjectVersions}" Style="{StaticResource FlatWhiteComboBox}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}"/>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
 
+                            <Image Grid.Row="6" Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
+                            
                         </Grid>
 
                         <Grid Grid.Column="1" Margin="20,0,5,5"
@@ -362,7 +377,7 @@
                     </Grid>
                 </TabItem.Header>
 
-                <views:ProjectsManager x:Name="ProjectsManagerView"/>
+                <views:ProjectsManager DataContext="{Binding ProjectsViewModel}"/>
                 
             </TabItem>
         </TabControl>

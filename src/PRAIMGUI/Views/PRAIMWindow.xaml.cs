@@ -37,24 +37,7 @@ namespace PRAIM
         {
             InitializeComponent();
 
-            this.DataContext = new PRAIMViewModel(1, "1.0", Priority.Low);
-            ProjectsManagerView.DataContextChanged += OnProjectsManagerDataContextChanged;
-            ProjectsManagerViewModel = new ProjectsManagerViewModel(MainViewModel.DB);
-            ProjectsManagerView.DataContext = ProjectsManagerViewModel;
-            MainViewModel.Pr
-        }
-
-        private void OnProjectsManagerDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (ProjectsManagerView.DataContext != null) {
-                ProjectsManagerViewModel projects_vm = ProjectsManagerView.ViewModel;
-                if (projects_vm != null) projects_vm.WorkingProjectChanged += OnWorkingProjectChanged;
-            }
-        }
-
-        private void OnWorkingProjectChanged(string project, string version)
-        {
-            MainViewModel.OnWorkingProjectChanged(project, version);
+            this.DataContext = new PRAIMViewModel();
         }
 
         private void OnTakeSnapshot(object sender, RoutedEventArgs e)
@@ -74,7 +57,6 @@ namespace PRAIM
 
             this.LayoutUpdated -= RunSnapshotMgr;
         }
-
 
         private void SnapshotMgrClosed(object sender, EventArgs e)
         {

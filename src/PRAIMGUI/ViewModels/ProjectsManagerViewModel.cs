@@ -28,6 +28,12 @@ namespace PRAIM
         public delegate void WorkingProjectChangedDelegate(string project, string version);
         public event WorkingProjectChangedDelegate WorkingProjectChanged;
 
+        public delegate void VersionAddDelegate(string version);
+        public event VersionAddDelegate VersionAdded;
+
+        public delegate void VersionRemovedDelegate(string version);
+        public event VersionRemovedDelegate VersionRemoved;
+
         #endregion Events
 
         #region Public Properties
@@ -46,6 +52,20 @@ namespace PRAIM
                 }
             }
         }
+
+        public List<string> SelectedProjectVersions
+        {
+            get
+            {
+                Project project = Projects.FirstOrDefault(x => x.Name == SelectedProject.Name);
+                if (project == null) return null;
+                return project.Versions.ToList();
+            }
+        }
+
+        public ObservableCollection<Project> Projects { get; set; }
+
+        public ProjectViewModel SelectedProject { get; set; }
 
         #endregion Public Properties
 
@@ -69,6 +89,8 @@ namespace PRAIM
         private void BuildProjects(List<Project> projects)
         {
             Projects = new ObservableCollection<Project>();
+            if (projects == null) return;
+
             foreach (Project project in projects) {
                 Projects.Add(project);
             }
@@ -87,12 +109,16 @@ namespace PRAIM
             _DB.InsertVersion(SelectedProject.Name, version);
             
             SelectedVersion = version;
+            if (VersionAdded != null) VersionAdded(version);
         }
 
         public void RemoveVersion()
         {
+            string removed_version = SelectedProject.SelectedVersion;
             SelectedProject.RemoveVersion.Execute(null);
-            _DB.DeleteVersion(SelectedProject.SelectedVersion);
+            _DB.DeleteVersion(removed_version);
+
+            if (VersionRemoved != null) VersionRemoved(removed_version);
         }
 
         #endregion Public Methods
