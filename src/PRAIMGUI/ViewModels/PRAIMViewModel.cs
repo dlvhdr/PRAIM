@@ -214,8 +214,6 @@ namespace PRAIM
             ProjectsViewModel.WorkingProjectChanged += OnWorkingProjectChanged;
             ProjectsViewModel.VersionAdded += OnVersionAdded;
             ProjectsViewModel.VersionRemoved += OnVersionRemoved;
-
-            PreviewImage = new BitmapImage();
         }
 
         #region Public Methods

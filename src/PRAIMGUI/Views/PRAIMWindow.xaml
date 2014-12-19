@@ -4,6 +4,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:views="clr-namespace:PRAIM.Views"
         xmlns:converters="clr-namespace:Common.Converters;assembly=Common"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         x:Name="self"
         Title="PRAIM - Project Action Items Manager" ShowInTaskbar="True"
         MinWidth="610" MinHeight="400"
@@ -11,7 +12,8 @@
         Closed="OnExit">
     <Window.Resources>
         <converters:NullToNegateBoolConverter x:Key="NullToNegateBoolConverter"/>
-        
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
         <LinearGradientBrush x:Key="SeperatorGradient">
             <GradientStop Color="White" Offset="0"/>
             <GradientStop Color="Black" Offset="0.3"/>
@@ -224,7 +226,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -284,7 +286,7 @@
 
                             <!--Priority-->
                             <TextBlock Grid.Row="3" Text="Priority:" Margin="0,0,0,5"/>
-                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" ItemsSource="{Binding PossiblePriorities}"
+                            <controls:NullableCombobox Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" ItemsSource="{Binding PossiblePriorities}"
                                       SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}" VerticalAlignment="Center"
                                       Style="{StaticResource FlatWhiteComboBox}">
                                 <ComboBox.ItemTemplate>
@@ -292,11 +294,11 @@
                                         <TextBlock Text="{Binding}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </controls:NullableCombobox>
 
                             <!--Project Name-->
                             <TextBlock Grid.Row="4" Text="Project Name:" Margin="0,0,5,5"/>
-                            <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Style="{StaticResource FlatWhiteComboBox}"
+                            <controls:NullableCombobox Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Style="{StaticResource FlatWhiteComboBox}"
                                       IsReadOnly="False"
                                       SelectedItem="{Binding SelectedSearchProject, Mode=OneWayToSource}"
                                       ItemsSource="{Binding Projects}">
@@ -305,11 +307,11 @@
                                         <TextBlock Text="{Binding}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </controls:NullableCombobox>
 
                             <!--Version-->
                             <TextBlock Grid.Row="5" Text="Version:" Margin="0,0,0,5"/>
-                            <ComboBox Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"
+                            <controls:NullableCombobox Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"
                                       IsReadOnly="False"
                                       SelectedItem="{Binding SearchMetadata.Version, Mode=OneWayToSource}"
                                       ItemsSource="{Binding SelectedProjectVersions}" Style="{StaticResource FlatWhiteComboBox}">
@@ -318,9 +320,21 @@
                                         <TextBlock Text="{Binding}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </controls:NullableCombobox>
 
-                            <Image Grid.Row="6" Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
+                            <Border Grid.Row="6" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Bottom"
+                                    Margin="0,5,0,5" Padding="0">
+                                <Grid>
+                                    <Image Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
+                                               Padding="0" Margin="0"
+                                               Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
+                                        No Action Item
+                                        <LineBreak/>
+                                        Selected
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
                             
                         </Grid>
 
