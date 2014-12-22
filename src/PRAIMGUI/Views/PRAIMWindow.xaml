@@ -20,7 +20,7 @@
             <GradientStop Color="White" Offset="1.1"/>
         </LinearGradientBrush>
     </Window.Resources>
-    
+
     <DockPanel>
         <Grid DockPanel.Dock="Top">
             <Menu HorizontalAlignment="Stretch">
@@ -167,7 +167,7 @@
                                             <TextBlock Text="{Binding}"/>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
-                                
+
                                 </ComboBox>
 
                             </Grid>
@@ -333,9 +333,13 @@
                                         <LineBreak/>
                                         Selected
                                     </TextBlock>
+                                    <controls:ImageButton Padding="5" ImageSource="{StaticResource FugueZoomFit}" Height="20" Width="20"
+                                                          Background="Transparent" ImageHeight="16" ImageWidth="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                          Click="OnPreviewFullSize" ToolTip="Full size"
+                                                          Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=False}"/>
                                 </Grid>
                             </Border>
-                            
+
                         </Grid>
 
                         <Grid Grid.Column="1" Margin="20,0,5,5"
@@ -348,28 +352,22 @@
                                 <DataGrid.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="Remove Action Item"
-                                            Command="{Binding RemoveActionItemCommand}"/>
+                                            Command="{Binding RemoveActionItemCommand}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource FugueDeleteIcon}"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                     </ContextMenu>
                                 </DataGrid.ContextMenu>
-                                
+
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" Binding="{Binding id}">
+                                    <DataGridTextColumn Header="Project" Binding="{Binding metaData.ProjectName}">
                                     </DataGridTextColumn>
-                                    <DataGridTemplateColumn Header="Image">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="Show" Click="ShowImageHandler" Background="AliceBlue"
-                                                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Comments" Binding="{Binding metaData.Comments}">
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Project Name" Binding="{Binding metaData.ProjectName}">
+                                    <DataGridTextColumn Header="Version" Binding="{Binding metaData.Version}">
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Priority" Binding="{Binding metaData.Priority}">
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Version" Binding="{Binding metaData.Version}">
+                                    <DataGridTextColumn Header="Comments" Binding="{Binding metaData.Comments}">
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Date" Binding="{Binding metaData.DateTime}">
                                     </DataGridTextColumn>
@@ -400,7 +398,7 @@
                 </TabItem.Header>
 
                 <views:ProjectsManager DataContext="{Binding ProjectsViewModel}"/>
-                
+
             </TabItem>
         </TabControl>
     </DockPanel>

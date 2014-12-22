@@ -296,6 +296,9 @@ namespace PRAIM
 
         private void OnRemoveActionItem(object parameter)
         {
+            MessageBoxResult res = MessageBox.Show("Are you sure?", "Please Confirm Action", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (res == MessageBoxResult.No) return;
+
             _DB.DeleteActionItems(this.SelectedActionItem);
             if (ResultDBItems != null) {
                 ResultDBItems.Remove(this.SelectedActionItem);

@@ -19,14 +19,16 @@
     <BitmapImage x:Key="TangoListAddIcon" UriSource="Images/Tango/list-add.png"/>
     <BitmapImage x:Key="TangoListRemoveIcon" UriSource="Images/Tango/list-remove.png"/>
 
-    <BitmapImage x:Key="FugueCameraIcon" UriSource="Images/Fugue/camera.png"/>
+    <BitmapImage x:Key="FugueCameraIcon" UriSource="Images/Fugue/camera-black.png"/>
     <BitmapImage x:Key="FugueDBIcon" UriSource="Images/Fugue/database.png"/>
     <BitmapImage x:Key="FugueCancelIcon" UriSource="Images/Fugue/cross-circle.png"/>
     <BitmapImage x:Key="FugueDocumentSave" UriSource="Images/Fugue/tick-circle.png"/>
     <BitmapImage x:Key="FugueSaveIcon" UriSource="Images/Fugue/disk.png"/>
-    <BitmapImage x:Key="FugueProjectsIcon" UriSource="Images/Fugue/applications-stack.png"/>
+    <BitmapImage x:Key="FugueProjectsIcon" UriSource="Images/Fugue/blue-folders-stack.png"/>
     <BitmapImage x:Key="FugueProjectIcon" UriSource="Images/Fugue/blue-document-attribute-p.png"/>
     <BitmapImage x:Key="FugueListAddIcon" UriSource="Images/Fugue/plus-white.png"/>
     <BitmapImage x:Key="FugueListRemoveIcon" UriSource="Images/Fugue/minus-white.png"/>
+    <BitmapImage x:Key="FugueDeleteIcon" UriSource="Images/Fugue/cross-script.png"/>
+    <BitmapImage x:Key="FugueZoomFit" UriSource="Images/Fugue/magnifier-zoom-fit.png"/>
 
 </ResourceDictionary>

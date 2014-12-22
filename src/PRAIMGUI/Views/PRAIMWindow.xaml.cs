@@ -67,8 +67,7 @@ namespace PRAIM
             BmpBitmapEncoder encoder = new BmpBitmapEncoder();
             if (snapshotMgr.CroppedImage != null) {
                 encoder.Frames.Add(BitmapFrame.Create(snapshotMgr.CroppedImage));
-                using(MemoryStream ms = new MemoryStream())
-                {
+                using (MemoryStream ms = new MemoryStream()) {
                     encoder.Save(ms);
                     image_bytes = ms.ToArray();
                     MainViewModel.CroppedImageBytes = image_bytes;
@@ -83,18 +82,23 @@ namespace PRAIM
             MainViewModel.SearchDB();
         }
 
-        private void ShowImageHandler(object sender, RoutedEventArgs e)
-        {
-            BitmapSource source = MainViewModel.GetSnapshotSource((sender as Button).DataContext);
-
-            ViewSnapshotDlg dlg = new ViewSnapshotDlg() { SnapshotSource = source };
-            dlg.Show();
-        }
-
         private void OnExit(object sender, EventArgs e)
         {
             MainViewModel.SaveConfig();
             this.Close();
+        }
+
+        private void OnPreviewFullSize(object sender, RoutedEventArgs e)
+        {
+            BitmapSource source = MainViewModel.GetSnapshotSource(MainViewModel.SelectedActionItem);
+
+            ViewSnapshotDlg dlg = new ViewSnapshotDlg()
+            {
+                SnapshotSource = source,
+                Owner = this,
+                WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner
+            };
+            dlg.Show();
         }
     }
 }

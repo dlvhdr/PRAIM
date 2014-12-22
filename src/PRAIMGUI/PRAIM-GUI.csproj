@@ -184,9 +184,7 @@
     <Resource Include="Images\Tango\system-file-manager.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Fugue\applications-stack.png" />
     <Resource Include="Images\Fugue\blue-document-attribute-p.png" />
-    <Resource Include="Images\Fugue\camera.png" />
     <Resource Include="Images\Fugue\database-delete.png" />
     <Resource Include="Images\Fugue\database-insert.png" />
     <Resource Include="Images\Fugue\database.png" />
@@ -204,6 +202,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Fugue\cross-circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Fugue\cross-script.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Fugue\blue-folders-stack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Fugue\camera-black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
