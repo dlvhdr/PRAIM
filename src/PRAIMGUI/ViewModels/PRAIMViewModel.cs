@@ -23,6 +23,7 @@ namespace PRAIM
         #region Commands
 
         public Command SaveCommand { get; set; }
+        public Command RemoveActionItemCommand { get; set; }
 
         #endregion Commands
 
@@ -123,7 +124,7 @@ namespace PRAIM
         /// <summary>
         /// List of action items returned as search results from the DB
         /// </summary>
-        public List<ActionItem> ResultDBItems
+        public ObservableCollection<ActionItem> ResultDBItems
         {
             get { return _ResultDBItems; }
             set
@@ -144,6 +145,7 @@ namespace PRAIM
                 if (_SelectedActionItem != value) {
                     _SelectedActionItem = value;
                     UpdateActionItemThumbnail();
+                    RemoveActionItemCommand.UpdateCanExecuteState();
                     NotifyPropertyChanged("SelectedActionItem");
                 }
             }
@@ -206,6 +208,7 @@ namespace PRAIM
             // Initialize Commands
             //-----------------------
             SaveCommand = new Command(SaveCanExec, SaveExec);
+            RemoveActionItemCommand = new Command(RemoveCanExec, OnRemoveActionItem);
 
             //---------------------------------------
             // Initialize ProjectsManager view model
@@ -214,6 +217,8 @@ namespace PRAIM
             ProjectsViewModel.WorkingProjectChanged += OnWorkingProjectChanged;
             ProjectsViewModel.VersionAdded += OnVersionAdded;
             ProjectsViewModel.VersionRemoved += OnVersionRemoved;
+
+            ResultDBItems = new ObservableCollection<ActionItem>();
         }
 
         #region Public Methods
@@ -245,7 +250,13 @@ namespace PRAIM
         /// </summary>
         public void SearchDB()
         {
-            ResultDBItems = _DB.GetActionItems(SearchMetadata);
+            List<ActionItem> items = _DB.GetActionItems(SearchMetadata);
+            ResultDBItems.Clear();
+            if (items == null) return;
+
+            foreach (ActionItem item in items) {
+                ResultDBItems.Add(item);
+            }
         }
 
         public BitmapSource GetSnapshotSource(object item)
@@ -277,6 +288,21 @@ namespace PRAIM
         #endregion Public Methods
 
         #region Private Methods
+
+        private bool RemoveCanExec(object parameter)
+        {
+            return this.SelectedActionItem != null;
+        }
+
+        private void OnRemoveActionItem(object parameter)
+        {
+            _DB.DeleteActionItems(this.SelectedActionItem);
+            if (ResultDBItems != null) {
+                ResultDBItems.Remove(this.SelectedActionItem);
+            }
+
+            this.SelectedActionItem = null;
+        }
 
         private void OnVersionRemoved(string version)
         {
@@ -369,7 +395,7 @@ namespace PRAIM
 
         private PRAIMDataBase _DB;
         private BitmapSource _CroppedImage;
-        private List<ActionItem> _ResultDBItems;
+        private ObservableCollection<ActionItem> _ResultDBItems;
         private ActionItem _SelectedActionItem;
         private string _WorkingProjectName;
         private string _WorkingProjectVersion;

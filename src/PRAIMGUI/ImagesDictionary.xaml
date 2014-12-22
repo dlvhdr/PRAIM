@@ -10,13 +10,23 @@
         <Setter Property="SnapsToDevicePixels" Value="True"/>
     </Style>
 
-    <BitmapImage x:Key="CameraIcon" UriSource="Images/camera-photo.png"/>
-    <BitmapImage x:Key="DBIcon" UriSource="Images/system-file-manager.png"/>
-    <BitmapImage x:Key="DocumentSave" UriSource="Images/document-save.png"/>
-    <BitmapImage x:Key="CancelIcon" UriSource="Images/emblem-unreadable.png"/>
-    <BitmapImage x:Key="SaveIcon" UriSource="Images/media-floppy.png"/>
-    <BitmapImage x:Key="ProjectsIcon" UriSource="Images/preferences-system-windows.png"/>
-    <BitmapImage x:Key="ListAddIcon" UriSource="Images/list-add.png"/>
-    <BitmapImage x:Key="ListRemoveIcon" UriSource="Images/list-remove.png"/>
-    
+    <BitmapImage x:Key="TangoCameraIcon" UriSource="Images/Tango/camera-photo.png"/>
+    <BitmapImage x:Key="TangoDBIcon" UriSource="Images/Tango/system-file-manager.png"/>
+    <BitmapImage x:Key="TangoDocumentSave" UriSource="Images/Tango/document-save.png"/>
+    <BitmapImage x:Key="TangoCancelIcon" UriSource="Images/Tango/emblem-unreadable.png"/>
+    <BitmapImage x:Key="TangoSaveIcon" UriSource="Images/Tango/media-floppy.png"/>
+    <BitmapImage x:Key="TangoProjectsIcon" UriSource="Images/Tango/preferences-system-windows.png"/>
+    <BitmapImage x:Key="TangoListAddIcon" UriSource="Images/Tango/list-add.png"/>
+    <BitmapImage x:Key="TangoListRemoveIcon" UriSource="Images/Tango/list-remove.png"/>
+
+    <BitmapImage x:Key="FugueCameraIcon" UriSource="Images/Fugue/camera.png"/>
+    <BitmapImage x:Key="FugueDBIcon" UriSource="Images/Fugue/database.png"/>
+    <BitmapImage x:Key="FugueCancelIcon" UriSource="Images/Fugue/cross-circle.png"/>
+    <BitmapImage x:Key="FugueDocumentSave" UriSource="Images/Fugue/tick-circle.png"/>
+    <BitmapImage x:Key="FugueSaveIcon" UriSource="Images/Fugue/disk.png"/>
+    <BitmapImage x:Key="FugueProjectsIcon" UriSource="Images/Fugue/applications-stack.png"/>
+    <BitmapImage x:Key="FugueProjectIcon" UriSource="Images/Fugue/blue-document-attribute-p.png"/>
+    <BitmapImage x:Key="FugueListAddIcon" UriSource="Images/Fugue/plus-white.png"/>
+    <BitmapImage x:Key="FugueListRemoveIcon" UriSource="Images/Fugue/minus-white.png"/>
+
 </ResourceDictionary>

@@ -53,13 +53,13 @@
                                 Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
                                 ToolTip="Remove selected project"
                                 VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
-                            <Image Source="{StaticResource ListRemoveIcon}"/>
+                            <Image Source="{StaticResource FugueListRemoveIcon}"/>
                         </Button>
                         <Button Click="OnAddProject"                                
                                 Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
                                 ToolTip="Add new project"
                                 VerticalAlignment="Center" Margin="2" Background="Transparent" BorderThickness="0">
-                            <Image Source="{StaticResource ListAddIcon}"/>
+                            <Image Source="{StaticResource FugueListAddIcon}"/>
                         </Button>
                     </DockPanel>
                     <ListBox Grid.Row="1" ItemsSource="{Binding Projects}" BorderThickness="1" BorderBrush="LightGray"
@@ -67,7 +67,7 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel>
-                                    <Image Style="{StaticResource Icon16x16}" Margin="2,2,3,2" Source="{StaticResource ProjectsIcon}"/>
+                                    <Image Style="{StaticResource Icon16x16}" Margin="2,2,3,2" Source="{StaticResource FugueProjectIcon}"/>
                                     <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
                                 </DockPanel>
                             </DataTemplate>
@@ -107,12 +107,12 @@
                             <Button Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
                                 ToolTip="Remove selected version" Click="OnRemoveVersion"
                                 VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
-                                <Image Source="{StaticResource ListRemoveIcon}"/>
+                                <Image Source="{StaticResource FugueListRemoveIcon}"/>
                             </Button>
                             <Button Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
                                 ToolTip="Add new version" Click="OnAddVersion"
                                 VerticalAlignment="Center" Margin="2" Background="Transparent" BorderThickness="0">
-                                <Image Source="{StaticResource ListAddIcon}"/>
+                                <Image Source="{StaticResource FugueListAddIcon}"/>
                             </Button>
                         </DockPanel>
                         <ListBox Grid.Row="1" ItemsSource="{Binding Versions}" BorderThickness="1" BorderBrush="LightGray"

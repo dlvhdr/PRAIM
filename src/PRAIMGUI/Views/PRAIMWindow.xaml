@@ -69,7 +69,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource CameraIcon}" Style="{StaticResource Icon16x16}"/>
+                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueCameraIcon}" Style="{StaticResource Icon16x16}"/>
                         <TextBlock Grid.Column="1" DockPanel.Dock="Left" Text="Snapshot" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </TabItem.Header>
@@ -192,7 +192,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource DBIcon}" Style="{StaticResource Icon16x16}"/>
+                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueDBIcon}" Style="{StaticResource Icon16x16}"/>
                         <TextBlock Grid.Column="1" Text="Search" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </TabItem.Header>
@@ -343,7 +343,15 @@
                             <DataGrid ItemsSource="{Binding ResultDBItems, UpdateSourceTrigger=PropertyChanged}"
                                       SelectedItem="{Binding SelectedActionItem}"
                                       Background="White"
-                                      AutoGenerateColumns="False" CanUserAddRows="False">
+                                      AutoGenerateColumns="False" CanUserAddRows="False"
+                                      IsReadOnly="True">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Remove Action Item"
+                                            Command="{Binding RemoveActionItemCommand}"/>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+                                
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="ID" Binding="{Binding id}">
                                     </DataGridTextColumn>
@@ -386,7 +394,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource ProjectsIcon}" Style="{StaticResource Icon16x16}"/>
+                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueProjectsIcon}" Style="{StaticResource Icon16x16}"/>
                         <TextBlock Grid.Column="1" Text="Projects" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </TabItem.Header>
