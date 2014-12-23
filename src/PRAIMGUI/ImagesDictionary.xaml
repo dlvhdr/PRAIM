@@ -30,5 +30,6 @@
     <BitmapImage x:Key="FugueListRemoveIcon" UriSource="Images/Fugue/minus-white.png"/>
     <BitmapImage x:Key="FugueDeleteIcon" UriSource="Images/Fugue/cross-script.png"/>
     <BitmapImage x:Key="FugueZoomFit" UriSource="Images/Fugue/magnifier-zoom-fit.png"/>
+    <BitmapImage x:Key="FuguePlus" UriSource="Images/Fugue/plus.png"/>
 
 </ResourceDictionary>
