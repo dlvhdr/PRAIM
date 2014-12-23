@@ -449,7 +449,7 @@ namespace PRAIMDB
         public int currentID {get; set;}
         static string appLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
-            // @"AttachDbFilename=C:\Users\Adi&Dvir\PRAIM\src\PRAIMDataBase\PRAIMTable.mdf;" +
+            //@"AttachDbFilename=C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMDataBase;" +
             @"AttachDbFilename=" + appLocation + @"\PRAIMTable.mdf;" +
                 "Integrated Security=True; Trusted_Connection=True; MultipleActiveResultSets=True;";
     }

@@ -4,6 +4,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:views="clr-namespace:PRAIM.Views"
         xmlns:converters="clr-namespace:Common.Converters;assembly=Common"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         x:Name="self"
         Title="PRAIM - Project Action Items Manager" ShowInTaskbar="True"
         MinWidth="610" MinHeight="400"
@@ -11,14 +12,15 @@
         Closed="OnExit">
     <Window.Resources>
         <converters:NullToNegateBoolConverter x:Key="NullToNegateBoolConverter"/>
-        
+        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+
         <LinearGradientBrush x:Key="SeperatorGradient">
             <GradientStop Color="White" Offset="0"/>
             <GradientStop Color="Black" Offset="0.3"/>
             <GradientStop Color="White" Offset="1.1"/>
         </LinearGradientBrush>
     </Window.Resources>
-    
+
     <DockPanel>
         <Grid DockPanel.Dock="Top">
             <Menu HorizontalAlignment="Stretch">
@@ -67,7 +69,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource CameraIcon}" Style="{StaticResource Icon16x16}"/>
+                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueCameraIcon}" Style="{StaticResource Icon16x16}"/>
                         <TextBlock Grid.Column="1" DockPanel.Dock="Left" Text="Snapshot" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </TabItem.Header>
@@ -165,7 +167,7 @@
                                             <TextBlock Text="{Binding}"/>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
-                                
+
                                 </ComboBox>
 
                             </Grid>
@@ -190,7 +192,7 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource DBIcon}" Style="{StaticResource Icon16x16}"/>
+                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueDBIcon}" Style="{StaticResource Icon16x16}"/>
                         <TextBlock Grid.Column="1" Text="Search" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </TabItem.Header>
@@ -224,7 +226,7 @@
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -284,7 +286,7 @@
 
                             <!--Priority-->
                             <TextBlock Grid.Row="3" Text="Priority:" Margin="0,0,0,5"/>
-                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" ItemsSource="{Binding PossiblePriorities}"
+                            <controls:NullableCombobox Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" ItemsSource="{Binding PossiblePriorities}"
                                       SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}" VerticalAlignment="Center"
                                       Style="{StaticResource FlatWhiteComboBox}">
                                 <ComboBox.ItemTemplate>
@@ -292,11 +294,11 @@
                                         <TextBlock Text="{Binding}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </controls:NullableCombobox>
 
                             <!--Project Name-->
                             <TextBlock Grid.Row="4" Text="Project Name:" Margin="0,0,5,5"/>
-                            <ComboBox Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Style="{StaticResource FlatWhiteComboBox}"
+                            <controls:NullableCombobox Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Style="{StaticResource FlatWhiteComboBox}"
                                       IsReadOnly="False"
                                       SelectedItem="{Binding SelectedSearchProject, Mode=OneWayToSource}"
                                       ItemsSource="{Binding Projects}">
@@ -305,11 +307,11 @@
                                         <TextBlock Text="{Binding}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </controls:NullableCombobox>
 
                             <!--Version-->
                             <TextBlock Grid.Row="5" Text="Version:" Margin="0,0,0,5"/>
-                            <ComboBox Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"
+                            <controls:NullableCombobox Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"
                                       IsReadOnly="False"
                                       SelectedItem="{Binding SearchMetadata.Version, Mode=OneWayToSource}"
                                       ItemsSource="{Binding SelectedProjectVersions}" Style="{StaticResource FlatWhiteComboBox}">
@@ -318,10 +320,26 @@
                                         <TextBlock Text="{Binding}"/>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
-                            </ComboBox>
+                            </controls:NullableCombobox>
 
-                            <Image Grid.Row="6" Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
-                            
+                            <Border Grid.Row="6" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Bottom"
+                                    Margin="0,5,0,5" Padding="0">
+                                <Grid>
+                                    <Image Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
+                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
+                                               Padding="0" Margin="0"
+                                               Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
+                                        No Action Item
+                                        <LineBreak/>
+                                        Selected
+                                    </TextBlock>
+                                    <controls:ImageButton Padding="5" ImageSource="{StaticResource FugueZoomFit}" Height="20" Width="20"
+                                                          Background="Transparent" ImageHeight="16" ImageWidth="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                          Click="OnPreviewFullSize" ToolTip="Full size"
+                                                          Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=False}"/>
+                                </Grid>
+                            </Border>
+
                         </Grid>
 
                         <Grid Grid.Column="1" Margin="20,0,5,5"
@@ -329,25 +347,27 @@
                             <DataGrid ItemsSource="{Binding ResultDBItems, UpdateSourceTrigger=PropertyChanged}"
                                       SelectedItem="{Binding SelectedActionItem}"
                                       Background="White"
-                                      AutoGenerateColumns="False" CanUserAddRows="False">
+                                      AutoGenerateColumns="False" CanUserAddRows="False"
+                                      IsReadOnly="True">
+                                <DataGrid.ContextMenu>
+                                    <ContextMenu>
+                                        <MenuItem Header="Remove Action Item"
+                                            Command="{Binding RemoveActionItemCommand}">
+                                            <MenuItem.Icon>
+                                                <Image Source="{StaticResource FugueDeleteIcon}"/>
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </DataGrid.ContextMenu>
+
                                 <DataGrid.Columns>
-                                    <DataGridTextColumn Header="ID" Binding="{Binding id}">
+                                    <DataGridTextColumn Header="Project" Binding="{Binding metaData.ProjectName}">
                                     </DataGridTextColumn>
-                                    <DataGridTemplateColumn Header="Image">
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <Button Content="Show" Click="ShowImageHandler" Background="AliceBlue"
-                                                        VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTextColumn Header="Comments" Binding="{Binding metaData.Comments}">
-                                    </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Project Name" Binding="{Binding metaData.ProjectName}">
+                                    <DataGridTextColumn Header="Version" Binding="{Binding metaData.Version}">
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Priority" Binding="{Binding metaData.Priority}">
                                     </DataGridTextColumn>
-                                    <DataGridTextColumn Header="Version" Binding="{Binding metaData.Version}">
+                                    <DataGridTextColumn Header="Comments" Binding="{Binding metaData.Comments}">
                                     </DataGridTextColumn>
                                     <DataGridTextColumn Header="Date" Binding="{Binding metaData.DateTime}">
                                     </DataGridTextColumn>
@@ -372,13 +392,13 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource ProjectsIcon}" Style="{StaticResource Icon16x16}"/>
+                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueProjectsIcon}" Style="{StaticResource Icon16x16}"/>
                         <TextBlock Grid.Column="1" Text="Projects" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
                     </Grid>
                 </TabItem.Header>
 
                 <views:ProjectsManager DataContext="{Binding ProjectsViewModel}"/>
-                
+
             </TabItem>
         </TabControl>
     </DockPanel>

@@ -136,6 +136,8 @@ namespace PRAIM
 
         private void OnRemoveProject(object parameter)
         {
+            if (SelectedProject.Model == null) return;
+
             _DB.DeleteProject(SelectedProject.Model.Name);
             Model.Projects.Remove(SelectedProject.Model);
             Projects.Remove(SelectedProject.Model);

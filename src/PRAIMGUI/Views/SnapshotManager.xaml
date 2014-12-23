@@ -108,13 +108,13 @@
 
             <StackPanel Width="20" Height="65" Name="ButtonsStackPanel" Visibility="{Binding ButtonsStackVisibility, ElementName=self, Converter={StaticResource BoolToVisibility}}"
                         Orientation="Vertical" VerticalAlignment="Bottom">
-                <common:ImageButton Padding="5" ImageSource="{StaticResource CancelIcon}" Height="20" Width="20" 
+                <common:ImageButton Padding="5" ImageSource="{StaticResource FugueCancelIcon}" Height="20" Width="20" 
                                         ImageHeight="16" ImageWidth="16"
                                         Click="OnCancel" ToolTip="Cancel"/>
-                <common:ImageButton Padding="5" ImageSource="{StaticResource SaveIcon}" Height="20" Width="20" 
+                <common:ImageButton Padding="5" ImageSource="{StaticResource FugueSaveIcon}" Height="20" Width="20" 
                                         ImageHeight="16" ImageWidth="16"
                                         Click="OnSaveToFile" ToolTip="Save to File"/>
-                <common:ImageButton Padding="5" ImageSource="{StaticResource DocumentSave}" Height="20" Width="20" 
+                <common:ImageButton Padding="5" ImageSource="{StaticResource FugueDocumentSave}" Height="20" Width="20" 
                                         ImageHeight="16" ImageWidth="16"
                                         Click="Capture" ToolTip="Continue to PRAIM"/>
                 

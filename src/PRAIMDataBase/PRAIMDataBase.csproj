@@ -103,11 +103,8 @@
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="PRAIMTable.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="PRAIMTable.mdf" />
     <Content Include="PRAIMTable_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>PRAIMTable.mdf</DependentUpon>
     </Content>
   </ItemGroup>
