@@ -11,7 +11,7 @@
         Width="610" Height="400"
         Closed="OnExit">
     <Window.Resources>
-        <converters:NullToNegateBoolConverter x:Key="NullToNegateBoolConverter"/>
+        <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
 
         <LinearGradientBrush x:Key="SeperatorGradient">
@@ -41,8 +41,8 @@
                             <Style.Triggers>
                                 <MultiDataTrigger>
                                     <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding WorkingProjectName, Converter={StaticResource NullToNegateBoolConverter}}" Value="True"/>
-                                        <Condition Binding="{Binding WorkingProjectVersion, Converter={StaticResource NullToNegateBoolConverter}}" Value="True"/>
+                                        <Condition Binding="{Binding WorkingProjectName, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Value="True"/>
+                                        <Condition Binding="{Binding WorkingProjectVersion, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Value="True"/>
                                     </MultiDataTrigger.Conditions>
                                     <Setter Property="Text">
                                         <Setter.Value>
@@ -132,8 +132,8 @@
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
                                                     <MultiDataTrigger.Conditions>
-                                                        <Condition Binding="{Binding WorkingProjectName, Converter={StaticResource NullToNegateBoolConverter}}" Value="True"/>
-                                                        <Condition Binding="{Binding WorkingProjectVersion, Converter={StaticResource NullToNegateBoolConverter}}" Value="True"/>
+                                                        <Condition Binding="{Binding WorkingProjectName, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Value="True"/>
+                                                        <Condition Binding="{Binding WorkingProjectVersion, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Value="True"/>
                                                     </MultiDataTrigger.Conditions>
                                                     <Setter Property="Text">
                                                         <Setter.Value>
@@ -322,23 +322,36 @@
                                 </ComboBox.ItemTemplate>
                             </controls:NullableCombobox>
 
-                            <Border Grid.Row="6" BorderBrush="Black" BorderThickness="1" VerticalAlignment="Bottom"
-                                    Margin="0,5,0,5" Padding="0">
-                                <Grid>
-                                    <Image Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
-                                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
-                                               Padding="0" Margin="0"
-                                               Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
-                                        No Action Item
-                                        <LineBreak/>
-                                        Selected
-                                    </TextBlock>
-                                    <controls:ImageButton Padding="5" ImageSource="{StaticResource FugueZoomFit}" Height="20" Width="20"
-                                                          Background="Transparent" ImageHeight="16" ImageWidth="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                                          Click="OnPreviewFullSize" ToolTip="Full size"
-                                                          Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=False}"/>
-                                </Grid>
-                            </Border>
+                            <Grid Grid.Row="6" Margin="0,5,0,5" VerticalAlignment="Bottom">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Border BorderBrush="Black" BorderThickness="1" Padding="0">
+                                    <Grid>
+                                        <Image Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
+                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
+                                                   Padding="0" Margin="0"
+                                                   Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
+                                            No Action Item
+                                            <LineBreak/>
+                                            Selected
+                                        </TextBlock>
+                                    </Grid>
+                                </Border>
+
+                                <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                    <controls:ImageButton  Padding="5" ImageSource="{StaticResource FugueSaveIcon}" Height="20" Width="20"
+                                                            Background="Transparent" ImageHeight="16" ImageWidth="16" 
+                                                            Click="OnExportActionItem" ToolTip="Export"
+                                                            IsEnabled="{Binding PreviewImage, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}"/>
+                                
+                                    <controls:ImageButton Grid.Column="1" Padding="5" ImageSource="{StaticResource FugueZoomFit}" Height="20" Width="20"
+                                                            Background="Transparent" ImageHeight="16" ImageWidth="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                                            ToolTip="View full size" Click="OnPreviewFullSize"
+                                                            IsEnabled="{Binding PreviewImage, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}"/>
+                                </StackPanel>
+                            </Grid>
 
                         </Grid>
 

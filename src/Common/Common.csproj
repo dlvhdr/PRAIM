@@ -56,7 +56,7 @@
     </Compile>
     <Compile Include="Converters\NegateNullableBoolToBoolConverter.cs" />
     <Compile Include="Converters\BoolToVisibilityConverter.cs" />
-    <Compile Include="Converters\NullToNegateBoolConverter.cs" />
+    <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="IProject.cs" />
     <Compile Include="Project.cs" />

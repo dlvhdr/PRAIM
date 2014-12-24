@@ -100,5 +100,15 @@ namespace PRAIM
             };
             dlg.Show();
         }
+
+        /// <summary>
+        /// Save action item snapshot to image file handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnExportActionItem(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.ExportActionItem();
+        }
     }
 }

@@ -8,7 +8,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <converters:NullToNegateBoolConverter x:Key="NullToNegateBool"/>
+        <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
         
         <LinearGradientBrush x:Key="SeperatorGradient">
             <GradientStop Color="White" Offset="0"/>
@@ -77,7 +77,7 @@
             </Grid>
 
             <GroupBox Grid.Column="1" Header="Project Properties" Padding="1,5,1,1" Margin="5" 
-                      IsEnabled="{Binding Path=DataContext.SelectedProject.Model, ElementName=self, Converter={StaticResource NullToNegateBool}, UpdateSourceTrigger=PropertyChanged}"
+                      IsEnabled="{Binding Path=DataContext.SelectedProject.Model, ElementName=self, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"
                       BorderThickness="1" BorderBrush="Black" DataContext="{Binding SelectedProject}">
                 <Grid>
                     <Grid.RowDefinitions>
