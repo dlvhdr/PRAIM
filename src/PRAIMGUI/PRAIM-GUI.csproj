@@ -41,6 +41,7 @@
     <ApplicationIcon>PRAIM.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework.Aero2" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -68,6 +69,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="BootConfig.cs" />
+    <Compile Include="CreateReport.cs" />
     <Compile Include="Models\ProjectsManagerModel.cs" />
     <Compile Include="ViewModels\ProjectsManagerViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />

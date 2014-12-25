@@ -15,6 +15,10 @@ using System.Windows.Controls;
 using System.Xml.Serialization;
 using System.Collections.ObjectModel;
 using PRAIM.Models;
+using System.Windows.Forms;
+using Microsoft.Win32;
+
+
 
 namespace PRAIM
 {
@@ -194,6 +198,8 @@ namespace PRAIM
             //-----------------------
             BootFromXml();
             _DB = new PRAIMDataBase((int)_Config.CurrentActionItemID);
+            _WorkingProjectName = _Config.LastProject;
+            _WorkingProjectVersion = _Config.LastVersion;
 
             //-----------------------
             // Initialize Properties
@@ -226,6 +232,8 @@ namespace PRAIM
         public void SaveConfig()
         {
             _Config.CurrentActionItemID = _DB.currentID;
+            _Config.LastProject = WorkingProjectName; 
+            _Config.LastVersion = WorkingProjectVersion;
             using (FileStream fs = new FileStream(_XmlLocation, FileMode.Open)) {
                 XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
                 serializer.Serialize(fs, _Config);
@@ -239,9 +247,9 @@ namespace PRAIM
         {
             InsertActionItem.snapShot = CroppedImageBytes;
             if (_DB.InsertActionItem(this.InsertActionItem) == true) {
-                MessageBox.Show("Action Item was saved successfully.", "Success", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("Action Item was saved successfully.", "Success", MessageBoxButton.OK);
             } else {
-                MessageBox.Show("Error insering to DB", "Error", MessageBoxButton.OK);
+                System.Windows.MessageBox.Show("Error insering to DB", "Error", MessageBoxButton.OK);
             }
         }
 
@@ -257,6 +265,22 @@ namespace PRAIM
             foreach (ActionItem item in items) {
                 ResultDBItems.Add(item);
             }
+        }
+
+        public void GenerateReport()
+        {
+            string appLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            
+                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+                saveFileDialog.FileName = "Report.csv";
+                saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (!CreateReport.CreateCSVReport(ResultDBItems, saveFileDialog.FileName))
+                    {
+                        System.Windows.MessageBox.Show("Error generating report", "Error", MessageBoxButton.OK);
+                    }
+                }           
         }
 
         public BitmapSource GetSnapshotSource(object item)
@@ -296,7 +320,7 @@ namespace PRAIM
 
         private void OnRemoveActionItem(object parameter)
         {
-            MessageBoxResult res = MessageBox.Show("Are you sure?", "Please Confirm Action", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult res = System.Windows.MessageBox.Show("Are you sure?", "Please Confirm Action", MessageBoxButton.YesNo, MessageBoxImage.Question);
             if (res == MessageBoxResult.No) return;
 
             _DB.DeleteActionItems(this.SelectedActionItem);

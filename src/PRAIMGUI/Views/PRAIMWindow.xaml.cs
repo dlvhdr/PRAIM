@@ -100,5 +100,19 @@ namespace PRAIM
             };
             dlg.Show();
         }
+
+        private void GenerateReport(object sender, RoutedEventArgs e)
+        {
+            MainViewModel.GenerateReport();
+        }
+
+        private void OpenAbout(object sender, EventArgs e)
+        {
+            MessageBox.Show("PRAIM - Project Action Items Manager.\n" + 
+                "Version 1.0\n" + 
+                "Developed by Dolev Hadar & Dvir Kehaty.\n" +
+                "Copyright ©2015 Philips & Technion CS faculty.\n" +
+                "All Rights Reserved.", "PRAIM");
+        }
     }
 }
