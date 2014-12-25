@@ -29,7 +29,7 @@
                 </MenuItem>
                 <MenuItem Header="Help">
                     <MenuItem Header="User Manual"/>
-                    <MenuItem Header="About"/>
+                    <MenuItem Header="About" Click="OpenAbout"/>
                 </MenuItem>
             </Menu>
             <DockPanel Margin="0,2,0,2" HorizontalAlignment="Right" VerticalAlignment="Center">
@@ -206,6 +206,8 @@
                                 Width="90" Padding="5">
                             Search
                         </Button>
+                        <Button 
+                        	Width="90" Padding="5" Content="Report" Click="GenerateReport"/>
                     </DockPanel>
 
                     <Separator DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
