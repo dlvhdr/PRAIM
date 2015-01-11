@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PRAIM.Interfaces
 {
+    /// <summary>
+    /// Project interface
+    /// </summary>
     public interface IProject
     {
         string Name { get; set; }

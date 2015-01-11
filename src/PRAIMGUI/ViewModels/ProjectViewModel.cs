@@ -1,5 +1,6 @@
 ﻿using Common;
 using PRAIM.Models;
+using PRAIMDB;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,6 +12,9 @@ using System.Windows.Input;
 
 namespace PRAIM.ViewModels
 {
+    /// <summary>
+    /// View model for Project
+    /// </summary>
     public class ProjectViewModel : INotifyPropertyChanged
     {
         #region Commands
@@ -20,10 +24,15 @@ namespace PRAIM.ViewModels
 
         #endregion Commands
 
+        #region Public Properties
+
+        /// <summary>
+        /// The project model
+        /// </summary>
         public Project Model
         {
             get { return _Model; }
-            set 
+            set
             {
                 if (_Model != value) {
                     _Model = value;
@@ -33,10 +42,14 @@ namespace PRAIM.ViewModels
             }
         }
 
+        /// <summary>
+        /// The name of the project
+        /// </summary>
         public string Name
         {
-            get { return (Model != null)? Model.Name : null; }
-            set {
+            get { return (Model != null) ? Model.Name : null; }
+            set
+            {
                 if (Model != null) {
                     Model.Name = value;
                     NotifyPropertyChanged("Name");
@@ -44,10 +57,19 @@ namespace PRAIM.ViewModels
             }
         }
 
+        /// <summary>
+        /// The versions of the project
+        /// </summary>
         public ObservableCollection<string> Versions { get; set; }
 
+        /// <summary>
+        /// The selected version
+        /// </summary>
         public string SelectedVersion { get; set; }
 
+        /// <summary>
+        /// The description of the project
+        /// </summary>
         public string Description
         {
             get { return (Model != null) ? Model.Description : null; }
@@ -59,6 +81,8 @@ namespace PRAIM.ViewModels
             }
         }
 
+        #endregion Public Properties
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -69,6 +93,13 @@ namespace PRAIM.ViewModels
             RemoveVersion = new Command(CommandsCanExec, OnRemoveVersion);
         }
 
+        #region Private Methods
+
+
+        /// <summary>
+        /// Add version command handler
+        /// </summary>
+        /// <param name="o"></param>
         private void OnAddVersion(object o)
         {
             string version = o as string;
@@ -78,17 +109,29 @@ namespace PRAIM.ViewModels
             Model.Versions.Add(version);
         }
 
+        /// <summary>
+        /// Remove version command handler
+        /// </summary>
+        /// <param name="o"></param>
         private void OnRemoveVersion(object o)
         {
             Model.Versions.Remove(SelectedVersion);
             Versions.Remove(SelectedVersion);
         }
 
+        /// <summary>
+        /// Various commands can execute handler
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         private bool CommandsCanExec(object parameter)
         {
             return true;
         }
 
+        /// <summary>
+        /// Called when the model is changed. Rebuilds the versions collection.
+        /// </summary>
         private void UpdateVersions()
         {
             Versions.Clear();
@@ -98,6 +141,8 @@ namespace PRAIM.ViewModels
                 Versions.Add(version);
             }
         }
+
+        #endregion Private Methods
 
         #region INotifyPropertyChanged
 

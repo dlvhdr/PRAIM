@@ -7,6 +7,10 @@ using System.Windows.Input;
 
 namespace Common
 {
+    /// <summary>
+    /// Command with CanExecute and Execute delegates.
+    /// Has UpdateCanExecuteState public method to re-evaluate CanExecute. 
+    /// </summary>
     public class Command : ICommand
     {
         public delegate bool CanExcuteDelegate(object parameter);

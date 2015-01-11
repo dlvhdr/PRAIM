@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 namespace Common
 {
     public enum Priority { High = 0, Medium, Low }
-    public enum ProjectName { ICT256}
 
+    /// <summary>
+    /// Action Item Meta-Data model
+    /// </summary>
     public class ActionMetaData
     {
         public string ProjectName { get; set; }
@@ -20,5 +22,13 @@ namespace Common
 
         public Nullable<DateTime> FromDate { get; set; }
         public Nullable<DateTime> ToDate { get; set; }
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public ActionMetaData()
+        {
+            Comments = String.Empty;
+        }
     }
 }

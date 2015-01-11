@@ -73,6 +73,9 @@
     <Compile Include="Models\ProjectsManagerModel.cs" />
     <Compile Include="ViewModels\ProjectsManagerViewModel.cs" />
     <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Views\AboutDlg.xaml.cs">
+      <DependentUpon>AboutDlg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NewProjectDlg.xaml.cs">
       <DependentUpon>NewProjectDlg.xaml</DependentUpon>
     </Compile>
@@ -97,6 +100,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\GroupBoxes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AboutDlg.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -216,6 +223,27 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Fugue\plus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Cancel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Save pictures.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\OK.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Save pictures_no_circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Save_circle.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

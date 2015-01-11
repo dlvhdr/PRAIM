@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace Common.Converters
 {
-    public class NullToVisibilityConverter : IValueConverter
+    public class NullToCollapsedConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {

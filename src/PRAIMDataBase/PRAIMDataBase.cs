@@ -15,65 +15,19 @@ using PRAIM.Models;
 
 namespace PRAIMDB
 {
+    /// <summary>
+    /// Database class
+    /// </summary>
     public class PRAIMDataBase
     {
-        //constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="currentID"></param>
         public PRAIMDataBase(int currentID)
         {
             this.currentID = currentID;
-            //CreateDatabase();
         }
-
-        //public static void CreateSqlDatabase(string filename)
-        //{
-
-        //    SqlConnection myConn = new SqlConnection(connectionString);
-
-        //    String str = "CREATE DATABASE MyDatabase ON PRIMARY " +
-        //        "(NAME = MyDatabase_Data, " +
-        //        "FILENAME = 'C:\\Users\\Adi&Dvir\\PRAIM\\src\\PRAIMDataBase\\PRAIMTable.mdf')";
-        //    SqlCommand myCommand = new SqlCommand(str, myConn);
-        //    try
-        //    {
-        //        myConn.Open();
-        //        myCommand.ExecuteNonQuery();
-        //        Console.WriteLine("DB was crated successfully"); //TODO: tobe removed
-                
-        //        if (myConn.State == ConnectionState.Open)
-        //        {
-        //            using (SqlCommand command = new SqlCommand(@"CREATE TABLE PRAIMDBTable (ActionItemId INT PRIMARY KEY" +
-        //                ",Priority INT,ProjectName NVARCHAR (MAX),Version NVARCHAR (MAX)" +
-        //                ",DateTime dateTime,Comments NVARCHAR (MAX), Snapshot IMAGE)", myConn))
-        //                try
-        //                {
-        //                    command.ExecuteNonQuery();
-        //                }
-        //                catch (System.Exception ex)
-        //                {
-        //                    Console.WriteLine("DB was failed, {0}", ex); //TODO: tobe removed
-        //                }
-        //            myConn.Close();
-        //        }
-                
-        //    }
-        //    catch (System.Exception ex)
-        //    {
-        //        Console.WriteLine("DB was failed, {0}", ex); //TODO: tobe removed
-        //    }       
-        //}
-
-        //create the DB 
-        //public void CreateDatabase()
-        //{
-        //    var filename = System.IO.Path.Combine(appLocation, "PRAIMTable.mdf");
-        //    if (!System.IO.File.Exists(filename))
-        //    {
-        //        CreateSqlDatabase(filename);
-        //    }
-        //    CreateSqlDatabase(filename); //TODO: tobe removed
-        //    Console.WriteLine("DB already exist"); //TODO: tobe removed
-        //}
-
 
         public bool InsertActionItem(ActionItem actionItem)
         {
@@ -449,7 +403,6 @@ namespace PRAIMDB
         public int currentID {get; set;}
         static string appLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
         static string connectionString = "Data Source=(LocalDB)\\v11.0;" +
-            //@"AttachDbFilename=C:\Users\dlv\Google Drive\Studies\6th Semester\Industrial Project\github_project\src\PRAIMDataBase;" +
             @"AttachDbFilename=" + appLocation + @"\PRAIMTable.mdf;" +
                 "Integrated Security=True; Trusted_Connection=True; MultipleActiveResultSets=True;";
     }

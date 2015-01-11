@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:converters="clr-namespace:Common.Converters;assembly=Common"
+             xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
              mc:Ignorable="d" Name="self"
              d:DesignHeight="300" d:DesignWidth="300">
 
@@ -25,45 +26,43 @@
                     Select a project and a version to set the working project
             </TextBlock>
             <!--Save button-->
-            <Button Command="{Binding SetWorkingProjectCommand}" DockPanel.Dock="Right" Padding="5"
-                                    Width="120" ToolTip="Change the working project to the selected project and version">
-                Set Working Project
-            </Button>
+            <controls:RectangleButton Command="{Binding SetWorkingProjectCommand}" DockPanel.Dock="Right"
+                                  Style="{StaticResource RectangleButtonStyle}" Width="160" Background="{StaticResource SmokeGreen}"
+                                  ToolTip="Change the working project to the selected project and version"
+                                  Text="SET WORKING PROJECT">
+            </controls:RectangleButton>
         </DockPanel>
 
-        <Separator DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
-                               Background="{StaticResource SeperatorGradient}">
-        </Separator>
-
-        <Grid DockPanel.Dock="Top" Margin="0,5,0,5">
+        <Grid DockPanel.Dock="Top" Margin="0,5,0,5" HorizontalAlignment="Left" Grid.IsSharedSizeScope="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.3*" SharedSizeGroup="ProjectsWidth"/>
+                <ColumnDefinition Width="0.3*" SharedSizeGroup="ProjectsWidth"/>
+                <ColumnDefinition Width="0.6*"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="0" MinWidth="120" Margin="5">
+            <!--Projects-->
+            <Grid Grid.Column="0" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <DockPanel Background="LightGray">
-                        <TextBlock Text="Projects" Margin="2" DockPanel.Dock="Left"/>
-                        <Button Command="{Binding RemoveProjectCommand}"
-                                Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                                ToolTip="Remove selected project"
-                                VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
-                            <Image Source="{StaticResource FugueDeleteIcon}"/>
-                        </Button>
-                        <Button Click="OnAddProject"                                
-                                Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                                ToolTip="Add new project"
-                                VerticalAlignment="Center" Margin="2" Background="Transparent" BorderThickness="0">
-                            <Image Source="{StaticResource FuguePlus}"/>
-                        </Button>
+                    <DockPanel Background="{StaticResource SmokeBlue}">
+                        <TextBlock Text="PROJECTS" Foreground="White" Margin="2" DockPanel.Dock="Left" VerticalAlignment="Center"
+                                   FontWeight="SemiBold"/>
+                        <controls:ImageButton Command="{Binding RemoveProjectCommand}" Padding="0"
+                                DockPanel.Dock="Right" HorizontalAlignment="Right" ImageHeight="30" ImageWidth="30"
+                                ToolTip="Remove selected project" ImageSource="{StaticResource MetroCancel}"
+                                VerticalAlignment="Center" Background="Transparent" BorderThickness="0"
+                                IsEnabled="{Binding SelectedProjectModel, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}">
+                        </controls:ImageButton>
                     </DockPanel>
-                    <ListBox Grid.Row="1" ItemsSource="{Binding Projects}" BorderThickness="1" BorderBrush="LightGray"
-                             SelectedItem="{Binding SelectedProject.Model}">
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Projects}" BorderThickness="1" BorderBrush="{StaticResource SmokeBlue}"
+                             SelectedItem="{Binding SelectedProjectModel}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <DockPanel>
@@ -76,53 +75,48 @@
                 </Grid>
             </Grid>
 
-            <GroupBox Grid.Column="1" Header="Project Properties" Padding="1,5,1,1" Margin="5" 
-                      IsEnabled="{Binding Path=DataContext.SelectedProject.Model, ElementName=self, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}"
-                      BorderThickness="1" BorderBrush="Black" DataContext="{Binding SelectedProject}">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
-                    </Grid.ColumnDefinitions>
-
-                    <TextBlock Grid.Row="0" Text="Name:" Margin="2"/>
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="2"/>
-
-                    <TextBlock Grid.Row="1" Text="Description:" Margin="2"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Description}" Margin="2"/>
-
-                    <Grid Grid.Row="2" Grid.ColumnSpan="2">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <DockPanel Background="LightGray" Margin="0">
-                            <TextBlock Text="Versions" Margin="2" DockPanel.Dock="Left"/>
-                            <Button Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                                ToolTip="Remove selected version" Click="OnRemoveVersion"
-                                VerticalAlignment="Center" Background="Transparent" BorderThickness="0">
-                                <Image Source="{StaticResource FugueDeleteIcon}"/>
-                            </Button>
-                            <Button Width="16" Height="16" DockPanel.Dock="Right" HorizontalAlignment="Right"
-                                ToolTip="Add new version" Click="OnAddVersion"
-                                VerticalAlignment="Center" Margin="2" Background="Transparent" BorderThickness="0">
-                                <Image Source="{StaticResource FuguePlus}"/>
-                            </Button>
-                        </DockPanel>
-                        <ListBox Grid.Row="1" ItemsSource="{Binding Versions}" BorderThickness="1" BorderBrush="LightGray"
+            <!--Versions-->
+            <Grid Grid.Column="1" Margin="5" DataContext="{Binding SelectedProject}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <DockPanel Background="{StaticResource SmokeBlue}" Margin="0">
+                    <TextBlock Text="VERSIONS" Margin="2" DockPanel.Dock="Left" Foreground="White" VerticalAlignment="Center"
+                               FontWeight="SemiBold"/>
+                    <controls:ImageButton Click="OnRemoveVersion" Padding="0"
+                                DockPanel.Dock="Right" HorizontalAlignment="Right" ImageHeight="30" ImageWidth="30"
+                                ToolTip="Remove selected version" ImageSource="{StaticResource MetroCancel}"
+                                VerticalAlignment="Center" Background="Transparent" BorderThickness="0"
+                                IsEnabled="{Binding Path=DataContext.SelectedVersion, ElementName=self, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True, UpdateSourceTrigger=PropertyChanged}">
+                    </controls:ImageButton>
+                </DockPanel>
+                <ListBox Grid.Row="1" ItemsSource="{Binding Versions}" BorderThickness="1" BorderBrush="{StaticResource SmokeBlue}"
                                  SelectedItem="{Binding Path=DataContext.SelectedVersion, ElementName=self}">
-                        </ListBox>
-                    </Grid>
-                </Grid>
+                </ListBox>
+            </Grid>
 
-            </GroupBox>
+            <!--Description-->
+            <Grid Grid.Column="2" DataContext="{Binding SelectedProject}" Margin="5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Text="PROJECT DESCRIPTION:"/>
+                <TextBlock Grid.Row="1" Text="{Binding Description}" Background="Transparent" VerticalAlignment="Stretch"
+                           TextWrapping="Wrap" TextTrimming="CharacterEllipsis" Foreground="{StaticResource LightSmokeGray}"/>
+            </Grid>
+
+            <controls:RectangleButton Grid.Row="1" Text="ADD PROJECT" Foreground="White" Margin="5" 
+                                      Click="OnAddProject"  ToolTip="Add new project"
+                                      FontWeight="SemiBold" MinWidth="100" Height="30" Background="{StaticResource SmokeBlue}">
+            </controls:RectangleButton>
+
+            <controls:RectangleButton Grid.Row="1" Grid.Column="1" Text="ADD VERSION" Foreground="White" Margin="5"
+                                      ToolTip="Add new version" Click="OnAddVersion"
+                                      FontWeight="SemiBold" MinWidth="100" Height="30" Background="{StaticResource SmokeBlue}"
+                                      IsEnabled="{Binding SelectedProjectModel, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}">
+            </controls:RectangleButton>
         </Grid>
-
     </DockPanel>
 </UserControl>

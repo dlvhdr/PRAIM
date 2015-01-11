@@ -32,4 +32,12 @@
     <BitmapImage x:Key="FugueZoomFit" UriSource="Images/Fugue/magnifier-zoom-fit.png"/>
     <BitmapImage x:Key="FuguePlus" UriSource="Images/Fugue/plus.png"/>
 
+    <BitmapImage x:Key="MetroCamera" UriSource="Images/Windows-Metro/Camera.png"/>
+    <BitmapImage x:Key="MetroCancel" UriSource="Images/Windows-Metro/Cancel.png"/>
+    <BitmapImage x:Key="MetroSaveImage" UriSource="Images/Windows-Metro/Save pictures.png"/>
+    <BitmapImage x:Key="MetroOK" UriSource="Images/Windows-Metro/OK.png"/>
+    <BitmapImage x:Key="MetroSaveImageNoCircle" UriSource="Images/Windows-Metro/Save pictures_no_circle.png"/>
+    <BitmapImage x:Key="MetroSave" UriSource="Images/Windows-Metro/Save.png"/>
+    <BitmapImage x:Key="MetroSaveCircle" UriSource="Images/Windows-Metro/Save_circle.png"/>
+
 </ResourceDictionary>

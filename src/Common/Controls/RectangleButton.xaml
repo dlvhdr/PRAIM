@@ -1,21 +1,18 @@
-﻿<Button x:Class="Common.Controls.ImageButton"
+﻿<Button x:Class="Common.Controls.RectangleButton"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             Name="self">
+             mc:Ignorable="d" x:Name="self"
+             d:DesignHeight="300" d:DesignWidth="300">
     <Button.Template>
-        <ControlTemplate>
-            <Border Name="ButtonBorder" HorizontalAlignment="Center" VerticalAlignment="Center" Background="{Binding Background, ElementName=self}" BorderBrush="{Binding BorderBrush, ElementName=self}">
-                <Image Width="{Binding ImageWidth, ElementName=self}" 
-                       Height="{Binding ImageHeight, ElementName=self}" 
-                       Source="{Binding ImageSource, ElementName=self}"></Image>
+        <ControlTemplate TargetType="Button">
+            <Border Background="{Binding Background,ElementName=self}">
+                <TextBlock x:Name="TextBlock" Text="{Binding Text, ElementName=self}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
             </Border>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled" Value="False">
-                    <Setter TargetName="ButtonBorder" Property="Opacity" Value="0.5"/>
+                    <Setter TargetName="TextBlock" Property="Opacity" Value="0.5"/>
                 </Trigger>
                 <MultiTrigger>
                     <MultiTrigger.Conditions>
@@ -23,7 +20,7 @@
                         <Condition Property="IsEnabled" Value="True"/>
                     </MultiTrigger.Conditions>
                     <MultiTrigger.Setters>
-                        <Setter TargetName="ButtonBorder" Property="Background" Value="{StaticResource SmokeGreen}"/>
+                        <Setter TargetName="TextBlock" Property="TextDecorations" Value="Underline"/>
                     </MultiTrigger.Setters>
                 </MultiTrigger>
             </ControlTemplate.Triggers>

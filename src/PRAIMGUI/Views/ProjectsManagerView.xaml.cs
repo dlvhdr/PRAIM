@@ -22,18 +22,26 @@ namespace PRAIM.Views
     /// </summary>
     public partial class ProjectsManager : UserControl
     {
+        /// <summary>
+        /// The view's view model.
+        /// </summary>
         public ProjectsManagerViewModel ViewModel { get { return DataContext as ProjectsManagerViewModel; } }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public ProjectsManager()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        #region Handlers
 
-        }
-
+        /// <summary>
+        /// Add project handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnAddProject(object sender, RoutedEventArgs e)
         {
             ProjectViewModel new_project = new ProjectViewModel() { Model = new Project() };
@@ -53,6 +61,11 @@ namespace PRAIM.Views
             }
         }
 
+        /// <summary>
+        /// Add version handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnAddVersion(object sender, RoutedEventArgs e)
         {
             NewVersionDlg dlg = new NewVersionDlg()
@@ -69,9 +82,16 @@ namespace PRAIM.Views
             }
         }
 
+        /// <summary>
+        /// Remove version handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnRemoveVersion(object sender, RoutedEventArgs e)
         {
             ViewModel.RemoveVersion();
         }
+
+        #endregion Handlers
     }
 }

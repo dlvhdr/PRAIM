@@ -7,23 +7,105 @@
         xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
         x:Name="self"
         Title="PRAIM - Project Action Items Manager" ShowInTaskbar="True"
-        MinWidth="610" MinHeight="400"
-        Width="610" Height="400"
-        Closed="OnExit">
+        Width="650" Height="400"
+        Closed="OnExit" Background="#32353a">
+
     <Window.Resources>
         <converters:NullToBoolConverter x:Key="NullToBoolConverter"/>
-        <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        <converters:NullToCollapsedConverter x:Key="NullToCollapsedConverter"/>
+        <converters:NullToHiddenConverter x:Key="NullToHiddenConverter"/>
+
 
         <LinearGradientBrush x:Key="SeperatorGradient">
             <GradientStop Color="White" Offset="0"/>
             <GradientStop Color="Black" Offset="0.3"/>
             <GradientStop Color="White" Offset="1.1"/>
         </LinearGradientBrush>
+
+        <Style TargetType="Grid">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <SolidColorBrush Color="#32353a"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+
+        <Style TargetType="DockPanel">
+            <Setter Property="Background" Value="{StaticResource SmokeGray}"/>
+            <Setter Property="Margin" Value="0"/>
+        </Style>
+
+        <Style TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+        </Style>
+
+        <SolidColorBrush x:Key="SolidBorderBrush" Color="#32353a" />
+
+        <SolidColorBrush x:Key="DisabledBackgroundBrush" Color="#32353a" />
+
+        <SolidColorBrush x:Key="DisabledBorderBrush" Color="#32353a" />
+
+        <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#32353a" />
+
+        <Style TargetType="{x:Type TabItem}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Grid>
+                            <Border 
+            Name="Border"
+            Margin="0,0,-4,0" 
+            Background="{StaticResource SmokeGray}"
+            BorderBrush="{StaticResource SolidBorderBrush}" 
+            BorderThickness="0">
+                                <ContentPresenter x:Name="ContentSite"
+              VerticalAlignment="Center"
+              HorizontalAlignment="Center"
+              ContentSource="Header"
+              Margin="12,2,12,2"
+              RecognizesAccessKey="True"/>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Panel.ZIndex" Value="100" />
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource SmokeBlue}" />
+                                <Setter TargetName="Border" Property="BorderThickness" Value="0" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}" />
+                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBorderBrush}" />
+                                <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type Button}" x:Key="TakeSnapshotStyle">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#99ba57"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
-    <DockPanel>
+    <DockPanel Margin="0">
         <Grid DockPanel.Dock="Top">
-            <Menu HorizontalAlignment="Stretch">
+            <Menu HorizontalAlignment="Stretch" Background="White">
                 <MenuItem Header="File">
                     <MenuItem Header="Exit" Click="OnExit"/>
                 </MenuItem>
@@ -32,102 +114,86 @@
                     <MenuItem Header="About" Click="OpenAbout"/>
                 </MenuItem>
             </Menu>
-            <DockPanel Margin="0,2,0,2" HorizontalAlignment="Right" VerticalAlignment="Center">
-                <Label Content="Working Project:" Margin="0,0,5,0" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Left" />
-                <TextBlock Margin="0,0,5,0" Padding="0" VerticalAlignment="Center" HorizontalAlignment="Left" FontWeight="Bold">
-                    <TextBlock.Style>
-                        <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Text" Value="None"/>
-                            <Style.Triggers>
-                                <MultiDataTrigger>
-                                    <MultiDataTrigger.Conditions>
-                                        <Condition Binding="{Binding WorkingProjectName, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Value="True"/>
-                                        <Condition Binding="{Binding WorkingProjectVersion, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}" Value="True"/>
-                                    </MultiDataTrigger.Conditions>
-                                    <Setter Property="Text">
-                                        <Setter.Value>
-                                            <MultiBinding StringFormat="{}{0}, ver. {1}">
-                                                <Binding Path="WorkingProjectName"/>
-                                                <Binding Path="WorkingProjectVersion"/>
-                                            </MultiBinding>
-                                        </Setter.Value>
-                                    </Setter>
-                                </MultiDataTrigger>
-                            </Style.Triggers>
-                        </Style>
-                    </TextBlock.Style>
-                </TextBlock>
-            </DockPanel>
-        </Grid>
-        <TabControl DockPanel.Dock="Top" SelectedIndex="0">
-            <!--Snapshot tab-->
-            <TabItem Padding="4,2">
-                <TabItem.Header>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueCameraIcon}" Style="{StaticResource Icon16x16}"/>
-                        <TextBlock Grid.Column="1" DockPanel.Dock="Left" Text="Snapshot" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                    </Grid>
+        </Grid>
+        <TabControl DockPanel.Dock="Top" SelectedIndex="0" Margin="0" Background="{StaticResource SmokeGray}"  BorderThickness="0">
+            <!--Snapshot tab-->
+            <TabItem Padding="0">
+                <TabItem.Header>
+                    <TextBlock Text="SNAPSHOT" Foreground="White" FontWeight="Bold"/>
                 </TabItem.Header>
 
-                <DockPanel LastChildFill="True">
+                <DockPanel Grid.IsSharedSizeScope="True" Margin="5" LastChildFill="True">
 
-                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False"
-                               Margin="0,5,5,5" Height="30">
+                    <!--Buttons-->
+                    <DockPanel DockPanel.Dock="Bottom" LastChildFill="False" Margin="0,10,0,0">
                         <!--Save button-->
-                        <Button Command="{Binding SaveCommand}" DockPanel.Dock="Right" Padding="5"
-                                Width="90" ToolTip="Save Action Item">
-                            Save
-                        </Button>
+                        <controls:RectangleButton Command="{Binding SaveCommand}" DockPanel.Dock="Right" Text="SAVE"
+                                              Style="{StaticResource RectangleButtonStyle}" Background="{StaticResource SmokeGreen}">
+                        </controls:RectangleButton>
                         <!--Take snapshot button-->
-                        <Button DockPanel.Dock="Right" Padding="5" Click="OnTakeSnapshot"
-                                Margin="0,0,10,0" Width="90" ToolTip="Add Snapshot to Action Item">
-                            Take Snapshot
+                        <Button DockPanel.Dock="Left" Padding="0" Click="OnTakeSnapshot" BorderThickness="0"
+                                Margin="0,0,10,0" ToolTip="Add Snapshot to Action Item" Style="{StaticResource TakeSnapshotStyle}">
+                            <StackPanel Orientation="Vertical" Margin="3">
+                                <Image Source="{StaticResource MetroCamera}" Height="30" Width="30"/>
+                                <TextBlock Text="TAKE SNAPSHOT" FontStretch="ExtraExpanded"/>
+                            </StackPanel>
+
+
                         </Button>
 
                     </DockPanel>
 
-                    <Separator DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
-                               Background="{StaticResource SeperatorGradient}">
-                    </Separator>
-
-                    <Grid Margin="5,5,0,0" Grid.IsSharedSizeScope="True">
+                    <!--Comments-->
+                    <Grid DockPanel.Dock="Bottom">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Labels"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+
+                        <TextBlock Grid.Row="0" Text="COMMENTS:" Margin="0,5,5,5"
+                                   VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                        <TextBox Grid.Row="1" Grid.ColumnSpan="2" SpellCheck.IsEnabled="True" Language="en-US" Margin="0,5,0,5"
+                                 TextWrapping="Wrap" AcceptsReturn="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                 Text="{Binding InsertMetadata.Comments, Mode=TwoWay}" MinHeight="60" MaxHeight="100"/>
+                    </Grid>
+
+                    <!--Metadata and preview-->
+                    <Grid DockPanel.Dock="Top">
+                        <Grid.ColumnDefinitions>
+                            <!--Metadata-->
                             <ColumnDefinition Width="0.35*"/>
+                            <!--Preview-->
                             <ColumnDefinition Width="0.65*"/>
                         </Grid.ColumnDefinitions>
+
                         <!--Metadata-->
-                        <GroupBox Grid.Column="0" Header="Action Item Meta-data" BorderBrush="Black" BorderThickness="1">
-                            <Grid HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch" Margin="0,0,0,0.2">
+                        <DockPanel Grid.Column="0" Margin="0,0,0,0" LastChildFill="False">
+
+                            <Grid DockPanel.Dock="Top">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="Auto" SharedSizeGroup="Labels"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Grid.Resources>
-                                    <Style TargetType="{x:Type TextBlock}">
-                                        <Setter Property="Margin" Value="0,2,5,2"/>
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
-                                    </Style>
-                                    <Style TargetType="{x:Type TextBox}">
-                                        <Setter Property="Margin" Value="2,2"/>
-                                    </Style>
-                                </Grid.Resources>
-
-                                <TextBlock Grid.Row="0" Text="Project:"/>
-                                <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center">
+                                <!--Project-->
+                                <TextBlock Grid.Row="0" Text="WORKING PROJECT:" FontWeight="SemiBold" Margin="0,5,5,2"
+                                       VerticalAlignment="Center" Foreground="{StaticResource SmokeGreen}"
+                                           FontSize="13"/>
+                                <TextBlock Grid.Row="1" VerticalAlignment="Center"
+                                       Margin="0,2,5,5" FontSize="13">
                                     <TextBlock.Style>
                                         <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Foreground" Value="White"/>
                                             <Setter Property="Text" Value="Select a Project"/>
                                             <Style.Triggers>
                                                 <MultiDataTrigger>
@@ -148,149 +214,155 @@
                                         </Style>
                                     </TextBlock.Style>
                                 </TextBlock>
+                            </Grid>
 
-                                <!--Comments-->
-                                <TextBlock Grid.Row="1" Text="Comments:" 
-                                   VerticalAlignment="Top" HorizontalAlignment="Left"/>
-                                <TextBox Grid.Row="1" SpellCheck.IsEnabled="True" Language="en-US" Grid.Column="1" 
-                                 TextWrapping="Wrap" Margin="2,2" AcceptsReturn="True" HorizontalAlignment="Stretch"
-                                 Text="{Binding InsertMetadata.Comments, Mode=TwoWay}"/>
+                            <Grid DockPanel.Dock="Bottom">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" SharedSizeGroup="Labels"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
                                 <!--Priority-->
-                                <TextBlock Grid.Row="2" Text="Priority:"/>
-                                <ComboBox Grid.Row="2" Grid.Column="1" Margin="2,2"
-                                          Style="{StaticResource FlatWhiteComboBox}"
-                                  ItemsSource="{Binding PossiblePriorities}" 
-                                  SelectedItem="{Binding InsertMetadata.Priority}">
+                                <TextBlock Grid.Column="0" Text="PRIORITY:" Margin="0,5,10,5" VerticalAlignment="Center"/>
+                                <ComboBox Grid.Column="1" Margin="0,5,5,5" MaxWidth="120" HorizontalAlignment="Stretch"
+                                  ItemsSource="{Binding PossiblePriorities}"  Style="{StaticResource FlatWhiteComboBox}"
+                                  SelectedItem="{Binding InsertMetadataPriority}">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}"/>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
-
                                 </ComboBox>
-
                             </Grid>
-                        </GroupBox>
+                        </DockPanel>
 
-                        <GroupBox Grid.Column="1" Header="Snapshot Preview" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
-                            <Image Source="{Binding CroppedImage}" Stretch="Uniform"/>
-                        </GroupBox>
+                        <!--Preview-->
+                        <Border Grid.Column="1" BorderThickness="2" BorderBrush="{StaticResource SmokeBlue}" Margin="10,0,0,0">
+                            <Grid>
+                                <Grid.Background>
+                                    <SolidColorBrush Color="White" Opacity="0.9"/>
+                                </Grid.Background>
+                                <Image Source="{Binding CroppedImage}" Stretch="Uniform"/>
+                                <TextBlock Text="NO SNAPSHOT TAKEN" Visibility="{Binding CroppedImage, Converter={StaticResource NullToCollapsedConverter}, ConverterParameter=True}"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" Foreground="{StaticResource SmokeBlue}"/>
+                            </Grid>
+                        </Border>
+
                     </Grid>
+
                 </DockPanel>
+
             </TabItem>
 
             <!--Seach db tab-->
-            <TabItem Padding="4,2">
+            <TabItem Padding="4,2" Foreground="White">
                 <TabItem.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueDBIcon}" Style="{StaticResource Icon16x16}"/>
-                        <TextBlock Grid.Column="1" Text="Search" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                    </Grid>
+                    <TextBlock Text="SEARCH" Foreground="White" FontWeight="Bold"/>
                 </TabItem.Header>
-
                 <DockPanel LastChildFill="True">
 
                     <!--Search button-->
                     <DockPanel DockPanel.Dock="Bottom" LastChildFill="False"
-                               Margin="0,5,5,5" Height="30">
-                        <Button DockPanel.Dock="Right" Click="SearchDB" 
-                                Width="90" Padding="5">
-                            Search
-                        </Button>
-                        <Button 
-                        	Width="90" Padding="5" Content="Report" Click="GenerateReport"/>
+                              Margin="5,10,5,10" Height="30">
+                        <controls:RectangleButton DockPanel.Dock="Right" Click="SearchDB" Style="{StaticResource RectangleButtonStyle}"
+                                Width="90" Padding="5" Margin="10,0,0,0" Text="SEARCH" Background="{StaticResource SmokeGreen}">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Text="SEARCH"/>
+                        </controls:RectangleButton>
+                        <controls:RectangleButton DockPanel.Dock="Left" Width="90" Padding="5" Click="GenerateReport"
+                                Style="{StaticResource RectangleButtonStyle}" Text="REPORT" Background="{StaticResource SmokeGreen}">
+                        </controls:RectangleButton>
                     </DockPanel>
 
-                    <Separator DockPanel.Dock="Bottom" HorizontalAlignment="Stretch"
-                               Background="{StaticResource SeperatorGradient}"/>
-
                     <Grid Margin="5,5,0,0" DockPanel.Dock="Top">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
 
                         <!--Search parameters-->
-                        <Grid Grid.IsSharedSizeScope="True">
+                        <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
-                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="110"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
                             </Grid.ColumnDefinitions>
 
                             <Grid.Resources>
                                 <Style TargetType="{x:Type TextBlock}">
-                                    <Setter Property="Margin" Value="0,2,5,2"/>
+                                    <Setter Property="Margin" Value="3,2"/>
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                 </Style>
                                 <Style TargetType="{x:Type TextBox}">
-                                    <Setter Property="Margin" Value="2,2"/>
+                                    <Setter Property="Margin" Value="3,2"/>
                                 </Style>
+
+                                <Style TargetType="{x:Type controls:NullableCombobox}" BasedOn="{StaticResource FlatWhiteComboBox}">
+                                </Style>
+
+                                <Style TargetType="{x:Type DatePicker}">
+                                    <Setter Property="Margin" Value="3,2"/>
+                                    <Setter Property="Width" Value="120"/>
+                                    <Setter Property="MaxWidth" Value="120"/>
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                    <Setter Property="BorderBrush" Value="White"/>
+                                </Style>
+
                             </Grid.Resources>
 
                             <!--FromDate-->
-                            <TextBlock Grid.Row="0" Text="From Date:" Margin="0,0,0,5"/>
+                            <TextBlock  Text="From Date:" Grid.Row="0" Grid.Column="0"/>
                             <DatePicker SelectedDate="{Binding Path = SearchMetadata.FromDate, StringFormat = {}{0:dd-MM-yyyy}}"
-                                        Margin="0,0,0,5" Padding="1" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" >
+                                        Grid.Row="0" Grid.Column="1">
                                 <DatePicker.Resources>
                                     <Style TargetType="DatePickerTextBox">
                                         <Setter Property="Control.Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <TextBox x:Name="PART_TextBox"
-                                                    Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd-MM-yyyy}, 
-                                                         RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                        Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd-MM-yyyy}, 
+                                                             RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Style>
                                 </DatePicker.Resources>
                             </DatePicker>
+
                             <!--ToDate-->
-                            <TextBlock Grid.Row="1" Text="To Date:" Margin="0,0,0,5"/>
+                            <TextBlock Text="To Date:" Grid.Row="0" Grid.Column="2"/>
                             <DatePicker SelectedDate="{Binding Path = SearchMetadata.ToDate, StringFormat = {}{0:dd-MM-yyyy}}"
-                                       Margin="0,0,0,5" Padding="1" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center">
+                                        Grid.Row="0" Grid.Column="3">
                                 <DatePicker.Resources>
                                     <Style TargetType="DatePickerTextBox">
                                         <Setter Property="Control.Template">
                                             <Setter.Value>
                                                 <ControlTemplate>
                                                     <TextBox x:Name="PART_TextBox"
-                                                    Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd-MM-yyyy}, 
-                                                         RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
+                                                        Text="{Binding Path=SelectedDate, StringFormat = {}{0:dd-MM-yyyy}, 
+                                                             RelativeSource={RelativeSource AncestorType={x:Type DatePicker}}}" />
                                                 </ControlTemplate>
                                             </Setter.Value>
                                         </Setter>
                                     </Style>
                                 </DatePicker.Resources>
                             </DatePicker>
-                            <!--Comments-->
-                            <TextBlock Grid.Row="2" Text="Comments:" Margin="0,0,0,5"/>
-                            <TextBox Grid.Row="2" Grid.Column="1" Margin="0,0,0,5" Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}"
-                                     VerticalAlignment="Center"/>
 
                             <!--Priority-->
-                            <TextBlock Grid.Row="3" Text="Priority:" Margin="0,0,0,5"/>
-                            <controls:NullableCombobox Grid.Row="3" Grid.Column="1" Margin="0,0,0,5" ItemsSource="{Binding PossiblePriorities}"
-                                      SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}" VerticalAlignment="Center"
-                                      Style="{StaticResource FlatWhiteComboBox}">
+                            <TextBlock Text="Priority:" Grid.Row="0" Grid.Column="4"/>
+                            <controls:NullableCombobox Grid.Row="0" Grid.Column="5" ItemsSource="{Binding PossiblePriorities}"
+                                      SelectedItem="{Binding SearchMetadata.Priority, Mode=OneWayToSource}"
+                                                        Width="120" MaxWidth="120" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,2">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding}"/>
@@ -298,11 +370,12 @@
                                 </ComboBox.ItemTemplate>
                             </controls:NullableCombobox>
 
+
                             <!--Project Name-->
-                            <TextBlock Grid.Row="4" Text="Project Name:" Margin="0,0,5,5"/>
-                            <controls:NullableCombobox Grid.Row="4" Grid.Column="1" Margin="0,0,0,5" Style="{StaticResource FlatWhiteComboBox}"
-                                      IsReadOnly="False"
-                                      SelectedItem="{Binding SelectedSearchProject, Mode=OneWayToSource}"
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Project Name:"/>
+                            <controls:NullableCombobox Grid.Row="1" Grid.Column="1" IsReadOnly="False"
+                                                       SelectedItem="{Binding SelectedSearchProject, Mode=OneWayToSource}"
+                                                       Width="120" MaxWidth="120" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,2"
                                       ItemsSource="{Binding Projects}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
@@ -312,11 +385,11 @@
                             </controls:NullableCombobox>
 
                             <!--Version-->
-                            <TextBlock Grid.Row="5" Text="Version:" Margin="0,0,0,5"/>
-                            <controls:NullableCombobox Grid.Row="5" Grid.Column="1" Margin="0,0,0,5"
-                                      IsReadOnly="False"
+                            <TextBlock Grid.Row="1" Grid.Column="2" Text="Version:"/>
+                            <controls:NullableCombobox Grid.Row="1" Grid.Column="3" IsReadOnly="False"
                                       SelectedItem="{Binding SearchMetadata.Version, Mode=OneWayToSource}"
-                                      ItemsSource="{Binding SelectedProjectVersions}" Style="{StaticResource FlatWhiteComboBox}">
+                                      ItemsSource="{Binding SelectedProjectVersions}"
+                                                       Width="120" MaxWidth="120" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="3,2">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <TextBlock Text="{Binding}"/>
@@ -324,44 +397,25 @@
                                 </ComboBox.ItemTemplate>
                             </controls:NullableCombobox>
 
-                            <Grid Grid.Row="6" Margin="0,5,0,5" VerticalAlignment="Bottom">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Border BorderBrush="Black" BorderThickness="1" Padding="0">
-                                    <Grid>
-                                        <Image Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
-                                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"
-                                                   Padding="0" Margin="0"
-                                                   Visibility="{Binding PreviewImage, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
-                                            No Action Item
-                                            <LineBreak/>
-                                            Selected
-                                        </TextBlock>
-                                    </Grid>
-                                </Border>
-
-                                <StackPanel Orientation="Vertical" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                                    <controls:ImageButton  Padding="5" ImageSource="{StaticResource FugueSaveIcon}" Height="20" Width="20"
-                                                            Background="Transparent" ImageHeight="16" ImageWidth="16" 
-                                                            Click="OnExportActionItem" ToolTip="Export"
-                                                            IsEnabled="{Binding PreviewImage, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}"/>
-                                
-                                    <controls:ImageButton Grid.Column="1" Padding="5" ImageSource="{StaticResource FugueZoomFit}" Height="20" Width="20"
-                                                            Background="Transparent" ImageHeight="16" ImageWidth="16" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                                                            ToolTip="View full size" Click="OnPreviewFullSize"
-                                                            IsEnabled="{Binding PreviewImage, Converter={StaticResource NullToBoolConverter}, ConverterParameter=True}"/>
-                                </StackPanel>
-                            </Grid>
-
+                            <!--Comments-->
+                            <TextBlock Text="Comments:"
+                                       Grid.Row="1" Grid.Column="4"/>
+                            <TextBox Grid.Row="1" Grid.Column="5" Text="{Binding SearchMetadata.Comments, Mode=OneWayToSource}"
+                                     Margin="3,2,5,2"/>
                         </Grid>
 
-                        <Grid Grid.Column="1" Margin="20,0,5,5"
-                          ScrollViewer.CanContentScroll="True">
-                            <DataGrid ItemsSource="{Binding ResultDBItems, UpdateSourceTrigger=PropertyChanged}"
-                                      SelectedItem="{Binding SelectedActionItem}"
-                                      Background="White"
+                        <Grid Grid.Row="2" ScrollViewer.CanContentScroll="True" Margin="0,15,0,5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="110"/>
+                            </Grid.ColumnDefinitions>
+
+                            <DataGrid Grid.Column="0" ItemsSource="{Binding ResultDBItems, UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedItem="{Binding SelectedActionItem}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
+                                      Background="White" Margin="0,0,5,0"
                                       AutoGenerateColumns="False" CanUserAddRows="False"
                                       IsReadOnly="True">
                                 <DataGrid.ContextMenu>
@@ -374,6 +428,12 @@
                                         </MenuItem>
                                     </ContextMenu>
                                 </DataGrid.ContextMenu>
+
+                                <DataGrid.Resources>
+                                    <Style TargetType="DataGridRow">
+                                        <EventSetter Event="MouseDoubleClick" Handler="ActionItemDoubleClick"/>
+                                    </Style>
+                                </DataGrid.Resources>
 
                                 <DataGrid.Columns>
                                     <DataGridTextColumn Header="Project" Binding="{Binding metaData.ProjectName}">
@@ -388,6 +448,16 @@
                                     </DataGridTextColumn>
                                 </DataGrid.Columns>
                             </DataGrid>
+
+                            <Border BorderBrush="{StaticResource SmokeBlue}" BorderThickness="2" Padding="0" Grid.Column="1"
+                                    VerticalAlignment="Bottom" Margin="2,0,5,0" Visibility="{Binding PreviewImage, Converter={StaticResource NullToHiddenConverter}}">
+                                <Grid>
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="White" Opacity="0.9"/>
+                                    </Grid.Background>
+                                    <Image Source="{Binding PreviewImage}" Stretch="Fill" Height="90" Width="90"/>
+                                </Grid>
+                            </Border>
                         </Grid>
 
                     </Grid>
@@ -396,24 +466,11 @@
 
             </TabItem>
 
-            <TabItem Padding="4,2">
+            <TabItem Padding="4,2" Foreground="White">
                 <TabItem.Header>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-
-                        <Image Grid.Column="0" Margin="5,0" Source="{StaticResource FugueProjectsIcon}" Style="{StaticResource Icon16x16}"/>
-                        <TextBlock Grid.Column="1" Text="Projects" VerticalAlignment="Center" TextAlignment="Center" HorizontalAlignment="Stretch"/>
-                    </Grid>
+                    <TextBlock Text="PROJECTS" Foreground="White" FontWeight="Bold"/>
                 </TabItem.Header>
-
                 <views:ProjectsManager DataContext="{Binding ProjectsViewModel}"/>
-
             </TabItem>
         </TabControl>
     </DockPanel>

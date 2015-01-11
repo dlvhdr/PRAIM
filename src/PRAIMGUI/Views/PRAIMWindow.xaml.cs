@@ -18,6 +18,7 @@ using PRAIM.SnapshotManager;
 using Common;
 using System.IO;
 using System.Globalization;
+using PRAIM.Views;
 
 
 
@@ -28,24 +29,37 @@ namespace PRAIM
     /// </summary>
     public partial class PRAIMWindow : Window
     {
-        public PRAIMViewModel MainViewModel { get { return this.DataContext as PRAIMViewModel; } }
-        public ProjectsManagerViewModel ProjectsManagerViewModel { get; set; }
+        /// <summary>
+        /// The view model for the view
+        /// </summary>
+        public PRAIMViewModel ViewModel { get { return this.DataContext as PRAIMViewModel; } }
 
-        public ICollectionView DummyDBItems { get; private set; }
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public PRAIMWindow()
         {
             InitializeComponent();
-
-            this.DataContext = new PRAIMViewModel();
         }
 
+        #region Command handlers
+
+        /// <summary>
+        /// Take snapshot button handler
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnTakeSnapshot(object sender, RoutedEventArgs e)
         {
             this.LayoutUpdated += RunSnapshotMgr;
             this.Hide();
         }
 
+        /// <summary>
+        /// Run snapshot manager (open the snapshot manager window)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RunSnapshotMgr(object sender, EventArgs e)
         {
             if (IsVisible == true) return;
@@ -58,6 +72,11 @@ namespace PRAIM
             this.LayoutUpdated -= RunSnapshotMgr;
         }
 
+        /// <summary>
+        /// Handler for when the snapshot manager is closed (snapshot taken)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SnapshotMgrClosed(object sender, EventArgs e)
         {
             SnapshotManagerWindow snapshotMgr = sender as SnapshotManagerWindow;
@@ -70,27 +89,41 @@ namespace PRAIM
                 using (MemoryStream ms = new MemoryStream()) {
                     encoder.Save(ms);
                     image_bytes = ms.ToArray();
-                    MainViewModel.CroppedImageBytes = image_bytes;
-                    MainViewModel.CroppedImage = snapshotMgr.CroppedImage;
-                    MainViewModel.DateTime = DateTime.Now;
+                    ViewModel.CroppedImageBytes = image_bytes;
+                    ViewModel.CroppedImage = snapshotMgr.CroppedImage;
+                    ViewModel.DateTime = DateTime.Now;
                 }
             }
         }
 
+        /// <summary>
+        /// Handler for search DB button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SearchDB(object sender, RoutedEventArgs e)
         {
-            MainViewModel.SearchDB();
+            ViewModel.SearchDB();
         }
 
+        /// <summary>
+        /// Handler for exit clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnExit(object sender, EventArgs e)
         {
-            MainViewModel.SaveConfig();
             this.Close();
         }
 
-        private void OnPreviewFullSize(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Handler for show full size action item snapshot.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ActionItemDoubleClick(object sender, RoutedEventArgs e)
         {
-            BitmapSource source = MainViewModel.GetSnapshotSource(MainViewModel.SelectedActionItem);
+            BitmapSource source = ViewModel.GetSnapshotSource(ViewModel.SelectedActionItem);
 
             ViewSnapshotDlg dlg = new ViewSnapshotDlg()
             {
@@ -102,27 +135,26 @@ namespace PRAIM
         }
 
         /// <summary>
-        /// Save action item snapshot to image file handler
+        /// Handler for generate report button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnExportActionItem(object sender, RoutedEventArgs e)
-        {
-            MainViewModel.ExportActionItem();
-        }
-
         private void GenerateReport(object sender, RoutedEventArgs e)
         {
-            MainViewModel.GenerateReport();
+            ViewModel.GenerateReport();
         }
 
+        /// <summary>
+        /// Handler for open about dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OpenAbout(object sender, EventArgs e)
         {
-            MessageBox.Show("PRAIM - Project Action Items Manager.\n" + 
-                "Version 1.0\n" + 
-                "Developed by Dolev Hadar & Dvir Kehaty.\n" +
-                "Copyright ©2015 Philips & Technion CS faculty.\n" +
-                "All Rights Reserved.", "PRAIM");
+            AboutDlg dlg = new AboutDlg() { Owner = this, WindowStartupLocation = System.Windows.WindowStartupLocation.CenterOwner };
+            dlg.Show();
         }
+
+        #endregion Command handlers
     }
 }

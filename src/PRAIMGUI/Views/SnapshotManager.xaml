@@ -106,17 +106,17 @@
                 </Grid>
             </ContentControl>
 
-            <StackPanel Width="20" Height="65" Name="ButtonsStackPanel" Visibility="{Binding ButtonsStackVisibility, ElementName=self, Converter={StaticResource BoolToVisibility}}"
-                        Orientation="Vertical" VerticalAlignment="Bottom">
-                <common:ImageButton Padding="5" ImageSource="{StaticResource FugueCancelIcon}" Height="20" Width="20" 
-                                        ImageHeight="16" ImageWidth="16"
-                                        Click="OnCancel" ToolTip="Cancel"/>
-                <common:ImageButton Padding="5" ImageSource="{StaticResource FugueSaveIcon}" Height="20" Width="20" 
-                                        ImageHeight="16" ImageWidth="16"
+            <StackPanel Width="30" Height="90" Name="ButtonsStackPanel" Visibility="{Binding ButtonsStackVisibility, ElementName=self, Converter={StaticResource BoolToVisibility}}"
+                        Orientation="Vertical" VerticalAlignment="Bottom" Background="{StaticResource SmokeGray}">
+                <common:ImageButton Padding="5" ImageSource="{StaticResource MetroCancel}" Height="30" Width="30" 
+                                        ImageHeight="30" ImageWidth="30" Background="{StaticResource SmokeGray}"
+                                        Click="OnCancel" ToolTip="Cancel" BorderThickness="0"/>
+                <common:ImageButton Padding="5" ImageSource="{StaticResource MetroSave}" Height="30" Width="30" 
+                                        ImageHeight="30" ImageWidth="30" Background="{StaticResource SmokeGray}" BorderThickness="0"
                                         Click="OnSaveToFile" ToolTip="Save to File"/>
-                <common:ImageButton Padding="5" ImageSource="{StaticResource FugueDocumentSave}" Height="20" Width="20" 
-                                        ImageHeight="16" ImageWidth="16"
-                                        Click="Capture" ToolTip="Continue to PRAIM"/>
+                <common:ImageButton Padding="5" ImageSource="{StaticResource MetroOK}" Height="30" Width="30" 
+                                        ImageHeight="30" ImageWidth="30" Background="{StaticResource SmokeGray}"
+                                        Click="Capture" ToolTip="Continue to PRAIM" BorderThickness="0"/>
                 
             </StackPanel>
         </Canvas>

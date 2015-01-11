@@ -1,0 +1,46 @@
+﻿<Window x:Class="PRAIM.Views.AboutDlg"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
+        Title="PRAIM" Height="220" Width="350" ResizeMode="NoResize">
+    <Grid Background="{StaticResource SmokeGray}">
+        <Grid.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="TextWrapping" Value="Wrap"/>
+            </Style>
+        </Grid.Resources>
+        <DockPanel LastChildFill="False" Margin="5">
+            <DockPanel DockPanel.Dock="Top">
+                <!--Logo-->
+                <Border DockPanel.Dock="Left" Height="100" Width="100">
+                    <Image/>
+                </Border>
+                <!--Text info-->
+                <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
+                    <TextBlock>
+                        <Bold>PRAIM</Bold> - Project Action Items Manager.
+                        <LineBreak />
+                        Version 1.0
+                        <LineBreak />
+                    </TextBlock>
+                    <TextBlock Foreground="{StaticResource SmokeGreen}" FontWeight="SemiBold">
+                        Developers:
+                    </TextBlock>
+                    <TextBlock>
+                        Dolev Hadar &amp; Dvir Kehaty.
+                        <LineBreak />
+                        <LineBreak />
+                        Copyright ©2015 Philips &amp; Technion CS faculty.
+                        <LineBreak />
+                        All Rights Reserved.
+                    </TextBlock>
+                </StackPanel>
+                
+            </DockPanel>
+            <controls:RectangleButton DockPanel.Dock="Bottom" HorizontalAlignment="Right" Text="OK" Foreground="White" FontWeight="SemiBold"
+                                      Width="60" Height="20" Background="{StaticResource SmokeGreen}"
+                                      Click="OnOK"/>
+        </DockPanel>
+    </Grid>
+</Window>

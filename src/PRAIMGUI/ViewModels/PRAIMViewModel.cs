@@ -22,6 +22,9 @@ using Microsoft.Win32;
 
 namespace PRAIM
 {
+    /// <summary>
+    /// Main application View model
+    /// </summary>
     public class PRAIMViewModel : INotifyPropertyChanged
     {
         #region Commands
@@ -33,12 +36,40 @@ namespace PRAIM
 
         #region Public Properties
 
-        public PRAIMDataBase DB { get { return _DB; } }
+        /// <summary>
+        /// The Database of ActionItems and Projects
+        /// </summary>
+        public PRAIMDataBase DB 
+        { 
+            get { return _DB; } 
+            set { _DB = value; } 
+        }
 
-        public ProjectsManagerViewModel ProjectsViewModel { get; set; }
+        /// <summary>
+        /// The projects manager view model. Register to changes on it.
+        /// </summary>
+        public ProjectsManagerViewModel ProjectsViewModel {
+            get { return _ProjectsViewModel; }
+            set 
+            {
+                _ProjectsViewModel = value;
 
+                if (_ProjectsViewModel != null) {
+                    _ProjectsViewModel.VersionAdded += OnVersionAdded;
+                    _ProjectsViewModel.VersionRemoved += OnVersionRemoved;
+                    _ProjectsViewModel.WorkingProjectChanged += OnWorkingProjectChanged;
+                }
+            } 
+        }
+
+        /// <summary>
+        /// Projects available for selection at search combobox.
+        /// </summary>
         public ObservableCollection<Project> Projects { get { return ProjectsViewModel.Projects; } }
 
+        /// <summary>
+        /// Selected project at search combobox
+        /// </summary>
         public Project SelectedSearchProject
         {
             get
@@ -49,12 +80,16 @@ namespace PRAIM
             {
                 if (value != _SelectedSearchProject) {
                     _SelectedSearchProject = value;
-                    SearchMetadata.ProjectName = _SelectedSearchProject.Name;
+
+                    SearchMetadata.ProjectName = (_SelectedSearchProject != null)? _SelectedSearchProject.Name : null;
                     UpdateSelectedProjectVersions();
                 }
             }
         }
         
+        /// <summary>
+        /// Version list for the selected project at combobox.
+        /// </summary>
         public ObservableCollection<string> SelectedProjectVersions { get; set; }
 
         /// <summary>
@@ -70,6 +105,11 @@ namespace PRAIM
         {
             get { return (InsertActionItem != null) ? InsertActionItem.metaData : null; }
             set { InsertActionItem.metaData = value; }
+        }
+        public Priority? InsertMetadataPriority
+        {
+            get { return (InsertMetadata != null) ? InsertMetadata.Priority : null; }
+            set { InsertMetadata.Priority = value; SaveCommand.UpdateCanExecuteState(); }
         }
 
         /// <summary>
@@ -97,6 +137,9 @@ namespace PRAIM
             set { SearchActionItem.metaData = value; }
         }
 
+        /// <summary>
+        /// The working project name
+        /// </summary>
         public string WorkingProjectName
         {
             get { return _WorkingProjectName; }
@@ -111,6 +154,9 @@ namespace PRAIM
             }
         }
 
+        /// <summary>
+        /// The working project version
+        /// </summary>
         public string WorkingProjectVersion
         {
             get { return _WorkingProjectVersion; }
@@ -189,18 +235,10 @@ namespace PRAIM
         #endregion Public Properties
 
         /// <summary>
-        /// constructor
+        /// Constructor
         /// </summary>
         public PRAIMViewModel()
         {
-            //-----------------------
-            // Boot from XML
-            //-----------------------
-            BootFromXml();
-            _DB = new PRAIMDataBase((int)_Config.CurrentActionItemID);
-            _WorkingProjectName = _Config.LastProject;
-            _WorkingProjectVersion = _Config.LastVersion;
-
             //-----------------------
             // Initialize Properties
             //-----------------------
@@ -216,29 +254,10 @@ namespace PRAIM
             SaveCommand = new Command(SaveCanExec, SaveExec);
             RemoveActionItemCommand = new Command(RemoveCanExec, OnRemoveActionItem);
 
-            //---------------------------------------
-            // Initialize ProjectsManager view model
-            //---------------------------------------
-            ProjectsViewModel = new ProjectsManagerViewModel(_DB);
-            ProjectsViewModel.WorkingProjectChanged += OnWorkingProjectChanged;
-            ProjectsViewModel.VersionAdded += OnVersionAdded;
-            ProjectsViewModel.VersionRemoved += OnVersionRemoved;
-
             ResultDBItems = new ObservableCollection<ActionItem>();
         }
 
         #region Public Methods
-
-        public void SaveConfig()
-        {
-            _Config.CurrentActionItemID = _DB.currentID;
-            _Config.LastProject = WorkingProjectName; 
-            _Config.LastVersion = WorkingProjectVersion;
-            using (FileStream fs = new FileStream(_XmlLocation, FileMode.Open)) {
-                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
-                serializer.Serialize(fs, _Config);
-            }
-        }
 
         /// <summary>
         /// Save an action item to the DB
@@ -267,22 +286,28 @@ namespace PRAIM
             }
         }
 
+        /// <summary>
+        /// Generate an CSV report from the search results
+        /// </summary>
         public void GenerateReport()
         {
-            string appLocation = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            
-                System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-                saveFileDialog.FileName = "Report.csv";
-                saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
-                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            saveFileDialog.FileName = "Report.csv";
+            saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                if (!CreateReport.CreateCSVReport(ResultDBItems, saveFileDialog.FileName))
                 {
-                    if (!CreateReport.CreateCSVReport(ResultDBItems, saveFileDialog.FileName))
-                    {
-                        System.Windows.MessageBox.Show("Error generating report", "Error", MessageBoxButton.OK);
-                    }
-                }           
+                    System.Windows.MessageBox.Show("Error generating report", "Error", MessageBoxButton.OK);
+                }
+            }           
         }
 
+        /// <summary>
+        /// Build a BitmapSource from the given action item's snapshot.
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         public BitmapSource GetSnapshotSource(object item)
         {
             ActionItem action_item = item as ActionItem;
@@ -303,21 +328,53 @@ namespace PRAIM
             return image;
         }
 
-        public void OnWorkingProjectChanged(string project, string version)
+        /// <summary>
+        /// Save action item snapshot to a file
+        /// </summary>
+        public void ExportActionItem()
         {
-            WorkingProjectName = project;
-            WorkingProjectVersion = version;
+            BitmapSource source = GetSnapshotSource(SelectedActionItem);
+
+            System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog();
+            dlg.Filter = "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp";
+
+            System.Windows.Forms.DialogResult result = dlg.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK) {
+                BitmapEncoder encoder;
+
+                if (dlg.FileName.EndsWith("jpeg")) {
+                    encoder = new JpegBitmapEncoder();
+                } else if (dlg.FileName.EndsWith("bmp")) {
+                    encoder = new BmpBitmapEncoder();
+                } else {
+                    encoder = new PngBitmapEncoder();
+                }
+
+                encoder.Frames.Add(BitmapFrame.Create(source));
+                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Create, FileAccess.Write)) {
+                    encoder.Save(fs);
+                }
+            }
         }
 
         #endregion Public Methods
 
         #region Private Methods
 
+        /// <summary>
+        /// Remove selected action item can execute.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         private bool RemoveCanExec(object parameter)
         {
             return this.SelectedActionItem != null;
         }
 
+        /// <summary>
+        /// Handler for when removing an action item
+        /// </summary>
+        /// <param name="parameter"></param>
         private void OnRemoveActionItem(object parameter)
         {
             MessageBoxResult res = System.Windows.MessageBox.Show("Are you sure?", "Please Confirm Action", MessageBoxButton.YesNo, MessageBoxImage.Question);
@@ -331,22 +388,50 @@ namespace PRAIM
             this.SelectedActionItem = null;
         }
 
-        private void OnVersionRemoved(string version)
+        /// <summary>
+        /// Handler for when a version was removed from a project
+        /// </summary>
+        /// <param name="version"></param>
+        private void OnVersionRemoved(string project, string version)
         {
-            if (SelectedProjectVersions == null) return;
+            if (SelectedSearchProject != null && SelectedSearchProject.Name == project &&
+                SelectedProjectVersions != null && SelectedProjectVersions.Contains(version)) {
+                    SelectedProjectVersions.Remove(version);
+            }
 
-            SelectedProjectVersions.Add(version);
+            if (WorkingProjectName == project && WorkingProjectVersion == version) {
+                WorkingProjectName = null;
+                WorkingProjectVersion = null;
+            }
         }
 
-        private void OnVersionAdded(string version)
+        /// <summary>
+        /// Handler for when a verion is added to a project
+        /// </summary>
+        /// <param name="version"></param>
+        private void OnVersionAdded(string project, string version)
         {
             if (SelectedProjectVersions == null) return;
 
-            if (SelectedProjectVersions.Contains(version)) {
+            if (SelectedSearchProject.Name == project && SelectedProjectVersions.Contains(version)) {
                 SelectedProjectVersions.Add(version);
             }
         }
 
+        /// <summary>
+        /// Handler for when the working project is changed.
+        /// </summary>
+        /// <param name="project"></param>
+        /// <param name="version"></param>
+        private void OnWorkingProjectChanged(string project, string version)
+        {
+            WorkingProjectName = project;
+            WorkingProjectVersion = version;
+        }
+
+        /// <summary>
+        /// Rebuild the selected project versions (for searching)
+        /// </summary>
         private void UpdateSelectedProjectVersions()
         {
             SelectedProjectVersions = new ObservableCollection<string>();
@@ -359,29 +444,12 @@ namespace PRAIM
             }
         }
 
+        /// <summary>
+        /// Build the selected action item thumbnail
+        /// </summary>
         private void UpdateActionItemThumbnail()
         {
             PreviewImage = GetSnapshotSource(SelectedActionItem);
-        }
-
-        /// <summary>
-        /// Initialize boot info
-        /// </summary>
-        private void BootFromXml()
-        {
-            if (!File.Exists(_XmlLocation)) {
-                _Config = new BootConfig();
-                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
-                FileStream fs = new FileStream(_XmlLocation, FileMode.CreateNew);
-                serializer.Serialize(fs, _Config);
-                return;
-            } else {
-                XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
-                using (StreamReader sr = new StreamReader(_XmlLocation)) {
-                    _Config = (BootConfig)serializer.Deserialize(sr);
-                }
-            }
-
         }
 
         /// <summary>
@@ -391,7 +459,7 @@ namespace PRAIM
         /// <returns></returns>
         private bool SaveCanExec(object p)
         {
-            return (CroppedImage != null && WorkingProjectName != null && WorkingProjectVersion != null);
+            return (CroppedImage != null && WorkingProjectName != null && WorkingProjectVersion != null && InsertMetadata.Priority != null);
         }
 
         /// <summary>
@@ -426,37 +494,10 @@ namespace PRAIM
         private ActionItem _SelectedActionItem;
         private string _WorkingProjectName;
         private string _WorkingProjectVersion;
-        private BootConfig _Config;
-        string _XmlLocation = Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "boot.xml");
         private Project _SelectedSearchProject;
         private BitmapSource _PreviewImage;
+        private ProjectsManagerViewModel _ProjectsViewModel;
 
         #endregion Private Fields
-
-        public void ExportActionItem()
-        {
-            BitmapSource source = GetSnapshotSource(SelectedActionItem);
-
-            System.Windows.Forms.SaveFileDialog dlg = new System.Windows.Forms.SaveFileDialog();
-            dlg.Filter = "JPEG (*.jpeg)|*.jpeg|PNG (*.png)|*.png|BMP (*.bmp)|*.bmp";
-
-            System.Windows.Forms.DialogResult result = dlg.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK) {
-                BitmapEncoder encoder;
-
-                if (dlg.FileName.EndsWith("jpeg")) {
-                    encoder = new JpegBitmapEncoder();
-                } else if (dlg.FileName.EndsWith("bmp")) {
-                    encoder = new BmpBitmapEncoder();
-                } else {
-                    encoder = new PngBitmapEncoder();
-                }
-
-                encoder.Frames.Add(BitmapFrame.Create(source));
-                using (FileStream fs = new FileStream(dlg.FileName, FileMode.Create, FileAccess.Write)) {
-                    encoder.Save(fs);
-                }
-            }
-        }
     }
 }

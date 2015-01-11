@@ -26,11 +26,11 @@ namespace PRAIM.SnapshotManager
     {
         #region Constants
 
-        public static double MinimumRecLength = 2;
-        public static double MinimumHookProximity = 3;
+        public static double MinimumRecLength = 0.1;
+        public static double MinimumHookProximity = 0.2;
         public static readonly double ScreenWidth = Screen.PrimaryScreen.Bounds.Width;
         public static readonly double ScreenHeight = Screen.PrimaryScreen.Bounds.Height;
-        public static readonly double NegetiveButtonsMargin = -24;
+        public double NegetiveButtonsMargin;
 
         #endregion Constants
 
@@ -581,6 +581,8 @@ namespace PRAIM.SnapshotManager
         /// <param name="e"></param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
+            NegetiveButtonsMargin = -ButtonsStackPanel.Width;
+
             Bitmap snapshot = new Bitmap(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
             Graphics graphics = Graphics.FromImage(snapshot);
             graphics.CopyFromScreen(new System.Drawing.Point(0, 0), new System.Drawing.Point(0, 0), Screen.PrimaryScreen.Bounds.Size, CopyPixelOperation.SourceCopy);
