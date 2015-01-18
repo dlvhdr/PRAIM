@@ -105,13 +105,13 @@
 
     <DockPanel Margin="0">
         <Grid DockPanel.Dock="Top">
-            <Menu HorizontalAlignment="Stretch" Background="White">
-                <MenuItem Header="File">
-                    <MenuItem Header="Exit" Click="OnExit"/>
+            <Menu HorizontalAlignment="Stretch" Foreground="White" Background="{StaticResource SmokeGray}">
+                <MenuItem Header="FILE">
+                    <MenuItem Foreground="Black" Header="Exit" Click="OnExit"/>
                 </MenuItem>
-                <MenuItem Header="Help">
-                    <MenuItem Header="User Manual"/>
-                    <MenuItem Header="About" Click="OpenAbout"/>
+                <MenuItem Header="HELP">
+                    <MenuItem Foreground="Black" Header="User Manual"/>
+                    <MenuItem Foreground="Black" Header="About" Click="OpenAbout"/>
                 </MenuItem>
             </Menu>
 
