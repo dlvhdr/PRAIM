@@ -38,7 +38,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>PRAIM.ico</ApplicationIcon>
+    <ApplicationIcon>rsz_praim_black.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -244,6 +244,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\Windows-Metro\Save_circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rsz_praim_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rsz_praim_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\rsz_praim_black.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="rsz_praim_black.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

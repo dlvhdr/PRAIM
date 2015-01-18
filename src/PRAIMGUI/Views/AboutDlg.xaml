@@ -13,8 +13,8 @@
         <DockPanel LastChildFill="False" Margin="5">
             <DockPanel DockPanel.Dock="Top">
                 <!--Logo-->
-                <Border DockPanel.Dock="Left" Height="100" Width="100">
-                    <Image/>
+                <Border DockPanel.Dock="Left" Height="100" Width="100" VerticalAlignment="Top" Margin="0,0,10,0">
+                    <Image Source="{StaticResource AppIconWhite}"/>
                 </Border>
                 <!--Text info-->
                 <StackPanel Orientation="Vertical" DockPanel.Dock="Left">
