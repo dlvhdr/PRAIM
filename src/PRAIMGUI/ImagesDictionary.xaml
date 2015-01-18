@@ -40,4 +40,6 @@
     <BitmapImage x:Key="MetroSave" UriSource="Images/Windows-Metro/Save.png"/>
     <BitmapImage x:Key="MetroSaveCircle" UriSource="Images/Windows-Metro/Save_circle.png"/>
 
+    <BitmapImage x:Key="AppIconWhite" UriSource="Images/rsz_praim_white.png"/>
+
 </ResourceDictionary>
