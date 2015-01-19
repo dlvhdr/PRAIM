@@ -180,7 +180,7 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsGrouping" Value="true"/>
-                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    <!--<Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>-->
                 </MultiTrigger.Conditions>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
             </MultiTrigger>
@@ -249,7 +249,7 @@
             <MultiTrigger>
                 <MultiTrigger.Conditions>
                     <Condition Property="IsGrouping" Value="true"/>
-                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                    <!--<Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>-->
                 </MultiTrigger.Conditions>
                 <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
             </MultiTrigger>

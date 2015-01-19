@@ -1,21 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5B6D2B58-F73B-4407-81CB-159C4DB7084B}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A8E95165-0AB4-4E58-9BA2-96538B4F6EB3}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PRAIM</RootNamespace>
-    <AssemblyName>PRAIM</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>PRAIMGUI</RootNamespace>
+    <AssemblyName>PRAIM-GUI</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,19 +40,15 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>rsz_praim_black.ico</ApplicationIcon>
@@ -59,83 +72,13 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
-      <SubType>Code</SubType>
     </Compile>
     <Compile Include="BootConfig.cs" />
     <Compile Include="CreateReport.cs" />
     <Compile Include="Models\ProjectsManagerModel.cs" />
-    <Compile Include="ViewModels\ProjectsManagerViewModel.cs" />
-    <Compile Include="ViewModels\ProjectViewModel.cs" />
-    <Compile Include="Views\AboutDlg.xaml.cs">
-      <DependentUpon>AboutDlg.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NewProjectDlg.xaml.cs">
-      <DependentUpon>NewProjectDlg.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\NewVersionDlg.xaml.cs">
-      <DependentUpon>NewVersionDlg.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ProjectsManagerView.xaml.cs">
-      <DependentUpon>ProjectsManagerView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\SnapshotManager.xaml.cs">
-      <DependentUpon>SnapshotManager.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ViewSnapshotDlg.xaml.cs">
-      <DependentUpon>ViewSnapshotDlg.xaml</DependentUpon>
-    </Compile>
-    <Page Include="Styles\ComboBoxes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ImagesDictionary.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\GroupBoxes.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\AboutDlg.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NewProjectDlg.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\NewVersionDlg.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\PRAIMWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ProjectsManagerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\SnapshotManager.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ViewSnapshotDlg.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ViewModels\PRAIMViewModel.cs" />
-    <Compile Include="Views\PRAIMWindow.xaml.cs">
-      <DependentUpon>PRAIMWindow.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="MoveResizeHelpers\MoveHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -149,10 +92,35 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ViewModels\PRAIMViewModel.cs" />
+    <Compile Include="ViewModels\ProjectsManagerViewModel.cs" />
+    <Compile Include="ViewModels\ProjectViewModel.cs" />
+    <Compile Include="Views\AboutDlg.xaml.cs">
+      <DependentUpon>AboutDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewProjectDlg.xaml.cs">
+      <DependentUpon>NewProjectDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NewVersionDlg.xaml.cs">
+      <DependentUpon>NewVersionDlg.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PRAIMWindow.xaml.cs">
+      <DependentUpon>PRAIMWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ProjectsManagerView.xaml.cs">
+      <DependentUpon>ProjectsManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SnapshotManager.xaml.cs">
+      <DependentUpon>SnapshotManager.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ViewSnapshotDlg.xaml.cs">
+      <DependentUpon>ViewSnapshotDlg.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -160,57 +128,116 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Sql.Server.Express.10.0">
+      <Visible>False</Visible>
+      <ProductName>SQL Server 2008 Express</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 4.5</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\dummygui-ss.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <Project>{1499f792-f0ff-4170-9867-88636ff8b927}</Project>
-      <Name>Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\PRAIMDataBase\PRAIMDataBase.csproj">
-      <Project>{267324c2-50fc-4290-9c5e-bd9cc8e4ae3a}</Project>
-      <Name>PRAIMDataBase</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Windows-Metro\Camera.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Windows-Metro\Cancel.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Windows-Metro\Save pictures.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Windows-Metro\OK.png" />
-  </ItemGroup>
-  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Save pictures.png" />
     <Resource Include="Images\Windows-Metro\Save pictures_no_circle.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Windows-Metro\Save.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\Windows-Metro\Save_circle.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\rsz_praim_white.png" />
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="ImagesDictionary.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ComboBoxes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\GroupBoxes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\AboutDlg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NewProjectDlg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\NewVersionDlg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\PRAIMWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ProjectsManagerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SnapshotManager.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ViewSnapshotDlg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\rsz_praim_black.png" />
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{F40E14E6-C013-4EDE-B4CB-A27C88AF373E}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PRAIMDataBase\PRAIMDataBase.csproj">
+      <Project>{66D1CE78-7F84-401F-A1CB-FCF818743D08}</Project>
+      <Name>PRAIMDataBase</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Erase_black.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\rsz_praim_black.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="rsz_praim_black.ico" />
+    <Resource Include="Images\rsz_praim_black.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Windows-Metro\Erase_black.png" />
+    <Resource Include="Images\rsz_praim_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="rsz_praim_black.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
