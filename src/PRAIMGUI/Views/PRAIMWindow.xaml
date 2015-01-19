@@ -423,7 +423,7 @@
                                         <MenuItem Header="Remove Action Item"
                                             Command="{Binding RemoveActionItemCommand}">
                                             <MenuItem.Icon>
-                                                <Image Source="{StaticResource FugueDeleteIcon}"/>
+                                                <Image Source="{StaticResource MetroErase}"/>
                                             </MenuItem.Icon>
                                         </MenuItem>
                                     </ContextMenu>

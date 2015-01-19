@@ -88,6 +88,8 @@ namespace PRAIM
             _Config.LastProject = _MainVM.WorkingProjectName;
             _Config.LastVersion = _MainVM.WorkingProjectVersion;
             using (FileStream fs = new FileStream(_XmlLocation, FileMode.Open)) {
+                fs.SetLength(0);
+                fs.Flush();
                 XmlSerializer serializer = new XmlSerializer(typeof(BootConfig));
                 serializer.Serialize(fs, _Config);
             }

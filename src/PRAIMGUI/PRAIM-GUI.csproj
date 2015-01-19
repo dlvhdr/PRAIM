@@ -41,8 +41,7 @@
     <ApplicationIcon>rsz_praim_black.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="PresentationFramework.Aero2" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -176,54 +175,7 @@
       <Name>PRAIMDataBase</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="PRAIM.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Tango\camera-photo.png" />
-    <Resource Include="Images\Tango\document-save.png" />
-    <Resource Include="Images\Tango\emblem-unreadable.png" />
-    <Resource Include="Images\Tango\list-add.png" />
-    <Resource Include="Images\Tango\list-remove.png" />
-    <Resource Include="Images\Tango\media-floppy.png" />
-    <Resource Include="Images\Tango\preferences-system-windows.png" />
-    <Resource Include="Images\Tango\system-file-manager.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\blue-document-attribute-p.png" />
-    <Resource Include="Images\Fugue\database-delete.png" />
-    <Resource Include="Images\Fugue\database-insert.png" />
-    <Resource Include="Images\Fugue\database.png" />
-    <Resource Include="Images\Fugue\disk.png" />
-    <Resource Include="Images\Fugue\magnifier-zoom-fit.png" />
-    <Resource Include="Images\Fugue\minus-button.png" />
-    <Resource Include="Images\Fugue\plus-button.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\minus-white.png" />
-    <Resource Include="Images\Fugue\plus-white.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\tick-circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\cross-circle.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\cross-script.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\blue-folders-stack.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\camera-black.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\Fugue\plus.png" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\Windows-Metro\Camera.png" />
   </ItemGroup>
@@ -256,6 +208,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="rsz_praim_black.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Windows-Metro\Erase_black.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

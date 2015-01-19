@@ -10,7 +10,7 @@
         <ContextMenu>
             <MenuItem Header="Remove selection" Command="{Binding Path=PlacementTarget.ClearSelectionCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}">
                 <MenuItem.Icon>
-                    <Image Source="{StaticResource FugueDeleteIcon}"/>
+                    <Image Source="{StaticResource MetroErase}"/>
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>

@@ -31,6 +31,7 @@ namespace PRAIMDB
 
         public bool InsertActionItem(ActionItem actionItem)
         {
+            int old_id = currentID;
             actionItem.id = currentID;
             int priority = (int)actionItem.metaData.Priority;
             string ProjectName = actionItem.metaData.ProjectName;
@@ -69,7 +70,6 @@ namespace PRAIMDB
             }
             catch (Exception e)
             {
-                //Console.WriteLine("connection to PRAIMDB was failed: {0}", e.ToString());
                 return false;
             }
            
