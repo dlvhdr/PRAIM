@@ -110,7 +110,7 @@
                     <MenuItem Foreground="Black" Header="Exit" Click="OnExit"/>
                 </MenuItem>
                 <MenuItem Header="HELP">
-                    <MenuItem Foreground="Black" Header="User Manual"/>
+                    <MenuItem Foreground="Black" Header="User Manual" Click="OpenUserManual"/>
                     <MenuItem Foreground="Black" Header="About" Click="OpenAbout"/>
                 </MenuItem>
             </Menu>
@@ -229,7 +229,7 @@
                                 <TextBlock Grid.Column="0" Text="PRIORITY:" Margin="0,5,10,5" VerticalAlignment="Center"/>
                                 <ComboBox Grid.Column="1" Margin="0,5,5,5" MaxWidth="120" HorizontalAlignment="Stretch"
                                   ItemsSource="{Binding PossiblePriorities}"  Style="{StaticResource FlatWhiteComboBox}"
-                                  SelectedItem="{Binding InsertMetadataPriority}">
+                                  SelectedItem="{Binding InsertMetadataPriority}" Loaded="PriorityComboboxLoaded">
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <TextBlock Text="{Binding}"/>

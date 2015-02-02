@@ -156,5 +156,16 @@ namespace PRAIM
         }
 
         #endregion Command handlers
+
+        private void OpenUserManual(object sender, RoutedEventArgs e)
+        {
+            string pdf_loc = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            System.Diagnostics.Process.Start(pdf_loc + "user_manual.pdf");
+        }
+
+        private void PriorityComboboxLoaded(object sender, RoutedEventArgs e)
+        {
+            (sender as ComboBox).SelectedIndex = 0;
+        }
     }
 }
